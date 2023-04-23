@@ -10,16 +10,16 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: '/push',
-      name: 'push',
+      path: '/chest',
+      name: 'chest',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/PushView.vue')
     },
     {
-      path: '/pull',
-      name: 'pull',
+      path: '/shoulder',
+      name: 'shoulder',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
@@ -32,7 +32,31 @@ const router = createRouter({
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/PushView.vue')
-    }
+    },
+    {
+      path: '/back',
+      name: 'back',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/PushView.vue')
+    },
+    {
+      path: '/biceps',
+      name: 'biceps',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/PushView.vue')
+    },
+    {
+      path: '/triceps',
+      name: 'teiceps',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/PushView.vue')
+    },
   ]
 })
 
