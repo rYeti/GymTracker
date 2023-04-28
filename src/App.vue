@@ -6,7 +6,6 @@ import { NavigationModel, Nav } from '@/components';
 <template>
     <div class="app-container">
         <NavigationModel />
-        <!-- <Nav /> -->
         <div class="container pt-4 pb-4">
             <router-view />
         </div>
