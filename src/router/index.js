@@ -15,7 +15,7 @@ const router = createRouter({
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../views/PushView.vue')
+      component: () => import('../views/Muscles/ChestView.vue')
     },
     {
       path: '/shoulder',
@@ -23,7 +23,7 @@ const router = createRouter({
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../views/PushView.vue')
+      component: () => import('../views/Muscles/ShoulderView.vue')
     },
     {
       path: '/legs',
@@ -31,7 +31,7 @@ const router = createRouter({
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../views/PushView.vue')
+      component: () => import('../views/Muscles/LegsView.vue')
     },
     {
       path: '/back',
@@ -39,7 +39,7 @@ const router = createRouter({
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../views/PushView.vue')
+      component: () => import('../views/Muscles/BackView.vue')
     },
     {
       path: '/biceps',
@@ -47,15 +47,15 @@ const router = createRouter({
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../views/PushView.vue')
+      component: () => import('../views/Muscles/BicepsView.vue')
     },
     {
       path: '/triceps',
-      name: 'teiceps',
+      name: 'triceps',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../views/PushView.vue')
+      component: () => import('../views/Muscles/TricepsView.vue')
     },
   ]
 })

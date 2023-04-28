@@ -1,0 +1,1 @@
+import{_ as s,o,c as r,a}from"./index-eae96017.js";const e={},n={class:"shoulder"},t=[a("h1",null,"Shoulder",-1)];const d=s(e,[["render",function(s,a){return o(),r("div",n,t)}]]);export{d as default};

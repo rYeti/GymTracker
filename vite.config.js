@@ -21,7 +21,9 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      '/css':   fileURLToPath(new URL('./src/css',              import.meta.url)),
+      'config': fileURLToPath(new URL('./src/css/_config.scss', import.meta.url)),
     }
   }
 })

@@ -1,0 +1,1 @@
+import{_ as s,o as n,c as t,a as r}from"./index-eae96017.js";const a={},e={class:"triceps"},o=[r("h1",null,[r("button",null,"Triceps")],-1)];const c=s(a,[["render",function(s,r){return n(),t("div",e,o)}]]);export{c as default};

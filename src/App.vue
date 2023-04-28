@@ -1,37 +1,24 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import { NavigationModel, Nav } from '@/components';
+
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/chest">Chest</RouterLink>
-        <RouterLink to="/shoulder">Shoulder</RouterLink>
-        <RouterLink to="/legs">Legs</RouterLink>
-        <RouterLink to="/back">Back</RouterLink>
-        <RouterLink to="/biceps">Biceps</RouterLink>
-        <RouterLink to="/triceps">Triceps</RouterLink>
-      </nav>
+    <div class="app-container">
+        <NavigationModel />
+        <!-- <Nav /> -->
+        <div class="container pt-4 pb-4">
+            <router-view />
+        </div>
     </div>
-  </header>
-
-  <RouterView />
 </template>
 
-<style scoped>
+
+<style scoped lang="scss">
+ @import '/css/head.scss';
 header {
   line-height: 1.5;
   max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
 }
 
 nav {
@@ -62,12 +49,8 @@ nav a:first-of-type {
 @media (min-width: 1024px) {
   header {
     display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
+    place-items: top;
+    padding-right: calc(var(--section-gap));
   }
 
   header .wrapper {
@@ -77,8 +60,8 @@ nav a:first-of-type {
   }
 
   nav {
-    text-align: right;
-    margin-left: -1rem;
+    text-align: center;
+    margin-left: 2rem;
     font-size: 1rem;
 
     padding: 1rem 0;
