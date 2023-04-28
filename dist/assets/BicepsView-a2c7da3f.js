@@ -1,0 +1,1 @@
+import{_ as s,o as a,c as e,a as n}from"./index-e86da208.js";const c={},o={class:"biceps"},r=[n("h1",null,"Biceps",-1)];const t=s(c,[["render",function(s,n){return a(),e("div",o,r)}]]);export{t as default};
