@@ -3,6 +3,10 @@
       <h1><button>Triceps</button></h1>
     </div>
   </template>
+
+<script setup>
+
+  </script>
   
   <style>
   @media (min-width: 1024px) {
