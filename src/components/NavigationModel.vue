@@ -11,13 +11,6 @@
             <router-link to="/Muscles/Shoulder" class="nav-item nav-link">Shoulder</router-link>
             <router-link to="/Muscles/Triceps" class="nav-item nav-link">Triceps</router-link>
             <router-link to="/Muscles/Bicepts" class="nav-item nav-link">Bicepts</router-link>
-            <router-link to="/" class="nav-item nav-link">HomeView</router-link>
-            <router-link to="/muscles/legs" class="nav-item nav-link">Legs</router-link>
-            <router-link to="/muscles/back" class="nav-item nav-link">Back</router-link>
-            <router-link to="/muscles/chest" class="nav-item nav-link">Chest</router-link>
-            <router-link to="/muscles/shoulder" class="nav-item nav-link">Shoulder</router-link>
-            <router-link to="/muscles/triceps" class="nav-item nav-link">Triceps</router-link>
-            <router-link to="/muscles/biceps" class="nav-item nav-link">Biceps</router-link>
         </div>
     </nav>
 </template>
@@ -31,7 +24,7 @@
     width: 100%;
     height: 4rem;
     justify-content: start;
-    background: grey;
+    background: rgb(36, 165, 75);
 }
 .navbar-nav{
     display: flex;

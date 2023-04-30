@@ -25,6 +25,6 @@ import { NavigationModel } from "./components/Index.js";
     max-width: 1024px;
     margin: 1rem auto;
     padding: 0.5rem 1rem;
-    background: grey;
+    background: black;
   }
 </style>
