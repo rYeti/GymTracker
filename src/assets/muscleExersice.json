@@ -1,0 +1,764 @@
+{
+    "muscle": [
+        { 
+            "name": "Legs",
+            "exercises":
+            [
+                {
+                    "name": "Barbell Back Squat"
+                },
+                {
+                    "name": "Barbell Front Squat"
+                },
+                {
+                    "name":"Barbell Split squat"
+                },
+                {
+                    "name":"Dumbbell Split Squat"
+                },
+                {
+                    "name": "Barbell Lunge"
+                },
+                {
+                    "name":"Barbell Bulgarien split Squat"
+                },
+                {
+                    "name":"Barbell Reverse Lunge"
+                },
+                {
+                    "name":"Dumbbell Bulgarien split squat"
+                },
+                {
+                    "name":"Dumbbell Lunges"
+                },
+                {
+                    "name":"Dumbbell Walking Lunges"
+                },
+                {
+                    "name":"Dumbbell Reverse Lunge"
+                },
+                {
+                    "name":"Dumbbell Goblet Squat"
+                },
+                {
+                    "name":"Dumbbell Step Ups"
+                },
+                {
+                    "name":"Hack Squat"
+                },
+                {
+                    "name": "Leg Press"
+                },
+                {
+                    "name": "Leg Extension"
+                },
+                {
+                    "name": "Leg Curl"
+                },
+                {
+                    "name":"Barbell Romanin Deadlift"
+                },
+                {
+                    "name":"Barbell Stiff leg Deadlift"
+                },
+                {
+                    "name":"Dumbell Romanin Deadlift"
+                },
+                {
+                    "name":"Dumbell Stiff leg Deadlift"
+                },
+                {
+                    "name":"Decline Dumbbell leg curl"
+                },
+                {
+                    "name":"Leg Ham Raises"
+                },
+                {
+                    "name":"Seated Leg Curl"
+                },
+                {
+                    "name":"Seated Single Leg Curl"
+                },
+                {
+                    "name":"Laying Leg Curl"
+                },
+                {
+                    "name":"Laying single leg leg Curl"
+                },
+                {
+                    "name":"Cable Laying Leg Curl"
+                },
+                {
+                    "name":"Cable Single Leg Romanian Deadlift"
+                },
+                {
+                    "name":"Back Extension (Ham Focused)"
+                },
+                {
+                    "name":"Barbell Hip Thrusts"
+                },
+                {
+                    "name":"Dumbbell Hip Thusts"
+                },
+                {
+                    "name":"Dumbbell leaning Forward Step up"
+                },
+                {
+                    "name":"Dumbbell Single leg Hip thusts"
+                },
+                {
+                    "name":"Cable Standing Cuff Kickback"
+                },
+                {
+                    "name":"Cable Pullthroughs"
+                },
+                {
+                    "name":"Cable Standing Side raises"
+                },
+                {
+                    "name":"Hip Abduction"
+                },
+                {
+                    "name":"Kettkebelt Swings"
+                },
+                {
+                    "name":"Glue hamm Raise"
+                },
+                {
+                    "name":"Back Extension (Glute Focused)"
+                },
+                {
+                    "name":"Single leg Hip Thusts"
+                },
+                {
+                    "name":"Plate Hip Thrusts"
+                },
+                {
+                    "name":"Single leg Plate Hip thusts"
+                },
+                {
+                    "name": "Hip Adduction"
+                },
+                {
+                    "name": "Hip Dumbbell Gobleg Adductor Lunges"
+                },
+                {
+                    "name": "Calf Raise"
+                },
+                {
+                    "name":"Single Leg Standing Dumbbell Calf Raises"
+                },
+                {
+                    "name":"Standing Dumbbell Calf Raises"
+                },
+                {
+                    "name":"Seated Dunbbell calrf Extensions"
+                },
+                {
+                    "name":"Seated Calf Raises"
+                },
+                {
+                    "name":"Staning Calf Raises"
+                },
+                {
+                    "name":"Donkey Calf Raises"
+                },
+                {
+                    "name":"Leg Press Calf Raises"
+                },
+                {
+                    "name":"Smith Maschine Donkey Calf Raises"
+                }
+            ]
+        },
+        {
+            "name": "Back",
+            "exercises":[
+                {
+                    "name":"Bentover Barbell Row"
+                },
+                {
+                    "name":"Standing T Bar Row"
+                },
+                {
+                    "name":"Chest Supported Barbell Row"
+                },
+                {
+                    "name":"Landmine 1 Arm Row"
+                },
+                {
+                    "name":"Dumbbell Tripod Row"
+                },
+                {
+                    "name":"Dumbbell Pullover (Lats)"
+                },
+                {
+                    "name":"Chest Supported Dumbbell row"
+                },
+                {
+                    "name":"Lat Focused Dumbbell Row"
+                },
+                {
+                    "name":"Rocking Pulldown"
+                },
+                {
+                    "name":"Close Grip Undergand Pulldown"
+                },
+                {
+                    "name":"Lap Pulldown"
+                },
+                {
+                    "name":"One Arm High Calbe Row"
+                },
+                {
+                    "name":"Seated One Arm High Cable row"
+                },
+                {
+                    "name":"Incline Cable Single Arm Stretch"
+                },
+                {
+                    "name":"Cable Straight Arm Pushdown Bar"
+                },
+                {
+                    "name":"Cable Straight Arm Pusdown Rope"
+                },
+                {
+                    "name":"Single Arm Straight Arm Pushdown"
+                },
+                {
+                    "name":"Seated Lat Focused Row"
+                },
+                {
+                    "name":"Seated Lat Focused One Arm Row"
+                },
+                {
+                    "name":"Kneeling one Arm Lat Focused Row"
+                },
+                {
+                    "name":"Kneeling Lat Pullin"
+                },
+                {
+                    "name":"Seated Chest supported lat row"
+                },
+                {
+                    "name":"Pull ups"
+                },
+                {
+                    "name":"Asissted Pull ups"
+                },
+                {
+                    "name":"Lat Pulldown"
+                },
+                {
+                    "name":"Chin ups"
+                },
+                {
+                    "name":"Asissted Pull ups"
+                },
+                {
+                    "name":"Austrailan Pull ups"
+                },
+                {
+                    "name":"Bentover Barbell row"
+                },
+                {
+                    "name":"Chest Supported Barbell Row"
+                },
+                {
+                    "name":"Medow Row"
+                },
+                {
+                    "name":"Chest Supported Dumbbell Row"
+                },
+                {
+                    "name":"Dumbbell One Arm Row"
+                },
+                {
+                    "name":"Bentover Dumbbell Row"
+                },
+                {
+                    "name":"Dumbbell Helms Row"
+                },
+                {
+                    "name":"Seated Row (Wide Grip)"
+                },
+                {
+                    "name":"Seated Row"
+                },
+                {
+                    "name":"Seated chest supported Row"
+                },
+                {
+                    "name":"Deadlift"
+                },
+                {
+                    "name":"Sumo Deadlift"
+                },
+                {
+                    "name":"Dead Row"
+                },
+                {
+                    "name":"Barbell Good Morning"
+                },
+                {
+                    "name":"Dumbell Good Morning"
+                },
+                {
+                    "name":"Dumbell Superman"
+                },
+                {
+                    "name":"Back Extensions"
+                },
+                {
+                    "name":"Superman"
+                },
+                {
+                    "name":"Good Morning"
+                },
+                {
+                    "name":"Rack Pull"
+                },
+                {
+                    "name":"Barbell Shrugs"
+                },
+                {
+                    "name":"Trap bar Shrugs"
+                },
+                {
+                    "name":"Trap Bar Carry"
+                },
+                {
+                    "name":"Dumbbell Shrugs"
+                },
+                {
+                    "name":"Dumbbell Carry"
+                },
+                {
+                    "name":"Dumbell Seated Shrug"
+                },
+                {
+                    "name":"Cable Shrugs"
+                },
+                {
+                    "name":"Plate Shurugs"
+                },
+                {
+                    "name":"Plate Carry"
+                },
+                {
+                    "name":"Cable Wrap Around Row"
+                },
+                {
+                    "name":"Cable Rope Pull"
+                },
+                {
+                    "name":"Prone Reverse Fly"
+                },
+                {
+                    "name":"Cable FacePull Press"
+                },
+                {
+                    "name":"Prone Y Rise"
+                },
+                {
+                    "name":"Prone Press"
+                },
+                {
+                    "name":"Plate Raise"
+                }
+            ]
+        },
+        {
+            "name": "Chest",
+            "exercises":[
+                {
+                    "name":"Incline Barbell Bench Press"
+                },
+                {
+                    "name":"Kneeling Landmine Press"
+                },
+                {
+                    "name":"Flat Underhand Barbell Bench Press"
+                },
+                {
+                    "name":"Landmine Rainbow"
+                },
+                {
+                    "name":"Paused Incline Barbell Bench Press"
+                },
+                {
+                    "name":"Incline Dumbbell Bench Press"
+                },
+                {
+                    "name":"Dumbbell Pullover (Chest)"
+                },
+                {
+                    "name":"DB UCV Raise"
+                },
+                {
+                    "name":"Incline Dumbbell Squeeze Press"
+                },
+                {
+                    "name":"Flat Underhand Dumbbell Bench Press"
+                },
+                {
+                    "name":"Paused Incline Dumbbell Bench Press"
+                },
+                {
+                    "name":"Sranding Low to High Cable Fly"
+                },
+                {
+                    "name":"Seated Low to High Cable  Fly"
+                },
+                {
+                    "name":"Incline Cable Press"
+                },
+                {
+                    "name":"Standing Low to High Crossover"
+                },
+                {
+                    "name":"Seated Low to High Crossover"
+                },
+                {
+                    "name":"Dual Cable UCV Raise"
+                },
+                {
+                    "name":"Decline Pushup"
+                },
+                {
+                    "name":"Slight Decline Bench Pess"
+                },
+                {
+                    "name":"Barbell Bench Press"
+                },
+                {
+                    "name":"Close Grip Barbell Bench Press"
+                },
+                {
+                    "name":"Slight Delcline Dumbbell Press"
+                },
+                {
+                    "name":"Dumbbell Bench Press"
+                },
+                {
+                    "name":"Paused Dumbbell Bench Press"
+                },
+                {
+                    "name":"Dumbbel Floor Fly"
+                },
+                {
+                    "name":"Seated Cable Fly"
+                },
+                {
+                    "name":"Seated Cable Press"
+                },
+                {
+                    "name":"Seated Cable Crossover"
+                },
+                {
+                    "name":"Standing Calbe Press"
+                },
+                {
+                    "name":"Standing Cable Crossover"
+                },
+                {
+                    "name":"Staning Cable Fly"
+                },
+                {
+                    "name":"Standing Calbe Press"
+                },
+                {
+                    "name":"Standing Cable Crossover"
+                },
+                {
+                    "name":"Pushup"
+                },
+                {
+                    "name":"Push away Pushup"
+                },
+                {
+                    "name":"Plate loaded Chest press"
+                },
+                {
+                    "name":"Assisted Chest press"
+                },
+                {
+                    "name":"Pec Dec (Chest)"
+                },
+                {
+                    "name":"Assisted Dip"
+                },
+                {
+                    "name":"Dip"
+                },
+                {
+                    "name":"Decline Barbell Bench Press"
+                },
+                {
+                    "name":"Barbell Dips"
+                },
+                {
+                    "name":"Decline Dumbbell Bench Press"
+                },
+                {
+                    "name":"Decline Dumbbell Flys Supernated"
+                },
+                {
+                    "name":"Decline Dumbbell Pullover"
+                },
+                {
+                    "name":"High to low Cable flys"
+                },
+                {
+                    "name":"High to low Cable Press"
+                },
+                {
+                    "name":"High to low Crossover"
+                },
+                {
+                    "name":"Standing Cable LC Press"
+                },
+                {
+                    "name":"Kneeling X Press"
+                },
+                {
+                    "name":"Decline Cable Dip"
+                },
+                {
+                    "name":"Jack Hammer Pushdown"
+                }
+            ]
+        },
+        {
+            "name": "Shoulders",
+            "exercises":[
+                {
+                    "name":"Barbell Overhead Press"
+                },
+                {
+                    "name":"Seated Barbell Overhead Press"
+                },
+                {
+                    "name":"Barbell Front raises"
+                },
+                {
+                    "name":"Kneeling Landmine Press"
+                },
+                {
+                    "name":"Smithmashine Shoulder Press"
+                },
+                {
+                    "name":"Dumbell Overhead Press"
+                },
+                {
+                    "name":"Seated Dumbell Overhead Press"
+                },
+                {
+                    "name":"Dumbell Arnold Press"
+                },
+                {
+                    "name":"Seated Arnold Press"
+                },
+                {
+                    "name":"Dumbbell Front Raises (pronated Grip)"
+                },
+                {
+                    "name":"Dumbbell Front Raises (Hammer Grip)"
+                },
+                {
+                    "name":"Dumbbell Front Raises (Supernated Grip BEST)"
+                },
+                {
+                    "name":"Seated Dumbell Press (Supernated Grip"
+                },
+                {
+                    "name":"Staning Dumbell Press  (Supernated Grip)"
+                },
+                {
+                    "name":"Dumbbel Scoop Press"
+                },
+                {
+                    "name":"Cable Front Riase (Pronated Grip)"
+                },
+                {
+                    "name":"Cable Front Riase (Supernated Grip BEST)"
+                },
+                {
+                    "name":"Cable Strch Front Raises"
+                },
+                {
+                    "name":"Plate Bus Drivers"
+                },
+                {
+                    "name":"Handstand Pushup"
+                },
+                {
+                    "name":"Pike Pushup"
+                },
+                {
+                    "name":"Seated Dumbbell Lateral Raise"
+                },
+                {
+                    "name":"Standing Dumbbell Lateral Raise"   
+                },
+                {
+                    "name":"Dumbbell Cheat Lateral Raise"
+                },
+                {
+                    "name":"Lying Incline Lateral Raise"
+                },
+                {
+                    "name":"Incline Dumbbell Parsel Side Lateral Raise"
+                },
+                {
+                    "name":"Cable Behind Body Lateral Raise "
+                },
+                {
+                    "name":"Cable Lateral Raise"
+                },
+                {
+                    "name":"Cable Lean-Away Lateral Raise"
+                },
+                {
+                    "name":"Egyptian Lateral Raise"
+                },
+                {
+                    "name":"Standing Cable Y Raise"
+                },
+                {
+                    "name":"Maschine Side Lateral Raises"
+                },
+                {
+                    "name":"Standing Barbell Rear Delt Row"
+                },
+                {  
+                    "name":"Chest Supported Barbell Rear Delt Row"
+                },
+                {
+                    "name":"Behinde the Back Barbell Raise"
+                },
+                {
+                    "name":"Dumbbell Rear Delt Row"
+                },
+                {
+                    "name":"Dumbbell Chest Supported Rear Delt Swing"
+                },
+                {
+                    "name":"Dumbbell Chest Supported Rear Delt Row"
+                },
+                {
+                    "name":"Dumbbell Reverse Flys"
+                },
+                {
+                    "name":"Dumbbll Hip Hugger"
+                },
+                {
+                    "name":"Abdduction Row"
+                },
+                {
+                    "name":"Incline Behind the Back Dumbbell Raise"
+                },
+                {
+                    "name":"Incline Dumbbell Rear Delt Fly"
+                },
+                {
+                    "name":"Seated Cable Rear Delt Row"
+                },
+                {
+                    "name":"Rear Delt Cable Pull"
+                },
+                {
+                    "name":"Double Arm Reverse Cabel Fly"
+                },
+                {
+                    "name":"Singke Arm Reverse Cable Fly"
+                },
+                {  
+                    "name":"Standing Face Pull"
+                },
+                {
+                    "name":"Kneeling Face Pull"
+                },
+                {
+                    "name":"Laying Face Pull"
+                },
+                {
+                    "name":"Reverse Pec Deck"
+                },
+                {
+                    "name":"Maschine Side Lateral Rear Delt Fly"
+                }
+            ]
+        },
+        {
+            "name":"Biceps",
+            "exercises":[
+                {
+                    "name":"Dumbbell Concentration Curl (Pronated Grip)"
+                },
+                {
+                    "name":"Crossbody Cable Curl"
+                },
+                {
+                    "name":"Dumbbell Concentration Curl (Hammer Grip)"
+                },
+                {
+                    "name":"Barbell Reverse Grip Curl"
+                },
+                {
+                    "name":"Ez Bar Reverse  Grip Curl"
+                },
+                {
+                    "name":"Dumbbell Reverse Grip"
+                },
+                {
+                    "name":"Barbell Curl"
+                },
+                {
+                    "name":"Ez bar Curl"
+                },
+                {
+                    "name":"Standing Dumbbell Curl"
+                },
+                {
+                    "name":"Seated Cable Curl"
+                },
+                {
+                    "name":"High Cable Curl"
+                }
+            ]
+        },
+        {
+            "name":"Triceps",
+            "exercises":[
+                {
+                    "name":"Rope Cable Pushdown (infront Body)"
+                },
+                {
+                    "name":"Straight Bart Cable Pushdown (underhand Grip)"
+                },
+                {
+                    "name":"Dumbbell Overhead Extension"
+                },
+                {
+                    "name":"Dip"
+                },
+                {
+                    "name":"Rope Cable Pushdown (behind body)"
+                },
+                {
+                    "name":"Cable Straight Bar Pushdown"
+                },
+                {
+                    "name":"Barbell Dip"
+                },
+                {
+                    "name":"Close Grip Pushup"
+                },
+                {
+                    "name":"Close Grip Barbell Bench Press"
+                }
+            ]
+        }
+    ]
+}

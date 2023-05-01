@@ -1,7 +1,7 @@
 <template>
     <nav v-show="true" class="navbar navbar-expand navbar-dark bg-dark">
         <div class="logo">
-            LOGO IS HERE
+            <img src="../assets/logo.png" alt="logo"/>
         </div>
         <div class="navbar-nav">
             <router-link to="/" class="nav-item nav-link">Home</router-link>
@@ -39,9 +39,14 @@
     text-decoration: none;
 }
 .nav-item:hover{
-    color: blue;
+    color: orangered;
 }
 .logo{
     width: 20%;
+}
+.logo img {
+    width: 30%;
+    height: 100%;
+    margin-left: 1rem;
 }
 </style>
