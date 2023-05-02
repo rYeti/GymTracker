@@ -1,5 +1,4 @@
-{
-    "muscle": [
+    "muscle" [
         { 
             "name": "Legs",
             "exercises":
@@ -761,4 +760,4 @@
             ]
         }
     ]
-}
+export default muscleExercise;

@@ -1,24 +1,26 @@
 <template>
     <div class="legs">
       <h1>Legs</h1>
-      <h2>Search</h2>
+      <div v-for="post in post.postList">
+        <h2>{{post.exercise}}</h2>
+        <p>{{post.body}}</p>
+      </div>
     </div>
   </template>
 
 <script setup>
+  import { usePostStore } from '@/stores/post.js'
+  import { onMounted } from 'vue';
 
-  </script>
+  const post = usePostStore()
+
+  onMounted(() => {
+       post.fetchMuscleExercise()
+     }
+     )
+
+</script>
   
-  <style>
-  /* @media (min-width: 1024px) {
-    .about {
-      min-height: 100vh;
-      display: flex;
-      align-items: right;
-    }
-  } */
-  .legs {
-    
-  }
-  </style>
+<style>
+</style>
   

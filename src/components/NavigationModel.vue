@@ -10,7 +10,7 @@
             <router-link to="/Muscles/Chest" class="nav-item nav-link">Chest</router-link>
             <router-link to="/Muscles/Shoulder" class="nav-item nav-link">Shoulder</router-link>
             <router-link to="/Muscles/Triceps" class="nav-item nav-link">Triceps</router-link>
-            <router-link to="/Muscles/Bicepts" class="nav-item nav-link">Bicepts</router-link>
+            <router-link to="/Muscles/Biceps" class="nav-item nav-link">Biceps</router-link>
         </div>
     </nav>
 </template>
@@ -45,7 +45,7 @@
     width: 20%;
 }
 .logo img {
-    width: 30%;
+    width: 20%;
     height: 100%;
     margin-left: 1rem;
 }
