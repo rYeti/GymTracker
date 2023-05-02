@@ -1,8 +1,8 @@
 <template>
     <div class="triceps">
       <h1>Triceps</h1>
-      <label> Search</label>
-      <div v-for="exercise in exercises" :key="exercise.name">
+      <input type="text" v-model="input" placeholder="Search..." />
+      <div v-for="exercise in filterExercises()" :key="exercise.name">
         <button>{{ exercise.name }}</button>
       </div>
     </div>
@@ -20,6 +20,14 @@
         exercises.value = json.postList.muscle[5].exercises
       }
       )
+
+  let input = ref('');
+  function filterExercises(){
+    return exercises.value.filter((exercise) => {
+      return exercise.name.toLowerCase().includes(input.value.toLowerCase());
+    });
+  };
+
 
 </script>
   
