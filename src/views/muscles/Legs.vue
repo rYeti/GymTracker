@@ -1,32 +1,12 @@
 <template>
     <div class="legs">
       <h1>Legs</h1>
-      <input type="text" v-model="input" placeholder="Search..." />
-      <div v-for="exercise in filterExercises()" :key="exercise.name">
-        <button>{{ exercise.name }}</button>
-      </div>
+      <ExerciseList muscle="Legs"/>
     </div>
   </template>
 
 <script setup>
-  import { usePostStore } from '@/stores/store.js'
-  import { onMounted, ref } from 'vue';
-
-  const json = usePostStore()
-  const exercises = ref([])
-
-  onMounted(async () => {
-        await json.fetchMuscleExercise()
-        exercises.value = json.postList.muscle[0].exercises
-      }
-      )
-
-  let input = ref('');
-  function filterExercises(){
-    return exercises.value.filter((exercise) => {
-      return exercise.name.toLowerCase().includes(input.value.toLowerCase());
-    });
-  };
+import {ExerciseList} from "@/components/Index.js";
 
 </script>
   
