@@ -2,9 +2,9 @@
     <div class="back">
       <h1>Back</h1>
       <label> Search</label>
-      <button v-for="exercise in exercises" :key="exercise.name">
-        {{exercise.name}}
-      </button>
+      <div v-for="exercise in exercises" :key="exercise.name">
+        <button>{{ exercise.name }}</button>
+      </div>
     </div>
   </template>
 

@@ -1,10 +1,10 @@
 <template>
     <div class="triceps">
-      <h1><button>Triceps</button></h1>
+      <h1>Triceps</h1>
       <label> Search</label>
-      <button v-for="exercise in exercises" :key="exercise.name">
-        {{exercise.name}}
-      </button>
+      <div v-for="exercise in exercises" :key="exercise.name">
+        <button>{{ exercise.name }}</button>
+      </div>
     </div>
   </template>
 
