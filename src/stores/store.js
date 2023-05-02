@@ -2,10 +2,9 @@ import {defineStore} from 'pinia'
 import muscleExercise from '../assets/muscleExercise';
 import { ref } from 'vue'
 
-export const usePostStore = defineStore('post', () => {
+export const usePostStore = defineStore('json', () => {
     const postList = ref([])
-    const currentPost = ref(null)
-    const error = ref(null)
+    const error = ref([])
    
     async function fetchMuscleExercise() {
         postList.value = muscleExercise
@@ -14,7 +13,6 @@ export const usePostStore = defineStore('post', () => {
 
     return {
         postList, 
-        currentPost, 
         error, 
         fetchMuscleExercise
     }

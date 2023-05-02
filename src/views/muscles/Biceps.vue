@@ -1,12 +1,27 @@
 <template>
     <div class="biceps">
       <h1>Biceps</h1>
+      <label> Search</label>
+      <button v-for="exercise in exercises" :key="exercise.name">
+        {{exercise.name}}
+      </button>
     </div>
   </template>
-  
-<script setup>
 
-  </script>
+<script setup>
+  import { usePostStore } from '@/stores/store.js'
+  import { onMounted, ref } from 'vue';
+
+  const json = usePostStore()
+  const exercises = ref([])
+
+  onMounted(async () => {
+        await json.fetchMuscleExercise()
+        exercises.value = json.postList.muscle[4].exercises
+      }
+      )
+
+</script>
 
   <style>
   @media (min-width: 1024px) {
