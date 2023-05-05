@@ -11,5 +11,5 @@ import {ExerciseList} from "@/components/Index.js";
 </script>
   
 <style>
+
 </style>
-  

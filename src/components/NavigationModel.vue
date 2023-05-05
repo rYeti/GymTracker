@@ -43,11 +43,11 @@
     color: orangered;
 }
 .logo{
-    width: 20%;
+    display: flex;
 }
 .logo img {
-    width: 20%;
+    width: 15%;
     height: 100%;
-    margin-left: 1rem;
+    margin-left: 0.5rem;
 }
 </style>

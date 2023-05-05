@@ -1,0 +1,1 @@
+export {default as weightsInput} from './WeightsInput.vue';
