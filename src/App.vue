@@ -6,8 +6,8 @@ import { NavigationModel } from "./components/Index.js";
 <template>
     <div class="app-container">
         <NavigationModel />
-        <div class="container">
-            <router-view />
+        <div class="container mx-auto">
+            <router-view class="mt-4" />
         </div>
     </div>
 </template>
@@ -20,11 +20,4 @@ import { NavigationModel } from "./components/Index.js";
   width: 100%;
  }
 
-  .container
-  {
-    max-width: auto;
-    margin: 1rem;
-    padding: 0.5rem 1rem;
-    background: black;
-  }
 </style>
