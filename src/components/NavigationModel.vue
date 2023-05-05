@@ -19,6 +19,7 @@
 </script>
 
 <style lang="scss" scoped>
+// styling for the navbar (with reference to https://css-tricks.com/snippets/css/a-guide-to-flexbox/#aa-flexbox-properties last accessed 05.05.2023)
 .navbar{
     display: flex;
     width: 100%;

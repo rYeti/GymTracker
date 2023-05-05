@@ -1,9 +1,9 @@
 <template>
     <input type="text" v-model="input" placeholder="Search..." />
     <div class="exerciseList">
-      <li class="exerciseItem" v-for="exercise in filterExercises()" :key="exercise.name">
+      <ul class="exerciseItem" v-for="exercise in filterExercises()" :key="exercise.name">
         <button class="button">{{ exercise.name }}</button>
-      </li>
+      </ul>
     </div>
 </template>
 
@@ -44,6 +44,8 @@ onMounted(async () => {
       }
     }
     )
+
+  // filter exercises with help from https://blog.logrocket.com/create-search-bar-vue/ last accessed 05.05.2023 
   let input = ref('');
   function filterExercises(){
     return exercises.value.filter((exercise) => {
