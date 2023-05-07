@@ -11,6 +11,9 @@
 <script setup>
 import {ExerciseList} from "@/components/Index.js";
 import WeightsInput from "@/views/weight/WeightsInput.vue";
+
+const exerciseListButton = ExerciseList
+ExerciseList.exerciseClick
 </script>
 
 <style>

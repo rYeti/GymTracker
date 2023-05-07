@@ -11,6 +11,11 @@ const router = createRouter({
       component: HomeView
     },
     {... MusclesRouter},
+    {
+      path: '/weightsinput',
+      name: 'weightsinput',
+      component: () => import('../views/weight/WeightsInput.vue')
+    }
   ]
 })
 

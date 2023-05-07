@@ -3,8 +3,11 @@
     <div class="flex">
     <div class="exerciseList">
       <ul class="exerciseItem" v-for="exercise in filterExercises()" :key="exercise.name">
-        <Button class="btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4" :class="{'btn--primary': primary}">{{ exercise.name }}</Button>
+        <Button @click="exerciseClick(exercise)" class="btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4" :class="{'btn--primary': primary}">{{ exercise.name }}</Button>
       </ul>
+    </div>
+    <div v-if="isClicked">
+      <WeightsInput/>
     </div>
   </div>
 </template>
@@ -19,6 +22,7 @@
       muscle: String
   })
 
+  const isClicked = false
   const primary = true
   const json = usePostStore()
   const exercises = ref([])
@@ -55,6 +59,17 @@
       return exercise.name.toLowerCase().includes(input.value.toLowerCase());
     });
   };
+
+const showWeightInput = (isClicked) => {
+  isClicked.value = true
+}
+
+const exerciseClick = (exercise) => {
+    console.log(exercise.name)
+    isClicked = true
+    return exercise.name
+  }
+
 
 </script>
 
