@@ -1,12 +1,11 @@
 <template>
-    <input class="search" type="text" v-model="input" placeholder="Search..." />
+    <input class="search " type="text" v-model="input" placeholder="Search..." />
     <div class="exerciseList">
       <ul class="exerciseItem" v-for="exercise in filterExercises()" :key="exercise.name">
-        <Button class="btn" :class="{'btn--primary': primary}">{{ exercise.name }}</Button>
+        <Button class="btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4" :class="{'btn--primary': primary}">{{ exercise.name }}</Button>
       </ul>
       <div class="weights">
-        <WeightsInput/> 
-        <router-link to="/" class="nav-item nav-link">Home</router-link>
+        <WeightsInput/>
       </div>
     </div>
 </template>
@@ -15,7 +14,7 @@
 
   import { usePostStore } from '@/stores/store.js';
   import { onMounted, ref } from 'vue';
-  // import { weightsInput } from '@/views/weight/index.js';
+  import WeightsInput from "@/views/weight/WeightsInput.vue";
 
   const muscle = defineProps({
       muscle: String
