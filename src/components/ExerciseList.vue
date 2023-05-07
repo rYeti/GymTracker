@@ -1,13 +1,12 @@
 <template>
     <input class="search " type="text" v-model="input" placeholder="Search..." />
+    <div class="flex">
     <div class="exerciseList">
       <ul class="exerciseItem" v-for="exercise in filterExercises()" :key="exercise.name">
         <Button class="btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4" :class="{'btn--primary': primary}">{{ exercise.name }}</Button>
       </ul>
-      <div class="weights">
-        <WeightsInput/>
-      </div>
     </div>
+  </div>
 </template>
 
 <script setup>
