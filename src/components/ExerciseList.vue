@@ -3,10 +3,11 @@
     <div class="flex">
     <div class="exerciseList">
       <ul class="exerciseItem" v-for="exercise in filterExercises()" :key="exercise.name">
-        <Button @click="exerciseClick(exercise)" class="btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4" :class="{'btn--primary': primary}">{{ exercise.name }}</Button>
+        <Button @click="exerciseClick(exercise)" class="btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4" >{{ exercise.name }}</Button>
       </ul>
     </div>
-    <div v-if="isClicked">
+    <div v-show="isClicked" class="show">
+      <label> {{ exerciseName }}</label>
       <WeightsInput/>
     </div>
   </div>
@@ -19,13 +20,17 @@
   import WeightsInput from "@/views/weight/WeightsInput.vue";
 
   const muscle = defineProps({
-      muscle: String
+      muscle: String,
+      warmUpSets: Array,
+      workingSets: Array,
+      warmUpReps: Array,
+      workingReps: Array,
   })
 
-  const isClicked = false
-  const primary = true
+  let isClicked = false
   const json = usePostStore()
   const exercises = ref([])
+  let exerciseName = ""
 
   onMounted(async () => {
         await json.fetchMuscleExercise()
@@ -65,9 +70,9 @@ const showWeightInput = (isClicked) => {
 }
 
 const exerciseClick = (exercise) => {
-    console.log(exercise.name)
     isClicked = true
-    return exercise.name
+    exerciseName = exercise.name
+    console.log(isClicked)
   }
 
 
