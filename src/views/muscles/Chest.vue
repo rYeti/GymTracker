@@ -4,12 +4,14 @@
       <h1>Chest</h1>
        <ExerciseList muscle="Chest"/>
     </div>
+    <div>
+      <weightsInput/>
+    </div>
   </div>
 </template>
 
 <script setup>
 import {ExerciseList} from "@/components/Index.js";
-
 </script>
 
 <style>
