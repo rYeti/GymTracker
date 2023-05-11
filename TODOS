@@ -1,0 +1,6 @@
+for stase management:
+1. Klick auf Übung macht neuen Eintrag in der UserState mit dem Excercise Namen + benötigten Feldern in currentEdit.
+2. Wenn CurrentEdit gesetzt zeig die Set Optionen an.
+3. Speichere die Sets in User.Chest
+4. Cleare den CurrentEdit
+5. Display oben was Eingetragen wurde in User.Chest
