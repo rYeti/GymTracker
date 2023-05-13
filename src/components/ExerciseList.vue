@@ -3,12 +3,11 @@
     <div class="flex">
     <div class="exerciseList">
       <ul class="exerciseItem" v-for="exercise in filterExercises()" :key="exercise.name">
-        <Button @click="exerciseClick(exercise)" class="btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4" >{{ exercise.name }}</Button>
+        <button @click="exerciseClick(exercise)" class="btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4" >{{ exercise.name }}</button>
       </ul>
     </div>
-    <div v-show="isClicked" class="show">
-      <label> {{ exerciseName }}</label>
-      <WeightsInput/>
+    <div v-for="selectedExercise in selectedExercises" :key="selectedExercise" class="show">
+      <WeightsInput v-model:selectedExercise="exerciseName"/>
     </div>
   </div>
 </template>
@@ -21,15 +20,13 @@
 
   const muscle = defineProps({
       muscle: String,
-      warmUpSets: Array,
-      workingSets: Array,
-      warmUpReps: Array,
-      workingReps: Array,
   })
 
-  let isClicked = false
   const json = usePostStore()
   const exercises = ref([])
+  // idee mit hilfe von chatGpt
+  const selectedExercises = ref([])
+  // const isClicked = ref(false)
   let exerciseName = ""
 
   onMounted(async () => {
@@ -65,16 +62,13 @@
     });
   };
 
-const showWeightInput = (isClicked) => {
-  isClicked.value = true
-}
-
-const exerciseClick = (exercise) => {
-    isClicked = true
-    exerciseName = exercise.name
-    console.log(isClicked)
-  }
-
+  const exerciseClick = (exercise) => {
+    exerciseName = exercise.name 
+    const existingExercise = selectedExercises.value.find((selected) => selected.name === exercise.name);
+    if (!existingExercise) {
+      selectedExercises.value.push({ exercise, weight: '' });
+    }
+  };
 
 </script>
 

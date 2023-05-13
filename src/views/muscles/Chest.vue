@@ -4,9 +4,6 @@
       <h1>Chest</h1>
        <ExerciseList muscle="Chest"/>
     </div>
-    <div>
-      <weightsInput/>
-    </div>
   </div>
 </template>
 
