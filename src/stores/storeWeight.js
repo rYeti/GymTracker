@@ -13,13 +13,13 @@ export const useWeightInputStore = defineStore('weightInput', () => {
     const selectedExercise = ref([]);
 
     function addWeightInput(workingSetWeight, workingRepsInput, warmUpSetsWeight, warmUpRepsInput, selectedExerciseInput) {
-        workingSets.value.push(workingSetWeight);
-        workingReps.value.push(workingRepsInput);
-        warmUpSets.value.push(warmUpSetsWeight);
-        warmUpReps.value.push(warmUpRepsInput);
-        selectedExercise.value.push(selectedExerciseInput);
+        workingSets.value = workingSetWeight;
+        workingReps.value  = workingRepsInput;
+        warmUpSets.value  = warmUpSetsWeight;
+        warmUpReps.value  = warmUpRepsInput;
+        selectedExercise.value  = selectedExerciseInput;
+        
     }
-
     return {
         workingSets,
         workingReps,
