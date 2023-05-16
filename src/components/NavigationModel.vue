@@ -25,7 +25,7 @@
     width: 100%;
     height: 4rem;
     justify-content: start;
-    background: rgb(36, 165, 75);
+    background: rgb(91, 154, 102);
 }
 .navbar-nav{
     display: flex;
@@ -39,9 +39,14 @@
     color: white;
     text-decoration: none;
 }
+
 .nav-item:hover{
-    color: orangered;
+    color: rgb(91, 154, 102);
+    background: #4510b7;
+    border-radius: 0.5rem;
+    transition: 0.5s;
 }
+
 .logo{
     display: flex;
 }

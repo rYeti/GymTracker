@@ -3,7 +3,7 @@
     <div class="flex">
     <div class="exerciseList">
       <ul class="exerciseItem" v-for="exercise in filterExercises()" :key="exercise.name">
-        <button @click="exerciseClick(exercise)" class="btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4" >{{ exercise.name }}</button>
+        <button @click="exerciseClick(exercise)" class="btn bg-secondary-button hover:bg-accent text-text font-bold py-2 px-4" >{{ exercise.name }}</button>
       </ul>
     </div>
     <div v-for="selectedExercise in selectedExercises" :key="selectedExercise" class="show">

@@ -4,7 +4,7 @@ import { NavigationModel } from "./components/Index.js";
 </script>
 
 <template>
-    <div class="app-containe">
+    <div class="app-container bg-background">
         <NavigationModel />
         <div class="container px-3 mx-auto">
             <router-view class="mt-4" />
