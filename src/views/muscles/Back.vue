@@ -1,5 +1,5 @@
 <template>
-    <div class="text-3xl font-bold underline text-blue-500">
+    <div class="text-white">
       <h1>Back</h1>
       <ExerciseList muscle="Back"/>
     </div>

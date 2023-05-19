@@ -1,10 +1,9 @@
 <template>
-  //TODO make view resposive on button click add
     <div class="w-2/3 mx-auto">
-      <div class="warmup-sets mt-12 w-2/3">
+      <div class="warmup-sets mt-2">
         <label>Warm-Up Sets</label>
         <button @click="warmUpAddSet()" 
-                class="add-btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded ml-5">
+                class="bg-accent hover:bg-primary-button text-white font-bold py-2 px-2 rounded ml-5">
                 Add
         </button>
         <div>
@@ -13,7 +12,8 @@
           <div class="ml-3">
             <input 
             v-model="weightInput.warmUpSetsWeight[warmUpSetCount]" 
-            type="number" class="mt-1 px-3 py-2 bg-black border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block rounded-md sm:text-sm focus:ring-1" 
+            type="number" 
+            class="mt-1 px-3 py-2 bg-black border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none block rounded-md sm:text-sm " 
             placeholder="Weight (kg)"
             onkeypress='return event.charCode >= 48 && event.charCode <= 57'/>
           </div>
@@ -22,7 +22,7 @@
             <input 
             v-model="weightInput.warmUpReps[warmUpSetCount]" 
             type="number" 
-            class="mt-1 px-3 py-2 bg-black border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block rounded-md sm:text-sm focus:ring-1" 
+            class="mt-1 px-3 py-2 bg-black border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none block rounded-md sm:text-sm " 
             placeholder="Reps"
             onkeypress='return event.charCode >= 48 && event.charCode <= 57'/>
           </div>
@@ -32,7 +32,7 @@
       <div class="working-set mt-5">
         <label>Working Sets</label>
         <button @click="workingAddSet()" 
-        class="add-btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded ml-7">
+        class="bg-accent hover:bg-primary-button text-white font-bold py-2 px-2 rounded ml-7">
         Add
       </button>
         
@@ -43,7 +43,7 @@
             <input
             v-model="weightInput.workingSetsWeight[workingSetCount]" 
             type="number" 
-            class="mt-1 py-2 bg-black border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block rounded-md sm:text-sm focus:ring-1" 
+            class="mt-1 px-3 py-2 bg-black border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none block rounded-md sm:text-sm " 
             placeholder="Weight (Kg)"
             onkeypress='return event.charCode >= 48 && event.charCode <= 57'/>
           </div>
@@ -51,7 +51,7 @@
           <div class="ml-3">
             <input v-model="weightInput.workingReps[workingSetCount]" 
             type="number" 
-            class="mt-1 px-3 py-2 bg-black border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block rounded-md sm:text-sm focus:ring-1" 
+            class="mt-1 px-3 py-2 bg-black border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none block rounded-md sm:text-sm " 
             placeholder="Reps"
             onkeypress='return event.charCode >= 48 && event.charCode <= 57'> <!-- https://stackoverflow.com/questions/66172698/textbox-which-accepts-only-numbers-in-vue-js -->
           </div>
@@ -63,7 +63,7 @@
 </template>
 
 <script setup>
-import { useWeightInputStore } from '@/stores/storeWeight';
+import { useWeightInputStore } from '@/stores/storeInput';
 
 const selectedExercise = defineProps({
   selectedExercise: String

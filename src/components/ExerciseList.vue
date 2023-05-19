@@ -1,9 +1,9 @@
 <template>
-    <input class="search " type="text" v-model="input" placeholder="Search..." />
+    <input class="search text-white font-bold py-2 px-2 rounded mt-5" type="text" v-model="input" placeholder="Search..." />
     <div class="flex">
     <div class="exerciseList">
       <ul class="exerciseItem" v-for="exercise in filterExercises()" :key="exercise.name">
-        <button @click="exerciseClick(exercise)" class="btn bg-secondary-button hover:bg-accent text-text font-bold py-2 px-4" >{{ exercise.name }}</button>
+        <button @click="exerciseClick(exercise)" class="btn bg-secondary-button hover:bg-accent text-white font-bold py-2 px-2 rounded" >{{ exercise.name }}</button>
       </ul>
     </div>
     <div v-for="selectedExercise in selectedExercises" :key="selectedExercise" class="show">

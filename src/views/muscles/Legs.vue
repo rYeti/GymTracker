@@ -1,5 +1,5 @@
 <template>
-    <div class="legs">
+    <div class="legs text-white">
       <h1>Legs</h1>
       <ExerciseList muscle="Legs"/>
     </div>

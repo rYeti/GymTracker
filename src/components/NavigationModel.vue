@@ -25,7 +25,7 @@
     width: 100%;
     height: 4rem;
     justify-content: start;
-    background: rgb(91, 154, 102);
+    background: #0a0e06;
 }
 .navbar-nav{
     display: flex;
@@ -36,15 +36,13 @@
 .nav-item{
     margin-left: 1rem;
     margin-right: 1rem;
-    color: white;
+    color: #e7f1df;
     text-decoration: none;
 }
 
 .nav-item:hover{
-    color: rgb(91, 154, 102);
-    background: #4510b7;
-    border-radius: 0.5rem;
-    transition: 0.5s;
+    // color: rgb(91, 154, 102);
+    color: #699f65
 }
 
 .logo{
