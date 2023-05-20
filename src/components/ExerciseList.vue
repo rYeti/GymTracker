@@ -1,20 +1,24 @@
 <template>
-    <input class="search text-white font-bold py-2 px-2 rounded mt-5" type="text" v-model="input" placeholder="Search..." />
+    <input class="search 
+    text-black py-2 px-2 rounded mt-5" 
+    v-model="input"
+    type="text" 
+    placeholder="Search..." />
     <div class="flex">
     <div class="exerciseList">
       <ul class="exerciseItem" v-for="exercise in filterExercises()" :key="exercise.name">
         <button @click="exerciseClick(exercise)" class="btn bg-secondary-button hover:bg-accent text-white font-bold py-2 px-2 rounded" >{{ exercise.name }}</button>
       </ul>
     </div>
-    <div v-for="selectedExercise in selectedExercises" :key="selectedExercise" class="show">
-      <WeightsInput v-model:selectedExercise="exerciseName"/>
+    <div v-if="selectedExercise">
+      <WeightsInput :selectedExercise="selectedExercise"></WeightsInput>
     </div>
   </div>
 </template>
 
 <script setup>
 
-  import { usePostStore } from '@/stores/store.js';
+  import { useExerciseStore } from '@/stores/storeExercise.js';
   import { onMounted, ref } from 'vue';
   import WeightsInput from "@/views/weight/WeightsInput.vue";
 
@@ -22,12 +26,9 @@
       muscle: String,
   })
 
-  const json = usePostStore()
+  const json = useExerciseStore()
   const exercises = ref([])
-  // idee mit hilfe von chatGpt
-  const selectedExercises = ref([])
-  // const isClicked = ref(false)
-  let exerciseName = ""
+  const selectedExercise = ref(null)
 
   onMounted(async () => {
         await json.fetchMuscleExercise()
@@ -63,12 +64,16 @@
   };
 
   const exerciseClick = (exercise) => {
-    exerciseName = exercise.name 
-    const existingExercise = selectedExercises.value.find((selected) => selected.name === exercise.name);
-    if (!existingExercise) {
-      selectedExercises.value.push({ exercise, weight: '' });
-    }
+    selectedExercise.value = exercise;
+    // const existingExercise = selectedExercises.value.find((selected) => selected.name === exercise.name);
+    // if (!existingExercise) {
+    // selectedExercises.value.push({ exercise, weight: '' });
+    // }
   };
+
+//   const selectedExercise = computed(() => {
+//   return selectedExercises.value.length > 0 ? selectedExercises.value[0] : null;
+// });
 
 </script>
 

@@ -6,6 +6,11 @@
                 class="bg-accent hover:bg-primary-button text-white font-bold py-2 px-2 rounded ml-5">
                 Add
         </button>
+        <button :disabled="!warmUpSetSmallerOne"
+                @click="removeWarmUpSet()"
+                class="bg-accent hover:bg-primary-button text-white font-bold py-2 px-2 rounded ml-5 disabled:opacity-25">
+                Remove
+        </button>
         <div>
           <div v-for="(warmUpSet, warmUpSetCount) in weightInput.warmUpSets" :key="warmUpSetCount" class="item flex justify-smart mt-1">
             {{ warmUpSet }}  
@@ -35,6 +40,11 @@
         class="bg-accent hover:bg-primary-button text-white font-bold py-2 px-2 rounded ml-7">
         Add
       </button>
+      <button :disabled="!setSmallerOne"
+                @click="removeWarmUpSet()"
+                class="bg-accent hover:bg-primary-button text-white font-bold py-2 px-2 rounded ml-5 disabled:opacity-25">
+                Remove
+        </button>
         
         <div>
           <div v-for="(workingset, workingSetCount) in weightInput.workingSets" :key="workingSetCount" class="item flex justify-smart mt-1">
@@ -64,12 +74,14 @@
 
 <script setup>
 import { useWeightInputStore } from '@/stores/storeInput';
+import { computed } from 'vue';
 
 const selectedExercise = defineProps({
   selectedExercise: String
 });
 
 const weightInput = useWeightInputStore();
+weightInput.selectedExercise = selectedExercise;
 
 const warmUpAddSet = () => { 
   const newWarmUpSet = {
@@ -86,6 +98,26 @@ const workingAddSet = () => {
   };
   weightInput.workingSets.push(newWorkingSet.content);
 };
+
+const removeWarmUpSet = () => {
+  weightInput.warmUpSets.pop();
+  weightInput.warmUpSetsWeight.pop();
+  weightInput.warmUpSetCount--;
+  };
+
+  const removeWorkingSet = () => {
+    weightInput.workingSets.pop();
+    weightInput.workingSetsWeight.pop();
+    weightInput.workingSetCount--;
+    };
+
+  const warmUpSetSmallerOne = computed(() => {
+    if (weightInput.warmUpSetCount < 1) {
+      return false;
+    } 
+    return true;
+  });
+  
 
 </script>
 

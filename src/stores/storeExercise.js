@@ -2,21 +2,21 @@ import {defineStore} from 'pinia'
 import muscleExercise from '../assets/muscleExercise';
 import { ref } from 'vue'
 
-export const usePostStore = defineStore('json', () => {
-    const postList = ref([])
+export const useExerciseStore = defineStore('json', () => {
+    const exerciseList = ref([])
     const error = ref([])
    
     async function fetchMuscleExercise() {
-        postList.value = muscleExercise
+        exerciseList.value = muscleExercise
         error.value = []
     }
 
     return {
-        postList, 
+        postList: exerciseList, 
         error, 
         fetchMuscleExercise
     }
     }   
 )
 
-export default usePostStore
+export default useExerciseStore

@@ -38,6 +38,7 @@
     margin-right: 1rem;
     color: #e7f1df;
     text-decoration: none;
+    font-size: 1.2rem;
 }
 
 .nav-item:hover{
