@@ -4,3 +4,13 @@ for stase management:
 3. Speichere die Sets in User.Chest
 4. Cleare den CurrentEdit
 5. Display oben was Eingetragen wurde in User.Chest
+
+In this rewritten example, we still use reactive to create the reactive inputValues object and ref to create the currentButton reference.
+
+The setCurrentButton function sets the value of currentButton to the ID of the button that was clicked.
+
+The saveInputValue function saves the input value for the current button in inputValues[currentButton.value].value.
+
+The rest of the code remains largely the same, with the buttons array being rendered using v-for, and the input field and value display being updated based on the currently selected button.
+
+With the Composition API, the reactive state and functions are defined within the setup function, providing a cleaner and more organized way to handle component logic.

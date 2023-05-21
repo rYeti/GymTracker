@@ -34,22 +34,22 @@
         await json.fetchMuscleExercise()
         switch (muscle.muscle) {
           case "Legs":
-              exercises.value = json.postList.muscle[0].exercises
+              exercises.value = json.exerciseList.muscle[0].exercises
               break;
           case "Back":
-              exercises.value = json.postList.muscle[1].exercises
+              exercises.value = json.exerciseList.muscle[1].exercises
               break;
           case "Chest":
-              exercises.value = json.postList.muscle[2].exercises
+              exercises.value = json.exerciseList.muscle[2].exercises
               break;
           case "Shoulder":
-              exercises.value = json.postList.muscle[3].exercises
+              exercises.value = json.exerciseList.muscle[3].exercises
               break;
           case "Biceps":
-              exercises.value = json.postList.muscle[4].exercises
+              exercises.value = json.exerciseList.muscle[4].exercises
               break;
           case "Triceps":
-              exercises.value = json.postList.muscle[5].exercises
+              exercises.value = json.exerciseList.muscle[5].exercises
               break;
         }
       }
@@ -65,15 +65,7 @@
 
   const exerciseClick = (exercise) => {
     selectedExercise.value = exercise;
-    // const existingExercise = selectedExercises.value.find((selected) => selected.name === exercise.name);
-    // if (!existingExercise) {
-    // selectedExercises.value.push({ exercise, weight: '' });
-    // }
   };
-
-//   const selectedExercise = computed(() => {
-//   return selectedExercises.value.length > 0 ? selectedExercises.value[0] : null;
-// });
 
 </script>
 

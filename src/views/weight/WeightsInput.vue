@@ -2,7 +2,7 @@
     <div class="w-2/3 mx-auto">
       <div class="warmup-sets mt-2">
         <label>Warm-Up Sets</label>
-        <button @click="warmUpAddSet()" 
+        <button @click="weightInput.addWarmUpSet(selectedExercise)" 
                 class="bg-accent hover:bg-primary-button text-white font-bold py-2 px-2 rounded ml-5">
                 Add
         </button>
@@ -12,11 +12,11 @@
                 Remove
         </button>
         <div>
-          <div v-for="(warmUpSet, warmUpSetCount) in weightInput.warmUpSets" :key="warmUpSetCount" class="item flex justify-smart mt-1">
+          <div v-for="(warmUpSet, warmUpSetCount) in weightInput.warmUpSets.warmUpSets" :key="warmUpSetCount" class="item flex justify-smart mt-1">
             {{ warmUpSet }}  
           <div class="ml-3">
             <input 
-            v-model="weightInput.warmUpSetsWeight[warmUpSetCount]" 
+            v-model="weightInput.warmUpSets.warmUpSetsWeight[warmUpSetCount]" 
             type="number" 
             class="mt-1 px-3 py-2 bg-black border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none block rounded-md sm:text-sm " 
             placeholder="Weight (kg)"
@@ -25,7 +25,7 @@
           <label class="ml-3 mt-2">Reps</label>
           <div class="ml-3">
             <input 
-            v-model="weightInput.warmUpReps[warmUpSetCount]" 
+            v-model="weightInput.warmUpSets.warmUpReps[warmUpSetCount]" 
             type="number" 
             class="mt-1 px-3 py-2 bg-black border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none block rounded-md sm:text-sm " 
             placeholder="Reps"
@@ -36,22 +36,22 @@
 
       <div class="working-set mt-5">
         <label>Working Sets</label>
-        <button @click="workingAddSet()" 
+        <button @click="weightInput.addWorkingSet(selectedExercise)" 
         class="bg-accent hover:bg-primary-button text-white font-bold py-2 px-2 rounded ml-7">
         Add
       </button>
-      <button :disabled="!setSmallerOne"
-                @click="removeWarmUpSet()"
+      <button :disabled="!workingSetSmallerOne"
+                @click="weightInput.removeWorkingSet(selectedExercise)"
                 class="bg-accent hover:bg-primary-button text-white font-bold py-2 px-2 rounded ml-5 disabled:opacity-25">
                 Remove
         </button>
         
         <div>
-          <div v-for="(workingset, workingSetCount) in weightInput.workingSets" :key="workingSetCount" class="item flex justify-smart mt-1">
+          <div v-for="(workingset, workingSetCount) in weightInput.workingSets.workingSets" :key="workingSetCount" class="item flex justify-smart mt-1">
             {{ workingset }}  
           <div class="ml-3">
             <input
-            v-model="weightInput.workingSetsWeight[workingSetCount]" 
+            v-model="weightInput.workingSets.workingSetsWeight[workingSetCount]" 
             type="number" 
             class="mt-1 px-3 py-2 bg-black border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none block rounded-md sm:text-sm " 
             placeholder="Weight (Kg)"
@@ -59,7 +59,7 @@
           </div>
           <label class="ml-3 mt-2">Reps</label>
           <div class="ml-3">
-            <input v-model="weightInput.workingReps[workingSetCount]" 
+            <input v-model="weightInput.workingSets.workingReps[workingSetCount]" 
             type="number" 
             class="mt-1 px-3 py-2 bg-black border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none block rounded-md sm:text-sm " 
             placeholder="Reps"
@@ -74,50 +74,56 @@
 
 <script setup>
 import { useWeightInputStore } from '@/stores/storeInput';
-import { computed } from 'vue';
+import { ref, computed } from 'vue';
 
 const selectedExercise = defineProps({
   selectedExercise: String
 });
 
 const weightInput = useWeightInputStore();
-weightInput.selectedExercise = selectedExercise;
+weightInput.selectedExercise = ref(selectedExercise.selectedExercise);
 
 const warmUpAddSet = () => { 
   const newWarmUpSet = {
-    id: weightInput.warmUpSetCount++,
-    content: weightInput.warmUpSetCount.toString().concat('. Set')
+    id: weightInput.sets.warmUpSetCount++,
+    content:weightInput.sets.warmUpSetCount.toString().concat('. Set'),
   };
-  weightInput.warmUpSets.push(newWarmUpSet.content);
+  weightInput.sets.warmUpSets.push(newWarmUpSet.content);
 };
 
 const workingAddSet = () => {   
   const newWorkingSet = {
-    id: weightInput.workingSetCount++,
-    content: weightInput.workingSetCount.toString().concat('. Set')
+    id: weightInput.sets.workingSetCount++,
+    content: weightInput.sets.workingSetCount.toString().concat('. Set'),
   };
-  weightInput.workingSets.push(newWorkingSet.content);
+  weightInput.sets.workingSets.push(newWorkingSet.content);
 };
 
 const removeWarmUpSet = () => {
-  weightInput.warmUpSets.pop();
-  weightInput.warmUpSetsWeight.pop();
-  weightInput.warmUpSetCount--;
+  weightInput.sets.warmUpSets.pop();
+  weightInput.sets.warmUpSetsWeight.pop();
+  weightInput.sets.warmUpSetCount--;
   };
 
   const removeWorkingSet = () => {
-    weightInput.workingSets.pop();
-    weightInput.workingSetsWeight.pop();
-    weightInput.workingSetCount--;
+    weightInput.sets.workingSets.pop();
+    weightInput.sets.workingSetsWeight.pop();
+    weightInput.sets.workingSetCount--;
     };
 
   const warmUpSetSmallerOne = computed(() => {
-    if (weightInput.warmUpSetCount < 1) {
+    if (weightInput.warmUpSets.warmUpSetCount < 1) {
       return false;
     } 
     return true;
   });
-  
+
+  const workingSetSmallerOne = computed(() => {
+    if (weightInput.workingSets.workingSetCount < 1) {
+      return false;
+    } 
+    return true;
+  });
 
 </script>
 
