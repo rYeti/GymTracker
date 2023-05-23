@@ -1,24 +1,30 @@
 import { defineStore } from 'pinia'
-import { useExerciseStore } from './storeExercise.js';
+import { reactive } from 'vue'
 
-//see https://stephanlangeveld.medium.com/simple-local-storage-implementation-using-vue-3-vueuse-and-pinia-with-zero-extra-lines-of-code-cb9ed2cce42a
 export const useWeightInputStore = defineStore(('weightInput'),{
-    state: () => ({
-        selectedExercise: "",
+    state: () => reactive ({
         workingSets: [
             {
-                // workingSets: [],
-                // workingReps: [],
-                // workingSetsWeight: [],
-                // workingSetCount: 0,
+                selectedExercise: '',
+                workingSet: [
+                    {
+                        workingReps: [],
+                        workingSetsWeight: []
+                    }
+                ],
+                workingSetCount: 0,
             }
         ],
         warmUpSets: [
             {
-                // warmUpSets: [],
-                // warmUpReps: [],
-                // warmUpSetsWeight: [],
-                // warmUpSetCount: 0,
+                selectedExercise: '',
+                warmUpSet: [
+                    {
+                        warmUpReps: [],
+                        warmUpSetsWeight: [],
+                    }
+                ],
+                warmUpSetCount: 0,
             }
         ],
     }),
@@ -29,14 +35,9 @@ export const useWeightInputStore = defineStore(('weightInput'),{
         removeWorkingSet(selectedExercise) {
             this.sets = this.sets.filter(e => {return e.selectedExercise !== selectedExercise})
         },
-        addWorkingSet(selectedExercise) {
-            this.workingSets.push({
-                selectedExercise: selectedExercise,
-                workingSets: [],
-                workingReps: [],
-                workingSetsWeight: [],
-                workingSetCount: this.workingSetCount++,
-            })
+        addWorkingSet(selectedExercise, workingSetCount, workingReps, workingSetsWeight){              
+            const neWworkingSet = {
+            }
         },
         addWarmUpSet(selectedExercise) {
             this.warmUpSets.push({
@@ -44,7 +45,7 @@ export const useWeightInputStore = defineStore(('weightInput'),{
                 warmUpSets: [],
                 warmUpReps: [],
                 warmUpSetsWeight: [],
-                warmUpSetCount: this.warmUpSetCount++,
+                warmUpSetCount: warmUpSetCount++,
             })
         }
     }
