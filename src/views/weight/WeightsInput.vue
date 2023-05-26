@@ -36,7 +36,7 @@
 
       <div class="working-set mt-5">
         <label>Working Sets</label>
-        <button @click="workingAddSet()" 
+        <button @click="addWorkingSet()" 
         class="bg-accent hover:bg-primary-button text-white font-bold py-2 px-2 rounded ml-7">
         Add
       </button>
@@ -47,11 +47,11 @@
         </button>
         
         <div>
-          <div v-for="(workingset, workingSetCount) in weightInput.workingSets.workingSets" :key="workingSetCount" class="item flex justify-smart mt-1">
-            {{ workingset }}  
+          <div v-for="(workingset, workingSetCount) in weightInput.workingSets" :key="workingSetCount" class="item flex justify-smart mt-1">
+            {{ workingset.content }}  
           <div class="ml-3">
             <input
-            v-model="weightInput.workingSets.workingSetsWeight.workingSetsWeight[workingSetCount]" 
+            v-model="weightInput.workingSets.workingSetsWeight[workingSetCount]" 
             type="number" 
             class="mt-1 px-3 py-2 bg-black border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none block rounded-md sm:text-sm " 
             placeholder="Weight (Kg)"
@@ -59,7 +59,7 @@
           </div>
           <label class="ml-3 mt-2">Reps</label>
           <div class="ml-3">
-            <input v-model="weightInput.workingSets.workingSets.workingReps[workingSetCount]" 
+            <input v-model="weightInput.workingSets.workingReps[workingSetCount]" 
             type="number" 
             class="mt-1 px-3 py-2 bg-black border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none block rounded-md sm:text-sm " 
             placeholder="Reps"
@@ -82,7 +82,10 @@ const selectedExercise = defineProps({
 
 const weightInput = useWeightInputStore();
 weightInput.selectedExercise = ref(selectedExercise.selectedExercise);
-let workingSetCount = ref(0);
+
+const addWorkingSet = () => {
+weightInput.addWorkingSet(selectedExercise.selectedExercise);
+}
 
 const warmUpAddSet = () => { 
   const newWarmUpSet = {
@@ -90,11 +93,7 @@ const warmUpAddSet = () => {
    content:weightInput.warmUpSets.warmUpSetCount.toString().concat('. Set'),
 
   };
-  weightInput.warmUpSets.push(newWarmUpSet.content);
-};
-
-const workingAddSet = () => {   
-  weightInput.workingSets.workingSetCount = ++workingSetCount;
+  weightInput.workingSetCount;
 };
 
 const removeWarmUpSet = () => {

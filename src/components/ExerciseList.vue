@@ -7,7 +7,7 @@
     <div class="flex">
     <div class="exerciseList">
       <ul class="exerciseItem" v-for="exercise in filterExercises()" :key="exercise.name">
-        <button @click="exerciseClick(exercise)" class="btn bg-secondary-button hover:bg-accent text-white font-bold py-2 px-2 rounded" >{{ exercise.name }}</button>
+        <button @click="exerciseClick(exercise); addSets()" class="btn bg-secondary-button hover:bg-accent text-white font-bold py-2 px-2 rounded" >{{ exercise.name }}</button>
       </ul>
     </div>
     <div v-if="selectedExercise">
@@ -21,12 +21,14 @@
   import { useExerciseStore } from '@/stores/storeExercise.js';
   import { onMounted, ref } from 'vue';
   import WeightsInput from "@/views/weight/WeightsInput.vue";
+  import { useWeightInputStore } from '@/stores/storeInput';
 
   const muscle = defineProps({
       muscle: String,
   })
 
   const json = useExerciseStore()
+  const weightInput = useWeightInputStore()
   const exercises = ref([])
   const selectedExercise = ref(null)
 
@@ -65,6 +67,10 @@
 
   const exerciseClick = (exercise) => {
     selectedExercise.value = exercise;
+  };
+
+  const addSets = () => {
+    weightInput.initInputs(selectedExercise.value);
   };
 
 </script>
