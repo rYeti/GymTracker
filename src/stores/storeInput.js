@@ -1,91 +1,91 @@
 import { defineStore } from 'pinia'
-import { reactive } from 'vue'
+// import { reactive } from 'vue'
+import { useLocalStorage } from '@vueuse/core'
 
-export const useWeightInputStore = defineStore(('weightInput'), {
-    state: () => reactive ({
-        workingSets: [
-            {
-                selectedExercise: '',
-                workingReps: [],
-                workingSetsWeight: [],
-                workingSetCount: 0,
-                /*
-                selectedExercise: '',
-                workingSet: [
-                    {
-                        workingReps: [],
-                        workingSetsWeight: []
-                    }
-                ],
-                workingSetReps: [],
-                workingSetWeight: [],
-                workingSetCount: 0,
-                */
-            }
-        ],
-        warmUpSets: [
-            {
-                selectedExercise: '',
-                warmUpReps: [],
-                warmUpSetsWeight: [],
-                warmUpSetCount: 0,
-                /*
-                selectedExercise: '',
-                warmUpSet: [
-                    {
-                        warmUpReps: [0,],
-                        warmUpSetsWeight: [0,],
-                    }
-                ],
-                warmUpSetReps: [],
-                warmUpSetWeight: [],
-                warmUpSetCount: 0,*/
-            }
-        ],
-    }),
-    getters: {
+export const useWeightInputStore = defineStore('weightInput', () => {
+    // localStorage https://vueuse.org/core/useLocalStorage/
+    const exercises = useLocalStorage('exercises', {});
     
-    },
-    actions: {
-        removeWorkingSet(selectedExercise) {
-            this.sets = this.sets.filter(e => {return e.selectedExercise !== selectedExercise})
-        },
-        addWorkingSet(selectedExercise) {              
-            const targetExercise = this.state.find(set => set.selectedExercise.name === selectedExercise);
-            if(targetExercise) {
-                targetExercise.warmUpReps.push([]);
-                targetExercise.warmUpSetsWeight.push([]);
-                targetExercise.warmUpSetCount++;
-            } else {
-                this.workingSets.push({
-                  selectedExercise,
-                  workingReps: [],
-                  workingSetsWeight: [],
-                  workingSetCount: 1,
-                })
-              }  
-        },
-        addWarmUpSet(selectedExercise) {
-            this.warmUpSets.push({
-                warmUpSets: [],
-                warmUpReps: [],
-                warmUpSetsWeight: [],
-                warmUpSetCount: warmUpSetCount++,
-            })
-        },
-        initInputs(selectedExercise) {
-            this.workingSets.push({
-                selectedExercise: selectedExercise,
+    function addWorkingSet(selectedExercise) {
+        if (!exercises.value[selectedExercise]) {
+            exercises.value[selectedExercise] = {
+              workingSet: [],
+            };
+            exercises.value[selectedExercise].workingSet.push({
                 workingSetReps: [],
-                workingSetsWeight: [],
-                workingSetCount: 1,
-            })
-            this.warmUpSets.push({
-                selectedExercise: selectedExercise,
-                warmUpReps: [],
-                warmUpSetsWeight: [],
-                warmUpSetCount: 1,
+                workingSetWeight: [],});
+          }
+          exercises.value[selectedExercise].workingSet.push({
+            workingSetReps: [],
+            workingSetWeight: [],
+          });
+    }
+
+    function addWarmUpSet(selectedExercise) {
+        if (!exercises.value[selectedExercise]) {
+            exercises.value[selectedExercise] = {
+                warmUpSet: [],
+            };
+            exercises.value[selectedExercise].warmUpSet.push({
+                warmSetReps: [],
+                warmSetWeight: [],});
+          }
+          exercises.value[selectedExercise].warmUpSet.push({
+            warmSetReps: [],
+            warmSetWeight: [],
+          });
+    }
+
+    function removeWorkingSet(selectedExercise) {
+        if(exercises.value[selectedExercise]) {
+            exercises.workingSet.pop({
+            workingSetReps: [],
+            workingSetsWeight: [],
             })
         }
     }
-})
+    
+    function removeWarmUpSet(selectedExercise) {
+        if(exercises.value[selectedExercise]) {
+            exercises.warmUpSet.pop({
+            warmUpSetReps: [],
+            warmUpSetsWeight: [],
+            })
+        }
+    }
+
+    function getWorkingSetCount(selectedExercise) {
+        if (exercises.value[selectedExercise]) {
+          return exercises.value[selectedExercise].workingSet.length;
+        }
+        return 0;
+      }
+    
+      function getWarmUpSetCount(selectedExercise) {
+        if (exercises.value[selectedExercise]) {
+          return exercises.value[selectedExercise].warmUpSet.length;
+        }
+        return 0;
+      }
+
+      function initSetsInputs(selectedExercise) {
+        if(!exercises.value[selectedExercise]) {
+            exercises.value[selectedExercise] = {
+                workingSet: [],
+                warmUpSet: [],
+              };
+            };
+        exercises.value[selectedExercise].workingSet.push({
+            workingSetReps: [],
+            workingSetWeight: [],
+          });
+          exercises.value[selectedExercise].warmUpSet.push({
+            warmSetReps: [],
+            warmSetWeight: [],
+          });
+    }     
+
+    return { exercises, addWorkingSet, removeWorkingSet, addWarmUpSet, removeWarmUpSet, getWorkingSetCount, getWarmUpSetCount, initSetsInputs }
+
+    }
+)

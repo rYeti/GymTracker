@@ -70,7 +70,7 @@
   };
 
   const addSets = () => {
-    weightInput.initInputs(selectedExercise.value);
+    weightInput.initSetsInputs(selectedExercise.value);
   };
 
 </script>
