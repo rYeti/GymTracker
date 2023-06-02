@@ -7,26 +7,24 @@
                 Add
         </button>
         <button :disabled="!warmUpSetSmallerOne"
-                @click="weightInpug.removeWarmUpSet()"
+                @click="weightInput.removeWarmUpSet()"
                 class="bg-accent hover:bg-primary-button text-white font-bold py-2 px-2 rounded ml-5 disabled:opacity-25">
                 Remove
         </button>
         <div>
-          <div v-for="(warmUpSet, warmUpSetCount) in weightInput.exercises.warmUpSets" :key="warmUpSetCount" class="item flex justify-smart mt-1">
-            {{ warmUpSet }}  
+          <div v-for="(warmUpSet, warmUpSetCount) in weightInput.exercises[selectedExercise].warmUpSet" :key="warmUpSetCount" class="item flex justify-smart mt-1">
+            <label class="break-normal"> {{ warmUpSetCount + 1 }}. Set</label>
           <div class="ml-3">
-            <label class="ml-3 mt-2"> {{ warmUpSetCount }}. Set</label>
             <input 
-            v-model="weightInput.exercises.warmUpSets.warmUpSetsWeight[warmUpSetCount]" 
+            v-model="warmUpSet.warmUpWeight" 
             type="number" 
             class="mt-1 px-3 py-2 bg-black border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none block rounded-md sm:text-sm " 
             placeholder="Weight (kg)"
             onkeypress='return event.charCode >= 48 && event.charCode <= 57'/>
           </div>
-          <label class="ml-3 mt-2">Reps</label>
           <div class="ml-3">
             <input 
-            v-model="weightInput.exercises.warmUpSets.warmUpSetReps[warmUpSetCount]" 
+            v-model="warmUpSet.warmUpReps" 
             type="number" 
             class="mt-1 px-3 py-2 bg-black border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none block rounded-md sm:text-sm " 
             placeholder="Reps"
@@ -48,20 +46,19 @@
         </button>
         
         <div>
-          <div v-for="(workingset, workingSetCount) in weightInput.exercises.workingSets" :key="workingSetCount" class="item flex justify-smart mt-1">
-            {{ workingset }}  
+          <div v-for="(workingset, workingSetCount) in weightInput.exercises[selectedExercise].workingSet" :key="workingSetCount" class="item flex justify-smart mt-1">
+            <label class=""> {{ workingSetCount + 1 }}. Set</label>
           <div class="ml-3">
             <input
-            v-model="weightInput.exercises.workingSets.workingSetsWeight[workingSetCount]" 
+            v-model="workingset.workingSetWeight"
             type="number" 
             class="mt-1 px-3 py-2 bg-black border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none block rounded-md sm:text-sm " 
             placeholder="Weight (Kg)"
             onkeypress='return event.charCode >= 48 && event.charCode <= 57'/>
           </div>
-          <label class="ml-3 mt-2">Reps</label>
           <div class="ml-3">
             <input 
-            v-model="weightInput.exercises.workingSets.workingSetReps[workingSetCount]" 
+            v-model="workingset.workingSetReps" 
             type="number" 
             class="mt-1 px-3 py-2 bg-black border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none block rounded-md sm:text-sm " 
             placeholder="Reps"
@@ -89,21 +86,11 @@ weightInput.selectedExercise = ref(selectedExercise.selectedExercise);
 // weightInput.addWorkingSet(selectedExercise.selectedExercise);}
 
   const warmUpSetSmallerOne = () =>  {
-    if (weightInput.getWarmUpSetCount < 1) {
-      return false;
-    } 
-    return true;
+    weightInput.getWarmUpSetCount <= 1 ? false : true;
   };
 
   const workingSetSmallerOne = () => {
-    if (weightInput.getWorkingSetCount < 1) {
-      return false;
-    } 
-    return true;
+    weightInput.getWorkingSetCount <= 1 ? false : true;
   };
 
 </script>
-
-<style> 
-
-</style>

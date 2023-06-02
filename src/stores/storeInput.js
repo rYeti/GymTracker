@@ -8,27 +8,19 @@ export const useWeightInputStore = defineStore('weightInput', () => {
     
     function addWorkingSet(selectedExercise) {
         if (!exercises.value[selectedExercise]) {
-            exercises.value[selectedExercise] = {
-              workingSet: [],
-            };
-            exercises.value[selectedExercise].workingSet.push({
-                workingSetReps: [],
-                workingSetWeight: [],});
+            return;
           }
           exercises.value[selectedExercise].workingSet.push({
             workingSetReps: [],
             workingSetWeight: [],
           });
+
+          console.log('Added working set:', exercises.value[selectedExercise]);
     }
 
     function addWarmUpSet(selectedExercise) {
-        if (!exercises.value[selectedExercise]) {
-            exercises.value[selectedExercise] = {
-                warmUpSet: [],
-            };
-            exercises.value[selectedExercise].warmUpSet.push({
-                warmSetReps: [],
-                warmSetWeight: [],});
+       if (!exercises.value[selectedExercise]) {
+           return;
           }
           exercises.value[selectedExercise].warmUpSet.push({
             warmSetReps: [],
@@ -37,35 +29,37 @@ export const useWeightInputStore = defineStore('weightInput', () => {
     }
 
     function removeWorkingSet(selectedExercise) {
-        if(exercises.value[selectedExercise]) {
-            exercises.workingSet.pop({
-            workingSetReps: [],
-            workingSetsWeight: [],
-            })
+        if(!exercises.value[selectedExercise]) {
+          return
         }
+        exercises.value[selectedExercise].workingSet.pop({
+          workingSetReps: [],
+          workingSetsWeight: [],
+        })
     }
     
     function removeWarmUpSet(selectedExercise) {
-        if(exercises.value[selectedExercise]) {
-            exercises.warmUpSet.pop({
-            warmUpSetReps: [],
-            warmUpSetsWeight: [],
-            })
+        if(!exercises.value[selectedExercise]) {
+          return;
         }
+        exercises.value[selectedExercise].workingSet.pop({
+          warmUpSetReps: [],
+          warmUpSetsWeight: [],
+        })
     }
 
     function getWorkingSetCount(selectedExercise) {
         if (exercises.value[selectedExercise]) {
           return exercises.value[selectedExercise].workingSet.length;
         }
-        return 0;
+        return 1;
       }
     
       function getWarmUpSetCount(selectedExercise) {
         if (exercises.value[selectedExercise]) {
           return exercises.value[selectedExercise].warmUpSet.length;
         }
-        return 0;
+        return 1;
       }
 
       function initSetsInputs(selectedExercise) {
@@ -74,7 +68,6 @@ export const useWeightInputStore = defineStore('weightInput', () => {
                 workingSet: [],
                 warmUpSet: [],
               };
-            };
         exercises.value[selectedExercise].workingSet.push({
             workingSetReps: [],
             workingSetWeight: [],
@@ -83,9 +76,18 @@ export const useWeightInputStore = defineStore('weightInput', () => {
             warmSetReps: [],
             warmSetWeight: [],
           });
-    }     
+        }
+      }     
 
-    return { exercises, addWorkingSet, removeWorkingSet, addWarmUpSet, removeWarmUpSet, getWorkingSetCount, getWarmUpSetCount, initSetsInputs }
+    return { 
+      exercises, 
+      addWorkingSet, 
+      removeWorkingSet, 
+      addWarmUpSet, 
+      removeWarmUpSet, 
+      getWorkingSetCount, 
+      getWarmUpSetCount, 
+      initSetsInputs }
 
     }
 )
