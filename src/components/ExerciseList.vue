@@ -7,7 +7,7 @@
     <div class="flex">
     <div class="exerciseList">
       <ul class="exerciseItem" v-for="exercise in filterExercises()" :key="exercise.name">
-        <button @click="exerciseClick(exercise); addSets()" class="btn bg-secondary-button hover:bg-accent text-white font-bold py-2 px-2 rounded" >{{ exercise.name }}</button>
+        <button @click="exerciseClick(exercise); initSetInput()" class="btn bg-secondary-button hover:bg-accent text-white font-bold py-2 px-2 rounded" >{{ exercise.name }}</button>
       </ul>
     </div>
     <div v-if="selectedExercise">
@@ -69,7 +69,7 @@
     selectedExercise.value = exercise;
   };
 
-  const addSets = () => {
+  const initSetInput = () => {
     weightInput.initSetsInputs(selectedExercise.value);
   };
 

@@ -1,19 +1,22 @@
 <template>
+
     <div class="w-2/3 mx-auto">
-      <div class="warmup-sets mt-2">
+      <div class="mt-2">
         <label>Warm-Up Sets</label>
         <button @click="weightInput.addWarmUpSet(selectedExercise)" 
                 class="bg-accent hover:bg-primary-button text-white font-bold py-2 px-2 rounded ml-5">
                 Add
         </button>
-        <button :disabled="!warmUpSetSmallerOne"
-                @click="weightInput.removeWarmUpSet()"
+        <!-- https://www.designcise.com/web/tutorial/how-to-conditionally-disable-a-button-in-vue-js -->
+        <button :disabled="weightInput.getWarmUpSetCount(selectedExercise) <= 1"
+                @click="weightInput.removeWarmUpSet(selectedExercise)"
                 class="bg-accent hover:bg-primary-button text-white font-bold py-2 px-2 rounded ml-5 disabled:opacity-25">
                 Remove
         </button>
-        <div>
-          <div v-for="(warmUpSet, warmUpSetCount) in weightInput.exercises[selectedExercise].warmUpSet" :key="warmUpSetCount" class="item flex justify-smart mt-1">
-            <label class="break-normal"> {{ warmUpSetCount + 1 }}. Set</label>
+        
+          <div v-for="(warmUpSet, warmUpSetCount) in weightInput.exercises[selectedExercise].warmUpSet" :key="warmUpSetCount" 
+          class="flex ml-2">
+          <label>Set {{ warmUpSetCount + 1 }}</label>
           <div class="ml-3">
             <input 
             v-model="warmUpSet.warmUpWeight" 
@@ -31,7 +34,7 @@
             onkeypress='return event.charCode >= 48 && event.charCode <= 57'/>
           </div>
         </div>  
-      </div>
+      
 
       <div class="working-set mt-5">
         <label>Working Sets</label>
@@ -39,7 +42,7 @@
                 class="bg-accent hover:bg-primary-button text-white font-bold py-2 px-2 rounded ml-7">
                 Add
       </button>
-      <button :disabled="!workingSetSmallerOne"
+      <button  :disabled="weightInput.getWorkingSetCount(selectedExercise) <= 1"
                 @click="weightInput.removeWorkingSet(selectedExercise)"
                 class="bg-accent hover:bg-primary-button text-white font-bold py-2 px-2 rounded ml-5 disabled:opacity-25">
                 Remove
@@ -69,6 +72,7 @@
       </div>
     </div>  
     </div>
+
 </template>
 
 <script setup>
@@ -81,16 +85,5 @@ const selectedExercise = defineProps({
 
 const weightInput = useWeightInputStore();
 weightInput.selectedExercise = ref(selectedExercise.selectedExercise);
-
-// const addWorkingSet = () => {
-// weightInput.addWorkingSet(selectedExercise.selectedExercise);}
-
-  const warmUpSetSmallerOne = () =>  {
-    weightInput.getWarmUpSetCount <= 1 ? false : true;
-  };
-
-  const workingSetSmallerOne = () => {
-    weightInput.getWorkingSetCount <= 1 ? false : true;
-  };
 
 </script>

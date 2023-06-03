@@ -42,7 +42,7 @@ export const useWeightInputStore = defineStore('weightInput', () => {
         if(!exercises.value[selectedExercise]) {
           return;
         }
-        exercises.value[selectedExercise].workingSet.pop({
+        exercises.value[selectedExercise].warmUpSet.pop({
           warmUpSetReps: [],
           warmUpSetsWeight: [],
         })
@@ -68,7 +68,7 @@ export const useWeightInputStore = defineStore('weightInput', () => {
                 workingSet: [],
                 warmUpSet: [],
               };
-        exercises.value[selectedExercise].workingSet.push({
+          exercises.value[selectedExercise].workingSet.push({
             workingSetReps: [],
             workingSetWeight: [],
           });
@@ -77,6 +77,7 @@ export const useWeightInputStore = defineStore('weightInput', () => {
             warmSetWeight: [],
           });
         }
+        console.log('Init sets inputs:', exercises.value[selectedExercise], selectedExercise);
       }     
 
     return { 
