@@ -1,83 +1,88 @@
 import { defineStore } from 'pinia'
-// import { reactive } from 'vue'
+import { ref } from 'vue'
 import { useLocalStorage } from '@vueuse/core'
 
 export const useWeightInputStore = defineStore('weightInput', () => {
     // localStorage https://vueuse.org/core/useLocalStorage/
-    const exercises = useLocalStorage('exercises', {});
+    const exercises = ref(useLocalStorage('exercises', {}));
     
-    function addWorkingSet(selectedExercise) {
-        if (!exercises.value[selectedExercise]) {
+    function addWorkingSet(muscle, selectedExercise) {
+        if (!exercises.value[muscle][selectedExercise]) {
             return;
           }
-          exercises.value[selectedExercise].workingSet.push({
+          exercises.value[muscle][selectedExercise].workingSet.push({
             workingSetReps: [],
             workingSetWeight: [],
           });
-
-          console.log('Added working set:', exercises.value[selectedExercise]);
     }
 
-    function addWarmUpSet(selectedExercise) {
-       if (!exercises.value[selectedExercise]) {
+    function addWarmUpSet(muscle, selectedExercise) {
+       if (!exercises.value[muscle][selectedExercise]) {
            return;
           }
-          exercises.value[selectedExercise].warmUpSet.push({
+          exercises.value[muscle][selectedExercise].warmUpSet.push({
             warmSetReps: [],
             warmSetWeight: [],
           });
     }
 
-    function removeWorkingSet(selectedExercise) {
-        if(!exercises.value[selectedExercise]) {
+    function removeWorkingSet(muscle, selectedExercise) {
+        if(!exercises.value[muscle][selectedExercise]) {
           return
         }
-        exercises.value[selectedExercise].workingSet.pop({
+        exercises.value[muscle][selectedExercise].workingSet.pop({
           workingSetReps: [],
           workingSetsWeight: [],
         })
     }
     
-    function removeWarmUpSet(selectedExercise) {
-        if(!exercises.value[selectedExercise]) {
+    function removeWarmUpSet(muscle, selectedExercise) {
+        if(!exercises.value[muscle][selectedExercise]) {
           return;
         }
-        exercises.value[selectedExercise].warmUpSet.pop({
+        exercises.value[muscle][selectedExercise].warmUpSet.pop({
           warmUpSetReps: [],
           warmUpSetsWeight: [],
         })
     }
 
-    function getWorkingSetCount(selectedExercise) {
-        if (exercises.value[selectedExercise]) {
-          return exercises.value[selectedExercise].workingSet.length;
+    function getWorkingSetCount(muscle, selectedExercise) {
+        if (exercises.value[muscle][selectedExercise]) {
+          return exercises.value[muscle][selectedExercise].workingSet.length;
         }
         return 1;
       }
     
-      function getWarmUpSetCount(selectedExercise) {
-        if (exercises.value[selectedExercise]) {
-          return exercises.value[selectedExercise].warmUpSet.length;
+      function getWarmUpSetCount(muscle, selectedExercise) {
+        if (exercises.value[muscle][selectedExercise]) {
+          return exercises.value[muscle][selectedExercise].warmUpSet.length;
         }
         return 1;
       }
 
-      function initSetsInputs(selectedExercise) {
-        if(!exercises.value[selectedExercise]) {
-            exercises.value[selectedExercise] = {
+      function initSetsInputs(muscle, selectedExercise) {
+        if(!exercises.value[muscle]) {
+          exercises.value[muscle] = {};
+        }
+
+        if(!exercises.value[muscle][selectedExercise]) {
+          exercises.value[muscle][selectedExercise] = {
                 workingSet: [],
                 warmUpSet: [],
               };
-          exercises.value[selectedExercise].workingSet.push({
+
+              exercises.value[muscle][selectedExercise].workingSet.push({
             workingSetReps: [],
             workingSetWeight: [],
           });
-          exercises.value[selectedExercise].warmUpSet.push({
+
+          exercises.value[muscle][selectedExercise].warmUpSet.push({
             warmSetReps: [],
             warmSetWeight: [],
           });
+
         }
-        console.log('Init sets inputs:', exercises.value[selectedExercise], selectedExercise);
+        console.log('Init sets inputs:', exercises.value[muscle][selectedExercise], selectedExercise);
       }     
 
     return { 

@@ -7,11 +7,11 @@
     <div class="flex">
     <div class="exerciseList">
       <ul class="exerciseItem" v-for="exercise in filterExercises()" :key="exercise.name">
-        <button @click="exerciseClick(exercise); initSetInput()" class="btn bg-secondary-button hover:bg-accent text-white font-bold py-2 px-2 rounded" >{{ exercise.name }}</button>
+        <button @click="exerciseClick(exercise); initSetInput()" :class="isActiveExericse(exercise.name)" >{{ exercise.name }}</button>
       </ul>
     </div>
     <div v-if="selectedExercise">
-      <WeightsInput :selectedExercise="selectedExercise"></WeightsInput>
+      <WeightsInput :muscle:="muscle" :selectedExerciseProp="selectedExercise"></WeightsInput>
     </div>
   </div>
 </template>
@@ -23,7 +23,7 @@
   import WeightsInput from "@/views/weight/WeightsInput.vue";
   import { useWeightInputStore } from '@/stores/storeInput';
 
-  const muscle = defineProps({
+  const props = defineProps({
       muscle: String,
   })
 
@@ -34,7 +34,7 @@
 
   onMounted(async () => {
         await json.fetchMuscleExercise()
-        switch (muscle.muscle) {
+        switch (props.muscle) {
           case "Legs":
               exercises.value = json.exerciseList.muscle[0].exercises
               break;
@@ -65,12 +65,16 @@
     });
   };
 
+  function isActiveExericse(exercise) {
+    return {'exercise-list-button-active': selectedExercise.value != exercise, 'exercise-list-button': selectedExercise.value == exercise}
+  }
+
   const exerciseClick = (exercise) => {
-    selectedExercise.value = exercise;
+    selectedExercise.value = exercise.name  ;
   };
 
   const initSetInput = () => {
-    weightInput.initSetsInputs(selectedExercise.value);
+    weightInput.initSetsInputs(props.muscle, selectedExercise.value);
   };
 
 </script>
@@ -110,6 +114,14 @@
     gap: 0.25rem;
     margin-top: 0.5rem;
     color: white;
-
 }
+
+.exercise-list-button {
+  @apply bg-secondary-button hover:bg-accent text-white font-bold py-2 px-4 rounded;
+}
+
+.exercise-list-button-active {
+  @apply bg-accent text-white font-bold py-2 px-4 rounded;
+}
+
 </style>

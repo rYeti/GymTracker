@@ -3,18 +3,18 @@
     <div class="w-2/3 mx-auto">
       <div class="mt-2">
         <label>Warm-Up Sets</label>
-        <button @click="weightInput.addWarmUpSet(selectedExercise)" 
+        <button @click="weightInput.addWarmUpSet(muslce, selectedExercise)" 
                 class="bg-accent hover:bg-primary-button text-white font-bold py-2 px-2 rounded ml-5">
                 Add
         </button>
         <!-- https://www.designcise.com/web/tutorial/how-to-conditionally-disable-a-button-in-vue-js -->
-        <button :disabled="weightInput.getWarmUpSetCount(selectedExercise) <= 1"
-                @click="weightInput.removeWarmUpSet(selectedExercise)"
+        <button :disabled="weightInput.getWarmUpSetCount(muslce, selectedExercisep) <= 1"
+                @click="weightInput.removeWarmUpSet(muslce, selectedExercise)"
                 class="bg-accent hover:bg-primary-button text-white font-bold py-2 px-2 rounded ml-5 disabled:opacity-25">
                 Remove
         </button>
         
-          <div v-for="(warmUpSet, warmUpSetCount) in weightInput.exercises[selectedExercise].warmUpSet" :key="warmUpSetCount" 
+          <div v-for="(warmUpSet, warmUpSetCount) in weightInput.exercises[muscle][selectedExerciseProp].warmUpSet" :key="warmUpSetCount" 
           class="flex ml-2">
           <label>Set {{ warmUpSetCount + 1 }}</label>
           <div class="ml-3">
@@ -35,21 +35,20 @@
           </div>
         </div>  
       
-
       <div class="working-set mt-5">
         <label>Working Sets</label>
-        <button @click="weightInput.addWorkingSet(selectedExercise.selectedExercise)" 
+        <button @click="weightInput.addWorkingSet(muslce, selectedExercise)" 
                 class="bg-accent hover:bg-primary-button text-white font-bold py-2 px-2 rounded ml-7">
                 Add
       </button>
-      <button  :disabled="weightInput.getWorkingSetCount(selectedExercise) <= 1"
-                @click="weightInput.removeWorkingSet(selectedExercise)"
+      <button  :disabled="weightInput.getWorkingSetCount(muslce, selectedExercise) <= 1"
+                @click="weightInput.removeWorkingSet(muslce, selectedExercise)"
                 class="bg-accent hover:bg-primary-button text-white font-bold py-2 px-2 rounded ml-5 disabled:opacity-25">
                 Remove
         </button>
         
         <div>
-          <div v-for="(workingset, workingSetCount) in weightInput.exercises[selectedExercise].workingSet" :key="workingSetCount" class="item flex justify-smart mt-1">
+          <div v-for="(workingset, workingSetCount) in weightInput.exercises[muscle][selectedExerciseProp].workingSet" :key="workingSetCount" class="item flex justify-smart mt-1">
             <label class=""> {{ workingSetCount + 1 }}. Set</label>
           <div class="ml-3">
             <input
@@ -79,11 +78,12 @@
 import { useWeightInputStore } from '@/stores/storeInput';
 import { ref } from 'vue';
 
-const selectedExercise = defineProps({
-  selectedExercise: String
+const props = defineProps({
+  muscle: String,
+  selectedExercise: String,
 });
 
 const weightInput = useWeightInputStore();
-weightInput.selectedExercise = ref(selectedExercise.selectedExercise);
+weightInput.selectedExercise = ref(props.selectedExercise);
 
 </script>
