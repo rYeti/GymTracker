@@ -1,10 +1,9 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
 import { useLocalStorage } from '@vueuse/core'
 
 export const useWeightInputStore = defineStore('weightInput', () => {
     // localStorage https://vueuse.org/core/useLocalStorage/
-    const exercises = ref(useLocalStorage('exercises', {}));
+    const exercises = useLocalStorage('exercises', {});
     
     function addWorkingSet(muscle, selectedExercise) {
         if (!exercises.value[muscle][selectedExercise]) {
@@ -61,17 +60,17 @@ export const useWeightInputStore = defineStore('weightInput', () => {
       }
 
       function initSetsInputs(muscle, selectedExercise) {
-        if(!exercises.value[muscle]) {
+        if (!exercises.value[muscle]) {
           exercises.value[muscle] = {};
         }
 
-        if(!exercises.value[muscle][selectedExercise]) {
+        if (!exercises.value[muscle][selectedExercise]) {
           exercises.value[muscle][selectedExercise] = {
-                workingSet: [],
-                warmUpSet: [],
-              };
+            workingSet: [],
+            warmUpSet: [],
+          };
 
-              exercises.value[muscle][selectedExercise].workingSet.push({
+          exercises.value[muscle][selectedExercise].workingSet.push({
             workingSetReps: [],
             workingSetWeight: [],
           });
@@ -80,10 +79,8 @@ export const useWeightInputStore = defineStore('weightInput', () => {
             warmSetReps: [],
             warmSetWeight: [],
           });
-
         }
-        console.log('Init sets inputs:', exercises.value[muscle][selectedExercise], selectedExercise);
-      }     
+      }
 
     return { 
       exercises, 
@@ -94,6 +91,5 @@ export const useWeightInputStore = defineStore('weightInput', () => {
       getWorkingSetCount, 
       getWarmUpSetCount, 
       initSetsInputs }
-
     }
 )

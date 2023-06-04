@@ -11,7 +11,7 @@
       </ul>
     </div>
     <div v-if="selectedExercise">
-      <WeightsInput :muscle:="muscle" :selectedExerciseProp="selectedExercise"></WeightsInput>
+      <WeightsInput :muscle="muscle" :selectedExercise="selectedExercise"></WeightsInput>
     </div>
   </div>
 </template>

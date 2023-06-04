@@ -1,7 +1,7 @@
 import {Back, Biceps, Chest, Legs, Shoulder, Triceps } from "../views/muscles/Index.js";
 
 export default {
-    path: '/muscles',
+    path: '/Muscles',
     children: [
         { path: 'legs', component: Legs },
         { path: 'back', component: Back },
