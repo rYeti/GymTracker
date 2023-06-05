@@ -1,17 +1,23 @@
 <template>
-    <input class="search 
+  <input @change="initSetInput()" class="search 
+    text-black py-2 px-2 rounded mt-5 w-full"  type="date" v-model="exerciseDate">
+  <div class="flex">
+    <div class="">
+  <input class="search 
     text-black py-2 px-2 rounded mt-5" 
-    v-model="input"
+    v-model="search"
     type="text" 
-    placeholder="Search..." />
-    <div class="flex">
-    <div class="exerciseList">
-      <ul class="exerciseItem" v-for="exercise in filterExercises()" :key="exercise.name">
-        <button @click="exerciseClick(exercise); initSetInput()" :class="isActiveExericse(exercise.name)" >{{ exercise.name }}</button>
-      </ul>
+    placeholder="Search..."/>
+    <div v-bind="containerProps" class="" style="witdh: 25%; height: 500px;">
+      <div v-bind="wrapperProps">
+      <div class="" v-for="exercise in list" :key="exercise.data.name">
+        <button style="height: 38px;" @click="exerciseClick(exercise.data); initSetInput()" :class="isActiveExericse(exercise.data.name)" >{{ exercise.data.name }}</button>
+      </div>
     </div>
-    <div v-if="selectedExercise">
-      <WeightsInput :muscle="muscle" :selectedExercise="selectedExercise"></WeightsInput>
+  </div>
+</div>
+<div v-if="selectedExercise">
+      <WeightsInput :muscle="muscle" :selectedExercise="selectedExercise" :exericseDate="exerciseDate"></WeightsInput>
     </div>
   </div>
 </template>
@@ -19,18 +25,22 @@
 <script setup>
 
   import { useExerciseStore } from '@/stores/storeExercise.js';
-  import { onMounted, ref } from 'vue';
+  import { computed, onMounted, ref } from 'vue';
   import WeightsInput from "@/views/weight/WeightsInput.vue";
   import { useWeightInputStore } from '@/stores/storeInput';
+  import { useVirtualList } from '@vueuse/core'
+  import dayjs from 'dayjs';
 
   const props = defineProps({
       muscle: String,
   })
 
+  const search = ref('');
   const json = useExerciseStore()
   const weightInput = useWeightInputStore()
   const exercises = ref([])
   const selectedExercise = ref(null)
+  const exerciseDate = ref(dayjs().format('YYYY-MM-DD'));
 
   onMounted(async () => {
         await json.fetchMuscleExercise()
@@ -57,13 +67,17 @@
       }
     )
 
-  // filter exercises with help from https://blog.logrocket.com/create-search-bar-vue/ last accessed 05.05.2023 
-  let input = ref('');
-  function filterExercises(){
-    return exercises.value.filter((exercise) => {
-      return exercise.name.toLowerCase().includes(input.value.toLowerCase());
-    });
-  };
+  const filterExericse = computed(() => {
+     return exercises.value.filter(e => (e.name.toLowerCase()).includes(search.value.toLowerCase()));
+   });
+
+  // https://vueuse.org/core/useVirtualList/#usage
+  const { list, containerProps, wrapperProps } = useVirtualList(
+    filterExericse,
+    {
+      itemHeight: 38,
+    },
+  )
 
   function isActiveExericse(exercise) {
     return {'exercise-list-button-active': selectedExercise.value != exercise, 'exercise-list-button': selectedExercise.value == exercise}
@@ -74,7 +88,8 @@
   };
 
   const initSetInput = () => {
-    weightInput.initSetsInputs(props.muscle, selectedExercise.value);
+    console.log(exerciseDate.value)
+    weightInput.initSetsInputs(exerciseDate.value, props.muscle, selectedExercise.value);
   };
 
 </script>
@@ -117,11 +132,11 @@
 }
 
 .exercise-list-button {
-  @apply bg-secondary-button hover:bg-accent text-white font-bold py-2 px-4 rounded;
+  @apply bg-accent text-white font-bold py-2 px-4 rounded;
 }
 
 .exercise-list-button-active {
-  @apply bg-accent text-white font-bold py-2 px-4 rounded;
+  @apply bg-secondary-button hover:bg-accent text-white font-bold py-2 px-4 rounded;
 }
 
 </style>
