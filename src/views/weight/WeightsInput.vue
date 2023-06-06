@@ -77,13 +77,12 @@
 
 <script setup>
 import { useWeightInputStore } from '@/stores/storeInput';
-import { ref } from 'vue';
-import dayjs from 'dayjs';
+
 
 const props = defineProps({
-muscle: String,
-selectedExercise: String,
-exericseDate: String,
+muscle: Object,
+selectedExercise: Object,
+exericseDate: Object,
 });
 
 const weightInput = useWeightInputStore();

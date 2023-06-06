@@ -32,7 +32,7 @@
   import dayjs from 'dayjs';
 
   const props = defineProps({
-      muscle: String,
+      muscle: Object,
   })
 
   const search = ref('');
