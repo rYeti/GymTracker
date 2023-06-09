@@ -2,3 +2,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.primary-button {
+    @apply bg-primary-button-500 hover:bg-primary-button-400 text-white font-bold rounded;
+  }
+  
+.primary-button-active {
+    @apply bg-primary-button-700 hover:bg-primary-button-400 text-white font-bold rounded;
+  }
+
+  .primary-button-medium {
+    @apply my-1 mx-1 py-2 px-4
+  }
+
+  .primary-button-small {
+    @apply my-1 mx-1 py-1 px-2
+  }

@@ -8,9 +8,9 @@
     v-model="search"
     type="text" 
     placeholder="Search..."/>
-    <div v-bind="containerProps" class="" style="witdh: 25%; height: 500px;">
+    <div v-bind="containerProps" class="" style="min-width: 350px; height: 500px;">
       <div v-bind="wrapperProps">
-      <div class="" v-for="exercise in list" :key="exercise.data.name">
+      <div class="min-w-full" v-for="exercise in list" :key="exercise.data.name">
         <button style="height: 38px;" @click="exerciseClick(exercise.data); initSetInput()" :class="isActiveExericse(exercise.data.name)" >{{ exercise.data.name }}</button>
       </div>
     </div>
@@ -76,11 +76,12 @@
     filterExericse,
     {
       itemHeight: 38,
+      itemWidth: 40,
     },
   )
 
   function isActiveExericse(exercise) {
-    return {'exercise-list-button-active': selectedExercise.value != exercise, 'exercise-list-button': selectedExercise.value == exercise}
+    return {'primary-button w-full primary-button-medium': selectedExercise.value != exercise, 'primary-button-active w-full primary-button-medium': selectedExercise.value == exercise}
   }
 
   const exerciseClick = (exercise) => {
@@ -131,12 +132,5 @@
     color: white;
 }
 
-.exercise-list-button {
-  @apply bg-accent text-white font-bold py-2 px-4 rounded;
-}
-
-.exercise-list-button-active {
-  @apply bg-secondary-button hover:bg-accent text-white font-bold py-2 px-4 rounded;
-}
 
 </style>

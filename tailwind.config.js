@@ -7,13 +7,25 @@ export default {
   theme: {
     extend: {
       colors: {
-        'primary-button':'#5b9a66',
+        // 'primary-button':'#5b9a66',
         // 'secondary-button':'#0d1406',
         'secondary-button':'#699f65',
-        'background':'#131d0c',
+        'background':'#4F5873',
         'text': '#e7f1df',
         'accent': '#361f47',
         'accent2': '#63992e',
+        'primary-button': {
+          '50': '#dafee8',
+          '100': '#b8fad3',
+          '200': '#80f5b2',
+          '300': '#42e689',
+          '400': '#17bf60',
+          '500': '#0eab52',
+          '600': '#0f8643',
+          '700': '#126939',
+          '800': '#105731',
+      },
+      
       }
     },
   },

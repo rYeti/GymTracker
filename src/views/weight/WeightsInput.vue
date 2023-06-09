@@ -1,22 +1,31 @@
 <template>
 
-  <div class="w-2/3 mx-auto">
+  <div class="w-full m-16">
     <div class="mt-2">
-      <label>Warm-Up Sets</label>
-      <button @click="weightInput.addWarmUpSet(exericseDate, muscle, selectedExercise)"
-              class="bg-accent hover:bg-primary-button text-white font-bold py-2 px-2 rounded ml-5">
-              Add
-      </button>
-      <!-- https://www.designcise.com/web/tutorial/how-to-conditionally-disable-a-button-in-vue-js -->
-      <button :disabled="weightInput.getWarmUpSetCount(exericseDate, muscle, selectedExercise) <= 1"
-              @click="weightInput.removeWarmUpSet(exericseDate, muscle, selectedExercise)"
-              class="bg-accent hover:bg-primary-button text-white font-bold py-2 px-2 rounded ml-5 mb-2 disabled:opacity-25">
-              Remove
-      </button>
+      <div class="flex justify-end items-center w-[78%]">
+        <div class="w-1/3 mb-2">
+          <div class="inline mr-4 font-extrabold text-base">Warm-Up Sets</div>
+        </div>
+        <div class="w-2/3 mb-2 flex justify-end">
+          <button @click="weightInput.addWarmUpSet(exericseDate, muscle, selectedExercise)"
+                class="primary-button primary-button-small">
+                Add
+        </button>
+        <!-- https://www.designcise.com/web/tutorial/how-to-conditionally-disable-a-button-in-vue-js -->
+        <button :disabled="weightInput.getWarmUpSetCount(exericseDate, muscle, selectedExercise) <= 1"
+                @click="weightInput.removeWarmUpSet(exericseDate, muscle, selectedExercise)"
+                class="primary-button primary-button-small">
+                Remove
+        </button>
+        </div>
+        
+        
+      </div>
+      
       
         <div v-for="(warmUpSet, warmUpSetCount) in weightInput.exercises[exericseDate][muscle][selectedExercise].warmUpSet" :key="warmUpSetCount"
-             class="flex ml-2">
-        <label>Set {{ warmUpSetCount + 1 }}</label>
+             class="flex justify-start">
+        <div class="inline mr-1 whitespace-nowrap py-2">Set {{ warmUpSetCount + 1 }}</div>
         <div class="ml-3">
           <input 
           v-model="warmUpSet.warmUpWeight" 
@@ -36,21 +45,21 @@
       </div>  
     
     <div class="working-set mt-5">
-      <label>Working Sets</label>
+      <div class="inline mr-4 font-extrabold text-base">Working Sets</div>
       <button @click="weightInput.addWorkingSet(exericseDate, muscle, selectedExercise)"
-              class="bg-accent hover:bg-primary-button text-white font-bold py-2 px-2 rounded ml-7">
+              class="primary-button primary-button-small">
               Add
     </button>
     <button  :disabled="weightInput.getWorkingSetCount(exericseDate, muscle, selectedExercise) <= 1"
               @click="weightInput.removeWorkingSet(exericseDate, muscle, selectedExercise)"
-              class="bg-accent hover:bg-primary-button text-white font-bold py-2 px-2 rounded ml-5 mb-2 disabled:opacity-25">
+              class="primary-button primary-button-small disabled:opacity-25">
               Remove
       </button>
       
       <div>
         <div v-for="(workingset, workingSetCount) in weightInput.exercises[exericseDate][muscle][selectedExercise].workingSet" :key="workingSetCount" 
              class="flex ml-2">
-          <label class="">Set {{ workingSetCount + 1 }}</label>
+          <div class="inline mr-1 whitespace-nowrap py-2">Set {{ workingSetCount + 1 }}</div>
         <div class="ml-3">
           <input
           v-model="workingset.workingSetWeight"
