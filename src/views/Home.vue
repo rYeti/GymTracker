@@ -1,44 +1,145 @@
 <template>
-<div>
-    <label>{{ legs }}</label>
-</div>
-<div class="" type="date"></div>
+    <div>
+        <input @input="getExercises(dateFrom)" v-model="dateFrom" type="date">
+    </div>
+    <div>
+        <input @input="getExercises(dateTo)" v-model="dateTo" type="date">
+    </div>
+    
+    <div class="" v-for="muscleGroup in muscleGroups" :key="muscleGroup.name">
+    <h3>{{ muscleGroup.name }}</h3>
+    <div v-for="exercise in muscleGroup.exercises" :key="exercise">
+      <h4>{{ exercise }}</h4>
+      <div v-for="set in getSetsByMuscleExercise(dateFrom, muscleGroup.name, exercise)" :key="set">
+        <div>
+          <div>
+            {{ getLastWorkingSetWeight(dateFrom, muscleGroup.name, exercise, set) }} 
+          </div>
+          <div>          
+          {{ getLastWorkingSetWeight(dateTo, muscleGroup.name, exercise, set) }}
+          </div>
+        </div>
+        <div>
+          <div>
+            {{ getLastWorkingSetReps(dateFrom, muscleGroup.name, exercise, set) }} 
+          </div>
+          <div>          
+          {{ getLastWorkingSetReps(dateTo, muscleGroup.name, set) }}
+          </div>
+        </div>
+      
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
-import { useExerciseStore } from '@/stores/storeExercise.js';
-import { objectEntries } from '@vueuse/core';
 import { ref } from 'vue';
+import { useWeightInputStore } from '@/stores/storeInput';
 
-const exercises = useExerciseStore();
-let date = new Date();
-let data = new Object();
-let muscle = '';
-let exercise = '';
-let set = '';
+const exercises = useWeightInputStore();
+let muscles = [];
+let kgCalc = 'test';
+let repCalc = 'test';
 
-const legs = 'Legs'
+const muscleGroups = [
+  { name: 'Legs', exercises: [] },
+  { name: 'Back', exercises: [] },
+  { name: 'Chest', exercises: [] },
+  { name: 'Shoulders', exercises: [] },
+  { name: 'Biceps', exercises: [] },
+  { name: 'Triceps', exercises: [] }
+];
+const dateFrom = ref('');
+const dateTo = ref('');
 
-const local = localStorage;
+function getExercises(date) {  
+    resetMuscleGroups();
 
-Object.keys(local).forEach(function(key) {
-    data = JSON.parse(local[key]);
-    // console.log(data)
-})
+    if(!exercises.exercises[date]) return;
+    const muscle = exercises.exercises[date];
+    goThoughMuscle(date, muscle)
+}
 
-Object.keys(data).forEach(function(key) {
-    console.log(data[key])
-    muscle = data[key]
-})
+// function getExercisesDateTo() {
+//     resetMuscleGroups();
 
-Object.keys(muscle[key2]).forEach(function(key3) {
-    exercise = data[key2][key3]
-    console.log(exercise)
-})
+//     if(!exercises.exercises[dateTo.value]) return;
+//     const muscle = exercises.exercises[dateTo.value];
+//     goThoughMuscle(muscle)
+// }
 
-Object.keys(exercise).forEach(function(key4) {
-    set = exercise[key4]
-    console.log(set)
-})
+function goThoughMuscle(date, muscle) {
+    muscles = Object.keys(muscle);
+
+    for (const muscleName of muscles) {
+        const muscleIndex = muscleGroups.findIndex((group) => group.name === muscleName);
+        if (muscleIndex !== -1) {
+        const exercises = getExercisesByMuscle(date, muscleName);
+        muscleGroups[muscleIndex].exercises = exercises;
+        }
+    }
+}
+
+
+function resetMuscleGroups() {
+  for (const group of muscleGroups) {
+    group.exercises = [];
+  }
+}
+
+function getExercisesByMuscle(date, muscle) {
+    if (exercises.exercises[date] && exercises.exercises[date][muscle]) {
+    return Object.keys(exercises.exercises[date][muscle]);
+  }
+  return [];
+}
+
+function getSetsByMuscleExercise(date, muscle, exercise) {
+  if (
+    exercises.exercises[date] &&
+    exercises.exercises[date][muscle] &&
+    exercises.exercises[date][muscle][exercise]
+  ) {
+    return Object.keys(exercises.exercises[date][muscle][exercise]);
+  }
+  return [];
+}
+
+function getLastWorkingSetWeight(date, muscle, exercise, set) {
+  if (
+    exercises.exercises[date] &&
+    exercises.exercises[date][muscle] &&
+    exercises.exercises[date][muscle][exercise] &&
+    exercises.exercises[date][muscle][exercise][set]
+  ) {
+    const workingSet = exercises.exercises[date][muscle][exercise][set];
+    const lastWorkingSet = workingSet[workingSet.length - 1];
+    return lastWorkingSet.workingSetWeight;
+  }
+  return '';
+}
+
+function getLastWorkingSetReps(date, muscle, exercise, set) {
+  if (
+    exercises.exercises[date] &&
+    exercises.exercises[date][muscle] &&
+    exercises.exercises[date][muscle][exercise] &&
+    exercises.exercises[date][muscle][exercise][set]
+  ) {
+    const workingSet = exercises.exercises[date][muscle][exercise][set];
+    const lastWorkingSet = workingSet[workingSet.length - 1];
+    return lastWorkingSet.workingSetReps;
+  }
+  return '';
+}
+
+function calculateKgDifferencInProcent(kgFromDate, kgToDate) {
+    return kgFromDate / kgToDate * 100;
+}
+
+function claculateRepsDifferencInProcent(repsFromDate, repsToDate) {
+    return repsFromDate / repsToDate * 100;
+}
 
 </script>

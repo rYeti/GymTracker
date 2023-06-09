@@ -1,5 +1,5 @@
 <template>
-  <input @change="initSetInput()" class="search 
+  <input  class="search 
     text-black py-2 px-2 rounded mt-5 w-full"  type="date" v-model="exerciseDate">
   <div class="flex">
     <div class="">
