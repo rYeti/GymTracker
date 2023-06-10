@@ -1,25 +1,38 @@
 <template>
-  <div class="flex justify-end">
-  <div class="w-1/2">
+  <div class="flex">
+  <div class="mr-4">
       <input @input="getExercises(dateFrom)" v-model="dateFrom" type="date" class="text-black font-semibold py-2 px-2 rounded mt-5 mb-1">
   </div>
-  <div class="w-1/2">
+  <div class="">
       <input @input="getExercises(dateTo)" v-model="dateTo" type="date" class="text-black font-semibold py-2 px-2 rounded mt-5 mb-1">
   </div>
   </div>
   <div class="" v-for="muscleGroup in muscleGroups" :key="muscleGroup.name">
-  <div class="font-bold mt-2 text-lg text-black bg-primary-button-500" style="max-width: 60%;">{{ muscleGroup.name }}</div>
-  <div v-for="exercise in muscleGroup.exercises" :key="exercise">
+  <div class="font-bold mt-2 text-lg text-black bg-primary-button-500" style="max-width: 35%;">{{ muscleGroup.name }}</div>
+  <div class="ml-5" v-for="exercise in muscleGroup.exercises" :key="exercise">
     <h2 class="font-bold mt-4">{{ exercise }}</h2>
-    <div v-for="set in getSetsByMuscleExercise(dateFrom, muscleGroup.name, exercise)" :key="set">
+    <div class="w-1/3 flex">
+    <div class="mr-7 flex justify-start" v-for="set in getSetsByMuscleExercise(dateFrom, muscleGroup.name, exercise)" :key="set">
       <div>
         <div>
           <label> 
             {{ getLastWorkingSet(dateFrom, muscleGroup.name, exercise, set) }} KG 
           </label>
-          <label class="text-green-600 mr-3">
-            {{ calculateKgDifferencInProcent(getLastWorkingSet(dateFrom, muscleGroup.name, exercise, set), getLastWorkingSet(dateTo, muscleGroup.name, exercise, set)) }}
-          </label>
+        </div>
+        <div>
+        </div>
+        <div>    
+          <div>
+            <label>
+              {{ getLastWorkingSetReps(dateFrom, muscleGroup.name, exercise, set) }} Reps     
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="w-1/3 flex justify-center" v-for="set in getSetsByMuscleExercise(dateTo, muscleGroup.name, exercise)" :key="set">
+      <div>
+        <div>
           <label>
             {{ getLastWorkingSet(dateTo, muscleGroup.name, exercise, set) }} KG
           </label>
@@ -29,18 +42,25 @@
         <div>    
           <div>
             <label>
-              {{ sets.workingSetReps }} Reps     
-            </label>
-            <label class="text-green-600 mr-3">
-              {{  claculateRepsDifferencInProcent(getLastWorkingSet(dateFrom, muscleGroup.name, exercise, set), getLastWorkingSet(dateTo, muscleGroup.name, exercise, set)) }}
-            </label>
-            <label>
-              {{ getLastWorkingSet(dateTo, muscleGroup.name, exercise, set) }} Reps
+              {{ getLastWorkingSetReps(dateTo, muscleGroup.name, exercise, set) }} Reps
             </label>
           </div>
         </div>
       </div>
     </div>
+    <div class="ml-6" v-for="set in getSetsByMuscleExercise(dateFrom, muscleGroup.name, exercise)" :key="set">
+      <div >
+        <div class="" :class="isNegative(calcKg)">
+            {{ calculateKgDifferencInProcent(getLastWorkingSet(dateFrom, muscleGroup.name, exercise, set), getLastWorkingSet(dateTo, muscleGroup.name, exercise, set)) }}
+        </div>
+      </div>
+      <div>
+        <label class="" :class="isNegativeReps(calcReps)">
+              {{  claculateRepsDifferencInProcent(getLastWorkingSetReps(dateFrom, muscleGroup.name, exercise, set), getLastWorkingSetReps(dateTo, muscleGroup.name, exercise, set)) }}
+        </label>
+      </div>
+    </div>
+  </div>
   </div>
 </div>
 </template>
@@ -51,6 +71,8 @@ import { useWeightInputStore } from '@/stores/storeInput';
 
 const exercises = useWeightInputStore();
 let muscles = [];
+let dateFromWorkingSets = [];
+let dateToWorkingSets = [];
 let calcKg = 0;
 let calcReps = 0;
 let sets = []
@@ -101,58 +123,72 @@ return [];
 }
 
 function getSetsByMuscleExercise(date, muscle, exercise) {
-if (
-  exercises.exercises[date] &&
-  exercises.exercises[date][muscle] &&
-  exercises.exercises[date][muscle][exercise]
-) {
-  const muscleExercise = Object.keys(exercises.exercises[date][muscle][exercise]);
-  muscleExercise.pop();
-  console.log(muscleExercise);
-  return muscleExercise;
-}
-return [];
+  if (
+    exercises.exercises[date] &&
+    exercises.exercises[date][muscle] &&
+    exercises.exercises[date][muscle][exercise]
+  ) {
+    const muscleExercise = Object.keys(exercises.exercises[date][muscle][exercise]);
+    muscleExercise.pop();
+    console.log(muscleExercise);
+    return muscleExercise;
+  }
+  return [];
 }
 //TODO refactor duplicate code
 function getLastWorkingSet(date, muscle, exercise, set) {
-if (
-  exercises.exercises[date] &&
-  exercises.exercises[date][muscle] &&
-  exercises.exercises[date][muscle][exercise] &&
-  exercises.exercises[date][muscle][exercise][set]
-) {
-  const workingSet = exercises.exercises[date][muscle][exercise][set];
-  const lastWorkingSet = workingSet[workingSet.length - 1];
-  sets = lastWorkingSet;
-  console.log(sets);
-  return lastWorkingSet;
-}
-return;
+  if (
+    exercises.exercises[date] &&
+    exercises.exercises[date][muscle] &&
+    exercises.exercises[date][muscle][exercise] &&
+    exercises.exercises[date][muscle][exercise][set]
+  ) {
+    const workingSet = exercises.exercises[date][muscle][exercise][set];
+    const lastWorkingSet = workingSet[workingSet.length - 1];
+    if(workingSet[date] === dateFrom) {
+      dateFromWorkingSets.push(lastWorkingSet.workingSetWeight);
+    } else {
+      dateToWorkingSets.push(lastWorkingSet.workingSetWeight);
+    }
+    return lastWorkingSet.workingSetWeight;
+  }
+  return;
 }
 
 function getLastWorkingSetReps(date, muscle, exercise, set) {
-if (
-  exercises.exercises[date] &&
-  exercises.exercises[date][muscle] &&
-  exercises.exercises[date][muscle][exercise] &&
-  exercises.exercises[date][muscle][exercise][set]
-) {
-  const workingSet = exercises.exercises[date][muscle][exercise][set];
-  const lastWorkingSet = workingSet[workingSet.length - 1];
-
-  return lastWorkingSet;
-}
-return;
+  if (
+    exercises.exercises[date] &&
+    exercises.exercises[date][muscle] &&
+    exercises.exercises[date][muscle][exercise] &&
+    exercises.exercises[date][muscle][exercise][set]
+  ) {
+    const workingSet = exercises.exercises[date][muscle][exercise][set];
+    const lastWorkingSet = workingSet[workingSet.length - 1];
+    if(workingSet[date] === dateFrom) {
+      dateFromWorkingSets.push(lastWorkingSet.workingSetWeight);
+    } else {
+      dateToWorkingSets.push(lastWorkingSet.workingSetWeight);
+    }
+    return lastWorkingSet.workingSetReps;
+  }
+  return;
 }
 
 function calculateKgDifferencInProcent(kgFromDate, kgToDate) {
-calcKg = parseFloat(100 - kgFromDate / kgToDate * 100).toFixed(2);
-return calcKg;
+  return calcKg = parseFloat(100 - kgFromDate / kgToDate * 100).toFixed(2);;
 }
 
 function claculateRepsDifferencInProcent(repsFromDate, repsToDate) {
-calcReps = parseFloat(100 - repsFromDate / repsToDate * 100).toFixed(2);
-return calcReps;
+
+  return calcReps = parseFloat(100 - repsFromDate / repsToDate * 100).toFixed(2);;
+}
+
+function isNegative(value) {
+  return { 'positive-line': value >= 0, 'negative-line': value < 0 };
+}
+
+function isNegativeReps(value) {
+  return { 'positive-line': value >= 0, 'negative-line': value < 0 };
 }
 
 </script>

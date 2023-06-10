@@ -25,6 +25,8 @@ export default {
           '700': '#126939',
           '800': '#105731',
       },
+      'negative-line': '#FF0000',
+      'positive-line': '#0eab52',
       
       }
     },
