@@ -1,15 +1,19 @@
 <template>
-  <input  class="search 
-    text-black py-2 px-2 rounded mt-5 w-full"  type="date" v-model="exerciseDate">
   <div class="flex">
-    <div class="">
-  <input class="search 
-    text-black py-2 px-2 rounded mt-5" 
+  <div>
+  <input  
+    class="text-black font-semibold py-2 px-2 rounded"  
+    type="date" 
+    v-model="exerciseDate" 
+    style="width: 100%;">
+  <input style="width: 100%;" 
+    class="search text-black font-semibold py-2 px-2 rounded mt-5 mb-1" 
     v-model="search"
     type="text" 
-    placeholder="Search..."/>
-    <div v-bind="containerProps" class="" style="min-width: 350px; height: 500px;">
-      <div v-bind="wrapperProps">
+    placeholder="Search..."
+    />
+    <div v-bind="containerProps" class="" style="min-width: 400px; height: 500px;">
+      <div v-bind="wrapperProps" style="min-w: w-full">
       <div class="min-w-full" v-for="exercise in list" :key="exercise.data.name">
         <button style="height: 38px;" @click="exerciseClick(exercise.data); initSetInput()" :class="isActiveExericse(exercise.data.name)" >{{ exercise.data.name }}</button>
       </div>
@@ -76,7 +80,7 @@
     filterExericse,
     {
       itemHeight: 38,
-      itemWidth: 40,
+      // itemWidth: 400,
     },
   )
 

@@ -14,15 +14,11 @@
         <!-- https://www.designcise.com/web/tutorial/how-to-conditionally-disable-a-button-in-vue-js -->
         <button :disabled="weightInput.getWarmUpSetCount(exericseDate, muscle, selectedExercise) <= 1"
                 @click="weightInput.removeWarmUpSet(exericseDate, muscle, selectedExercise)"
-                class="primary-button primary-button-small">
+                class="primary-button primary-button-small disabled:opacity-25">
                 Remove
         </button>
         </div>
-        
-        
       </div>
-      
-      
         <div v-for="(warmUpSet, warmUpSetCount) in weightInput.exercises[exericseDate][muscle][selectedExercise].warmUpSet" :key="warmUpSetCount"
              class="flex justify-start">
         <div class="inline mr-1 whitespace-nowrap py-2">Set {{ warmUpSetCount + 1 }}</div>
@@ -45,7 +41,11 @@
       </div>  
     
     <div class="working-set mt-5">
+      <div class="flex justify-end items-center w-[78%]">
+        <div class="w-1/3 mb-2">
       <div class="inline mr-4 font-extrabold text-base">Working Sets</div>
+      </div>
+      <div class="w-2/3 mb-2 flex justify-end">
       <button @click="weightInput.addWorkingSet(exericseDate, muscle, selectedExercise)"
               class="primary-button primary-button-small">
               Add
@@ -55,10 +55,11 @@
               class="primary-button primary-button-small disabled:opacity-25">
               Remove
       </button>
-      
+      </div>
+      </div>
       <div>
         <div v-for="(workingset, workingSetCount) in weightInput.exercises[exericseDate][muscle][selectedExercise].workingSet" :key="workingSetCount" 
-             class="flex ml-2">
+        class="flex justify-start">
           <div class="inline mr-1 whitespace-nowrap py-2">Set {{ workingSetCount + 1 }}</div>
         <div class="ml-3">
           <input

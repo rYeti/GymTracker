@@ -1,7 +1,7 @@
 <template>
   <div class="text-white">
-    <div class="w-1/2">
-      <h1>Chest</h1>
+    <div class="">
+      <h1></h1>
        <ExerciseList muscle="Chest"/>
     </div>
   </div>

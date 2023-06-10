@@ -1,6 +1,6 @@
 <template>
     <div class="triceps text-white ">
-      <h1>Triceps</h1>
+      <h1></h1>
       <ExerciseList muscle="Triceps"/>
     </div>
   </template>

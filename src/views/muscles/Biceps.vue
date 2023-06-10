@@ -1,6 +1,6 @@
 <template>
     <div class="biceps text-text">
-      <h1>Biceps</h1>
+      <h1></h1>
       <ExerciseList muscle="Biceps"/>
     </div>
   </template>

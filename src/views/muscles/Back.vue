@@ -1,6 +1,6 @@
 <template>
-    <div class="text-white">
-      <h1>Back</h1>
+    <div class="">
+      <h1></h1>
       <ExerciseList muscle="Back"/>
     </div>
   </template>

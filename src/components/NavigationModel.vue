@@ -27,13 +27,13 @@
     justify-content: start;
     background: #0a0e06;
 }
-.navbar-nav{
+.navbar-nav {
     display: flex;
     width: 100%;
     justify-content: start;
     align-items: center;
 }
-.nav-item{
+.nav-item {
     margin-left: 1rem;
     margin-right: 1rem;
     color: #e7f1df;
@@ -41,12 +41,15 @@
     font-size: 1.2rem;
 }
 
-.nav-item:hover{
-    // color: rgb(91, 154, 102);
+.nav-item:hover {
     color: #699f65
 }
 
-.logo{
+.active-link {
+    color: #699f65;
+}
+
+.logo {
     display: flex;
 }
 .logo img {

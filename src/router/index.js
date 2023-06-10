@@ -4,6 +4,7 @@ import MusclesRouter from './muscle.js';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
+  linkActiveClass: 'active-link',
   routes: [
     {
       path: '/',
