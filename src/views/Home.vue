@@ -50,8 +50,9 @@
     </div>
     <div class="ml-6" v-for="set in getSetsByMuscleExercise(dateFrom, muscleGroup.name, exercise)" :key="set">
       <div >
-        <div class="" :class="isNegative(calcKg)">
-            {{ calculateKgDifferencInProcent(getLastWorkingSet(dateFrom, muscleGroup.name, exercise, set), getLastWorkingSet(dateTo, muscleGroup.name, exercise, set)) }}
+        <div class="">
+          {{ calculateKgDifferencInProcent(getLastWorkingSet(dateFrom, muscleGroup.name, exercise, set), getLastWorkingSet(dateTo, muscleGroup.name, exercise, set)) }}
+          <Bar :data="data" :options="config" />
         </div>
       </div>
       <div>
@@ -68,14 +69,74 @@
 <script setup>
 import { ref } from 'vue';
 import { useWeightInputStore } from '@/stores/storeInput';
+import { Bar } from 'vue-chartjs';
+import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
+ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 
 const exercises = useWeightInputStore();
 let muscles = [];
 let dateFromWorkingSets = [];
 let dateToWorkingSets = [];
-let calcKg = 0;
-let calcReps = 0;
-let sets = []
+const calcKg = ref(0);
+const calcReps = ref(0);
+
+const chartData = ref({
+  labels: ['%'],
+  datasets: [
+    {
+      axis: 'y',
+      backgroundColor: '#0eab52',
+      data: [10],
+    },
+  ],
+})
+
+const chartOptions = ref({
+  responsive: true,
+  maintainAspectRatio: true,
+  type: 'bar',
+  chartData,
+  options: {
+    indexAxis: 'x',
+  }
+})
+
+const data = {
+  labels: [1, 2, 3, 4, 5],
+  datasets: [{
+    axis: 'x',
+    label: 'My First Dataset',
+    data: [65, 59, 80, 81, 56, 55, 40],
+    fill: false,
+    backgroundColor: [
+      'rgba(255, 99, 132, 0.2)',
+      'rgba(255, 159, 64, 0.2)',
+      'rgba(255, 205, 86, 0.2)',
+      'rgba(75, 192, 192, 0.2)',
+      'rgba(54, 162, 235, 0.2)',
+      'rgba(153, 102, 255, 0.2)',
+      'rgba(201, 203, 207, 0.2)'
+    ],
+    borderColor: [
+      'rgb(255, 99, 132)',
+      'rgb(255, 159, 64)',
+      'rgb(255, 205, 86)',
+      'rgb(75, 192, 192)',
+      'rgb(54, 162, 235)',
+      'rgb(153, 102, 255)',
+      'rgb(201, 203, 207)'
+    ],
+    borderWidth: 1
+  }]
+};
+
+const config = {
+  type: 'bar',
+  data,
+  options: {
+    indexAxis: 'y',
+  }
+};
 
 const muscleGroups = [
 { name: 'Legs', exercises: [] },
@@ -175,12 +236,11 @@ function getLastWorkingSetReps(date, muscle, exercise, set) {
 }
 
 function calculateKgDifferencInProcent(kgFromDate, kgToDate) {
-  return calcKg = parseFloat(100 - kgFromDate / kgToDate * 100).toFixed(2);;
+  return calcKg.value = parseFloat(100 - kgFromDate / kgToDate * 100).toFixed(2);;
 }
 
 function claculateRepsDifferencInProcent(repsFromDate, repsToDate) {
-
-  return calcReps = parseFloat(100 - repsFromDate / repsToDate * 100).toFixed(2);;
+  return calcReps.value = parseFloat(100 - repsFromDate / repsToDate * 100).toFixed(2);;
 }
 
 function isNegative(value) {
