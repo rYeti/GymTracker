@@ -52,14 +52,16 @@
       <div >
         <div class="">
           {{ calculateKgDifferencInProcent(getLastWorkingSet(dateFrom, muscleGroup.name, exercise, set), getLastWorkingSet(dateTo, muscleGroup.name, exercise, set)) }}
-          <Bar :data="data" :options="config" />
         </div>
       </div>
       <div>
-        <label class="" :class="isNegativeReps(calcReps)">
-              {{  claculateRepsDifferencInProcent(getLastWorkingSetReps(dateFrom, muscleGroup.name, exercise, set), getLastWorkingSetReps(dateTo, muscleGroup.name, exercise, set)) }}
+        <label class="">
+          {{  claculateRepsDifferencInProcent(getLastWorkingSetReps(dateFrom, muscleGroup.name, exercise, set), getLastWorkingSetReps(dateTo, muscleGroup.name, exercise, set)) }}
         </label>
       </div>
+    </div>
+    <div class="w-1/3 ml-7">
+      <Line :data="data" :options="config" />
     </div>
   </div>
   </div>
@@ -67,77 +69,18 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { useWeightInputStore } from '@/stores/storeInput';
-import { Bar } from 'vue-chartjs';
-import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
-ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
+import { Line } from 'vue-chartjs';
+import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement } from 'chart.js';
+ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement);
 
 const exercises = useWeightInputStore();
 let muscles = [];
-let dateFromWorkingSets = [];
-let dateToWorkingSets = [];
+
 const calcKg = ref(0);
 const calcReps = ref(0);
-
-const chartData = ref({
-  labels: ['%'],
-  datasets: [
-    {
-      axis: 'y',
-      backgroundColor: '#0eab52',
-      data: [10],
-    },
-  ],
-})
-
-const chartOptions = ref({
-  responsive: true,
-  maintainAspectRatio: true,
-  type: 'bar',
-  chartData,
-  options: {
-    indexAxis: 'x',
-  }
-})
-
-const data = {
-  labels: [1, 2, 3, 4, 5],
-  datasets: [{
-    axis: 'x',
-    label: 'My First Dataset',
-    data: [65, 59, 80, 81, 56, 55, 40],
-    fill: false,
-    backgroundColor: [
-      'rgba(255, 99, 132, 0.2)',
-      'rgba(255, 159, 64, 0.2)',
-      'rgba(255, 205, 86, 0.2)',
-      'rgba(75, 192, 192, 0.2)',
-      'rgba(54, 162, 235, 0.2)',
-      'rgba(153, 102, 255, 0.2)',
-      'rgba(201, 203, 207, 0.2)'
-    ],
-    borderColor: [
-      'rgb(255, 99, 132)',
-      'rgb(255, 159, 64)',
-      'rgb(255, 205, 86)',
-      'rgb(75, 192, 192)',
-      'rgb(54, 162, 235)',
-      'rgb(153, 102, 255)',
-      'rgb(201, 203, 207)'
-    ],
-    borderWidth: 1
-  }]
-};
-
-const config = {
-  type: 'bar',
-  data,
-  options: {
-    indexAxis: 'y',
-  }
-};
-
+const lastWorkingSet = ref([]);
 const muscleGroups = [
 { name: 'Legs', exercises: [] },
 { name: 'Back', exercises: [] },
@@ -146,9 +89,60 @@ const muscleGroups = [
 { name: 'Biceps', exercises: [] },
 { name: 'Triceps', exercises: [] }
 ];
-
 const dateFrom = ref('');
 const dateTo = ref('');
+const dateFromWorkingSetsWeight = ref([]);
+const dateToWorkingSetsWeight = ref([]);
+const dateFromWorkingSetsReps = ref([]);
+const dateToWorkingSetsReps = ref([]);
+
+const data = {
+  datasets: [{
+    label: 'KG difference',
+    data: {
+      dateFrom: dateFromWorkingSetsWeight.value,
+      dateTo: dateToWorkingSetsWeight.value,
+    },
+    fill: true,
+    borderColor: 'rgb(75, 192, 192)',
+  },
+  {
+    label: 'Reps difference',
+    data: [dateFromWorkingSetsReps.value, dateToWorkingSetsReps.value],
+    /*{
+      
+      RepFrom: dateFromWorkingSetsReps.value,
+      RepTo: dateToWorkingSetsReps.value,
+    },
+    */
+    fill: true,
+    borderColor: 'green',
+  }]
+};
+
+const config = {
+  type: 'line',
+  data: data,
+  chartOptions: {
+        responsive: true
+      }
+};
+
+watch([dateFromWorkingSetsWeight, dateToWorkingSetsWeight, dateFromWorkingSetsReps, dateToWorkingSetsReps], ([newWeightFrom, newWeightTo, newRepsFrom, newRepsTo]) => {
+  const newDateset = {
+    label: 'rep difference',
+    data:[newRepsFrom, newRepsTo],
+    borderColor: 'green',
+  }
+  data.datasets.forEach((dataset) => {
+    dataset.data.dateFrom = newWeightFrom;
+    dataset.data.dateTo = newWeightTo;
+
+    data.datasets.push(newDateset);
+    // dataset.data.RepFrom = newRepsFrom;
+    // dataset.data.RepTo = newRepsTo;
+  });
+});
 
 function getExercises(date) {  
   resetMuscleGroups();
@@ -164,21 +158,21 @@ function goThoughMuscle(date, muscle) {
   for (const muscleName of muscles) {
       const muscleIndex = muscleGroups.findIndex((group) => group.name === muscleName);
       if (muscleIndex !== -1) {
-      const exercises = getExercisesByMuscle(date, muscleName);
-      muscleGroups[muscleIndex].exercises = exercises;
+        const exercises = getExercisesByMuscle(date, muscleName);
+        muscleGroups[muscleIndex].exercises = exercises;
       }
   }
 }
 
 function resetMuscleGroups() {
-for (const group of muscleGroups) {
-  group.exercises = [];
+  for (const group of muscleGroups) {
+    group.exercises = [];
   }
 }
 
 function getExercisesByMuscle(date, muscle) {
   if (exercises.exercises[date] && exercises.exercises[date][muscle]) {
-  return Object.keys(exercises.exercises[date][muscle]);
+    return Object.keys(exercises.exercises[date][muscle]);
   }
 return [];
 }
@@ -191,7 +185,6 @@ function getSetsByMuscleExercise(date, muscle, exercise) {
   ) {
     const muscleExercise = Object.keys(exercises.exercises[date][muscle][exercise]);
     muscleExercise.pop();
-    console.log(muscleExercise);
     return muscleExercise;
   }
   return [];
@@ -205,13 +198,13 @@ function getLastWorkingSet(date, muscle, exercise, set) {
     exercises.exercises[date][muscle][exercise][set]
   ) {
     const workingSet = exercises.exercises[date][muscle][exercise][set];
-    const lastWorkingSet = workingSet[workingSet.length - 1];
-    if(workingSet[date] === dateFrom) {
-      dateFromWorkingSets.push(lastWorkingSet.workingSetWeight);
+    lastWorkingSet.value = workingSet[workingSet.length - 1];
+    if(date === dateFrom.value) {
+      dateFromWorkingSetsWeight.value = lastWorkingSet.value.workingSetWeight;
     } else {
-      dateToWorkingSets.push(lastWorkingSet.workingSetWeight);
+      dateToWorkingSetsWeight.value = lastWorkingSet.value.workingSetWeight;
     }
-    return lastWorkingSet.workingSetWeight;
+    return lastWorkingSet.value.workingSetWeight;
   }
   return;
 }
@@ -224,31 +217,23 @@ function getLastWorkingSetReps(date, muscle, exercise, set) {
     exercises.exercises[date][muscle][exercise][set]
   ) {
     const workingSet = exercises.exercises[date][muscle][exercise][set];
-    const lastWorkingSet = workingSet[workingSet.length - 1];
-    if(workingSet[date] === dateFrom) {
-      dateFromWorkingSets.push(lastWorkingSet.workingSetWeight);
+    lastWorkingSet.value = workingSet[workingSet.length - 1];
+    if(date === dateFrom.value) {
+      dateFromWorkingSetsReps.value = lastWorkingSet.value.workingSetReps;
     } else {
-      dateToWorkingSets.push(lastWorkingSet.workingSetWeight);
+      dateToWorkingSetsReps.value = lastWorkingSet.value.workingSetReps;
     }
-    return lastWorkingSet.workingSetReps;
+    return lastWorkingSet.value.workingSetReps;
   }
   return;
 }
 
 function calculateKgDifferencInProcent(kgFromDate, kgToDate) {
-  return calcKg.value = parseFloat(100 - kgFromDate / kgToDate * 100).toFixed(2);;
+  return calcKg.value = parseFloat(100 - kgFromDate / kgToDate * 100).toFixed(2);
 }
 
 function claculateRepsDifferencInProcent(repsFromDate, repsToDate) {
-  return calcReps.value = parseFloat(100 - repsFromDate / repsToDate * 100).toFixed(2);;
-}
-
-function isNegative(value) {
-  return { 'positive-line': value >= 0, 'negative-line': value < 0 };
-}
-
-function isNegativeReps(value) {
-  return { 'positive-line': value >= 0, 'negative-line': value < 0 };
+  return calcReps.value = parseFloat(100 - repsFromDate / repsToDate * 100).toFixed(2);
 }
 
 </script>

@@ -27,7 +27,6 @@
 </template>
 
 <script setup>
-
   import { useExerciseStore } from '@/stores/storeExercise.js';
   import { computed, onMounted, ref } from 'vue';
   import WeightsInput from "@/views/weight/WeightsInput.vue";
