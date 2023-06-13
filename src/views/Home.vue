@@ -61,7 +61,8 @@
       </div>
     </div>
     <div class="w-1/3 ml-7">
-      <Line :data="data" :options="config" />
+      <!-- <Line :data="data" :options="config" /> -->
+      <Line :data="chartInstance" :options="config" />
     </div>
   </div>
   </div>
@@ -69,7 +70,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { useWeightInputStore } from '@/stores/storeInput';
 import { Line } from 'vue-chartjs';
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement } from 'chart.js';
@@ -95,7 +96,15 @@ const dateFromWorkingSetsWeight = ref([]);
 const dateToWorkingSetsWeight = ref([]);
 const dateFromWorkingSetsReps = ref([]);
 const dateToWorkingSetsReps = ref([]);
+const weightChart = ref(null);
+let chartInstance = null;
 
+onMounted(() => {
+  const ctx = weightChart.value.getContext('2d');
+  chartInstance = new ChartJS(ctx, config);
+});
+
+/*
 const data = {
   datasets: [{
     label: 'KG difference',
@@ -114,21 +123,43 @@ const data = {
       RepFrom: dateFromWorkingSetsReps.value,
       RepTo: dateToWorkingSetsReps.value,
     },
-    */
     fill: true,
     borderColor: 'green',
   }]
 };
+*/
 
 const config = {
   type: 'line',
-  data: data,
+  data: chartInstance,
   chartOptions: {
         responsive: true
       }
 };
 
 watch([dateFromWorkingSetsWeight, dateToWorkingSetsWeight, dateFromWorkingSetsReps, dateToWorkingSetsReps], ([newWeightFrom, newWeightTo, newRepsFrom, newRepsTo]) => {
+  if(chartInstance){
+    chartInstance.data.label = 'KG difference';
+    chartInstance.data.datasets[0].data = [newWeightFrom, newWeightTo];
+    chartInstance.data.datasets[1].data = [newRepsFrom, newRepsTo];
+    chartInstance.options.LinearScale.y.suggestedMax = Math.max(
+      newWeightFrom,
+      newWeightTo
+    );
+    chartInstance.update();
+  }
+});
+
+/*
+watch([dateFromWorkingSetsWeight, dateToWorkingSetsWeight, dateFromWorkingSetsReps, dateToWorkingSetsReps], ([newWeightFrom, newWeightTo, newRepsFrom, newRepsTo]) => {
+    const newDateset = {
+    label: 'KG difference',
+    data: {
+      dateFrom: newWeightFrom,
+      dateTo: newWeightTo,
+    },
+    borderColor: 'rgb(75, 192, 192)',
+  }
   const newDateset = {
     label: 'rep difference',
     data:[newRepsFrom, newRepsTo],
@@ -142,7 +173,8 @@ watch([dateFromWorkingSetsWeight, dateToWorkingSetsWeight, dateFromWorkingSetsRe
     // dataset.data.RepFrom = newRepsFrom;
     // dataset.data.RepTo = newRepsTo;
   });
-});
+})
+*/
 
 function getExercises(date) {  
   resetMuscleGroups();
