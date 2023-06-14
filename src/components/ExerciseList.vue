@@ -35,38 +35,22 @@
   import dayjs from 'dayjs';
 
   const props = defineProps({
-      muscle: Object,
+      muscle: String,
+      required: true,
   })
 
   const search = ref('');
   const json = useExerciseStore()
   const weightInput = useWeightInputStore()
   const exercises = ref([])
+  const exerciseList = ref([]);
   const selectedExercise = ref(null)
   const exerciseDate = ref(dayjs().format('YYYY-MM-DD'));
 
   onMounted(async () => {
-        await json.fetchMuscleExercise()
-        switch (props.muscle) {
-          case "Legs":
-              exercises.value = json.exerciseList.muscle[0].exercises
-              break;
-          case "Back":
-              exercises.value = json.exerciseList.muscle[1].exercises
-              break;
-          case "Chest":
-              exercises.value = json.exerciseList.muscle[2].exercises
-              break;
-          case "Shoulder":
-              exercises.value = json.exerciseList.muscle[3].exercises
-              break;
-          case "Biceps":
-              exercises.value = json.exerciseList.muscle[4].exercises
-              break;
-          case "Triceps":
-              exercises.value = json.exerciseList.muscle[5].exercises
-              break;
-        }
+        await json.fetchMuscleExercise();
+        exerciseList.value = json.exerciseList.muscle;
+        exercises.value = exerciseList.value.find(m => m.name === props.muscle)?.exercises ?? [];
       }
     )
 
@@ -79,7 +63,6 @@
     filterExericse,
     {
       itemHeight: 38,
-      // itemWidth: 400,
     },
   )
 
