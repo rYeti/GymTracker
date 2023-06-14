@@ -61,8 +61,8 @@
       </div>
     </div>
     <div class="w-1/3 ml-7">
-      <!-- <Line :data="data" :options="config" /> -->
-      <Line :data="chartInstance" :options="config" />
+      <Line :data="data" :options="config" />
+      <!-- <Line :data="chartInstance" :options="config" /> -->
     </div>
   </div>
   </div>
@@ -70,13 +70,31 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { useWeightInputStore } from '@/stores/storeInput';
 import { Line } from 'vue-chartjs';
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement } from 'chart.js';
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement);
 
 const exercises = useWeightInputStore();
+const props = defineProps({
+  muscle: {
+    type: String,
+    required: true,
+  },
+  exercise: {
+    type: String,
+    required: true,
+  },
+  fromDate: {
+    type: String,
+    required: true,
+  },
+  toDate: {
+    type: String,
+    required: true,
+  },
+})
 let muscles = [];
 
 const calcKg = ref(0);
@@ -96,15 +114,43 @@ const dateFromWorkingSetsWeight = ref([]);
 const dateToWorkingSetsWeight = ref([]);
 const dateFromWorkingSetsReps = ref([]);
 const dateToWorkingSetsReps = ref([]);
-const weightChart = ref(null);
-let chartInstance = null;
 
-onMounted(() => {
-  const ctx = weightChart.value.getContext('2d');
-  chartInstance = new ChartJS(ctx, config);
-});
+const exerciseData = exercises.exercises;
 
-/*
+const filteredData = computed(() =>
+  Object.entries(exerciseData)
+    .filter(([date]) => {
+      const currentDate = new Date(date)
+      console.log('currentDate', currentDate)
+      return currentDate >= dateFrom.value && currentDate <= dateTo.value
+    })
+    .map(([, muscleData]) => muscleData[props.muscle]?.[props.exercise])
+    .filter(Boolean),
+    );
+    console.log('filteredData', filteredData.value)
+
+console.log('filteredData', filteredData.value)
+
+// Prepare the chart data
+const chartData = computed(() =>
+  filteredData.value.map((exercise, index) => {
+    const date = new Date(Object.keys(exerciseData)[index])
+    const formattedDate = `${date.getMonth() + 1}/${date.getDate()}`
+    const maxWarmUpSetWeight = Math.max(
+      ...exercise.warmUpSet.map(set => set.warmSetWeight),
+    )
+    const maxWorkingSetWeight = Math.max(
+      ...exercise.workingSet.map(set => set.workingSetWeight),
+    )
+
+    return {
+      date: formattedDate,
+      warmUpSet: Number.isNaN(maxWarmUpSetWeight) ? 0 : maxWarmUpSetWeight,
+      workingSet: Number.isNaN(maxWorkingSetWeight) ? 0 : maxWorkingSetWeight,
+    }
+  }),
+)
+
 const data = {
   datasets: [{
     label: 'KG difference',
@@ -123,20 +169,29 @@ const data = {
       RepFrom: dateFromWorkingSetsReps.value,
       RepTo: dateToWorkingSetsReps.value,
     },
+  */
     fill: true,
     borderColor: 'green',
   }]
 };
-*/
 
 const config = {
   type: 'line',
-  data: chartInstance,
   chartOptions: {
         responsive: true
       }
 };
 
+const weightChart = ref(null);
+let chartInstance = null;
+
+/*
+onMounted(() => {
+  const ctx = weightChart.value.getContext('2d');
+  chartInstance = new ChartJS(ctx, config);
+});*/
+
+/*
 watch([dateFromWorkingSetsWeight, dateToWorkingSetsWeight, dateFromWorkingSetsReps, dateToWorkingSetsReps], ([newWeightFrom, newWeightTo, newRepsFrom, newRepsTo]) => {
   if(chartInstance){
     chartInstance.data.label = 'KG difference';
@@ -149,10 +204,10 @@ watch([dateFromWorkingSetsWeight, dateToWorkingSetsWeight, dateFromWorkingSetsRe
     chartInstance.update();
   }
 });
+*/
 
-/*
 watch([dateFromWorkingSetsWeight, dateToWorkingSetsWeight, dateFromWorkingSetsReps, dateToWorkingSetsReps], ([newWeightFrom, newWeightTo, newRepsFrom, newRepsTo]) => {
-    const newDateset = {
+  const newDateset = {
     label: 'KG difference',
     data: {
       dateFrom: newWeightFrom,
@@ -160,11 +215,13 @@ watch([dateFromWorkingSetsWeight, dateToWorkingSetsWeight, dateFromWorkingSetsRe
     },
     borderColor: 'rgb(75, 192, 192)',
   }
-  const newDateset = {
+  /*
+  newDateset = {
     label: 'rep difference',
     data:[newRepsFrom, newRepsTo],
     borderColor: 'green',
   }
+  */
   data.datasets.forEach((dataset) => {
     dataset.data.dateFrom = newWeightFrom;
     dataset.data.dateTo = newWeightTo;
@@ -174,7 +231,6 @@ watch([dateFromWorkingSetsWeight, dateToWorkingSetsWeight, dateFromWorkingSetsRe
     // dataset.data.RepTo = newRepsTo;
   });
 })
-*/
 
 function getExercises(date) {  
   resetMuscleGroups();
