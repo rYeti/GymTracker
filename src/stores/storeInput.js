@@ -27,7 +27,7 @@ export const useWeightInputStore = defineStore('weightInput', () => {
 
     function removeWorkingSet(date, muscle, selectedExercise) {
         if(!exercises.value[date][muscle][selectedExercise]) {
-          return
+          return;
         }
         exercises.value[date][muscle][selectedExercise].workingSet.pop({
           workingSetReps: [],

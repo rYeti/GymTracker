@@ -35,16 +35,18 @@ const dateFrom = computed(() => new Date(props.fromDate));
 
 const exerciseData = exercises.exercises;
 
-const filteredData = computed(() =>
-  Object.entries(exerciseData)
+const filteredData = computed(() => {
+
+  const filtered = Object.entries(exerciseData)
     .filter(([date]) => {
-      const currentDate = new Date(date)
-      console.log('currentDate', currentDate)
-      return currentDate >= dateFrom.value && currentDate <= dateTo.value
+      const currentDate = new Date(date);
+      return currentDate >= dateFrom.value && currentDate <= dateTo.value;
     })
-    .map(([, muscleData]) => muscleData[props.muscle]?.[props.exercise])
-    .filter(Boolean),
-    );
+    .map(([, muscleData]) => {
+      return muscleData[props.muscle]?.[props.exercise];    })
+    .filter(Boolean);
+  return filtered;
+});
 
     // Prepare the chart data
 const chartData = computed(() =>
@@ -54,7 +56,6 @@ const chartData = computed(() =>
     const maxWorkingSetWeight = Math.max(
       ...exercise.workingSet.map(set => set.workingSetWeight),
     )
-
     return {
       date: formattedDate,
       workingSet: Number.isNaN(maxWorkingSetWeight) ? 0 : maxWorkingSetWeight,
@@ -63,8 +64,11 @@ const chartData = computed(() =>
 );
 
 const labels = computed(() => chartData.value.map(data => data.date))
-const warmUpSetWeights = computed(() => chartData.value.map(data => data.warmUpSet))
-const workingSetWeights = computed(() => chartData.value.map(data => data.workingSet))
+const workingSetWeights = computed(() => chartData.value.map(data => {
+  return data.workingSet}
+  ))
+
+console.log('working' + workingSetWeights.value)
 
 const chartOptions = computed(() => ({
   responsive: true,
@@ -84,6 +88,7 @@ const chartConfig = computed(() => ({
     labels: labels.value,
     datasets: [
       {
+        yAxisID: 'y',
         label: 'Working Sets',
         data: workingSetWeights.value,
         fill: false,
@@ -104,12 +109,11 @@ onMounted(() => {
 
 watch([filteredData, chartOptions], () => {
   if (chartInstance) {
-    if (chartInstance.data.datasets.length === 0) {
-      chartInstance.data.datasets.push({});
-    }
+    console.log('chart' + chartInstance.options)
+
     chartInstance.data.labels = labels.value
     chartInstance.data.datasets[0].data = workingSetWeights.value
-    chartInstance.options.scales.y.suggestedMax = Math.max(
+    chartInstance.value.scales.y.suggestedMax = Math.max(
       Math.max(...workingSetWeights.value),
     )
     chartInstance.update()
