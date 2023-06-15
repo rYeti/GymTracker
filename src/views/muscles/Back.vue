@@ -1,9 +1,9 @@
 <template>
   <div>
-    <ExerciseList muscle="Back"/>
+    <ExerciseList muscle="Back" />
   </div>
 </template>
 
 <script setup>
-import {ExerciseList} from "@/components/Index.js";
+import { ExerciseList } from '@/components/Index.js'
 </script>

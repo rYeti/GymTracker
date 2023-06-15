@@ -1,60 +1,59 @@
 <template>
-    <nav v-show="true" class="navbar navbar-expand navbar-dark bg-dark">
-        <div class="logo">
-            <img src="../assets/logo.png" alt="logo"/>
-        </div>
-        <div class="navbar-nav">
-            <router-link to="/" class="nav-item nav-link">Home</router-link>
-            <router-link to="/Muscles/Legs" class="nav-item nav-link">Legs</router-link>
-            <router-link to="/Muscles/Back" class="nav-item nav-link">Back</router-link>
-            <router-link to="/Muscles/Chest" class="nav-item nav-link">Chest</router-link>
-            <router-link to="/Muscles/Shoulder" class="nav-item nav-link">Shoulder</router-link>
-            <router-link to="/Muscles/Triceps" class="nav-item nav-link">Triceps</router-link>
-            <router-link to="/Muscles/Biceps" class="nav-item nav-link">Biceps</router-link>
-        </div>
-    </nav>
+  <nav v-show="true" class="navbar navbar-expand navbar-dark bg-dark">
+    <div class="logo">
+      <img src="../assets/logo.png" alt="logo" />
+    </div>
+    <div class="navbar-nav">
+      <router-link to="/" class="nav-item nav-link">Home</router-link>
+      <router-link to="/Muscles/Legs" class="nav-item nav-link">Legs</router-link>
+      <router-link to="/Muscles/Back" class="nav-item nav-link">Back</router-link>
+      <router-link to="/Muscles/Chest" class="nav-item nav-link">Chest</router-link>
+      <router-link to="/Muscles/Shoulder" class="nav-item nav-link">Shoulder</router-link>
+      <router-link to="/Muscles/Triceps" class="nav-item nav-link">Triceps</router-link>
+      <router-link to="/Muscles/Biceps" class="nav-item nav-link">Biceps</router-link>
+    </div>
+  </nav>
 </template>
 
-<script setup>
-</script>
+<script setup></script>
 
 <style lang="scss" scoped>
 // styling for the navbar (with reference to https://css-tricks.com/snippets/css/a-guide-to-flexbox/#aa-flexbox-properties last accessed 05.05.2023)
-.navbar{
-    display: flex;
-    width: 100%;
-    height: 4rem;
-    justify-content: start;
-    background: #0a0e06;
+.navbar {
+  display: flex;
+  width: 100%;
+  height: 4rem;
+  justify-content: start;
+  background: #0a0e06;
 }
 .navbar-nav {
-    display: flex;
-    width: 100%;
-    justify-content: start;
-    align-items: center;
+  display: flex;
+  width: 100%;
+  justify-content: start;
+  align-items: center;
 }
 .nav-item {
-    margin-left: 1rem;
-    margin-right: 1rem;
-    color: #e7f1df;
-    text-decoration: none;
-    font-size: 1.2rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  color: #e7f1df;
+  text-decoration: none;
+  font-size: 1.2rem;
 }
 
 .nav-item:hover {
-    color: #699f65
+  color: #699f65;
 }
 
 .active-link {
-    color: #699f65;
+  color: #699f65;
 }
 
 .logo {
-    display: flex;
+  display: flex;
 }
 .logo img {
-    width: 15%;
-    height: 100%;
-    margin-left: 0.5rem;
+  width: 15%;
+  height: 100%;
+  margin-left: 0.5rem;
 }
 </style>
