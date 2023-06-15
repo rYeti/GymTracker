@@ -79,6 +79,7 @@ const chartConfig = computed(() => ({
     labels: labels.value,
     datasets: [
       {
+        yAxisID: 'y',
         label: 'Working Sets',
         data: workingSetWeights.value,
         fill: false,
