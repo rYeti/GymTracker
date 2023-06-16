@@ -61,6 +61,7 @@ const chartData = computed(() =>
 const labels = computed(() => chartData.value.map((data) => data.date))
 const workingSetWeights = computed(() => chartData.value.map((data) => data.workingSet))
 
+
 const chartOptions = computed(() => ({
   responsive: true,
   maintainAspectRatio: false,
@@ -72,7 +73,6 @@ const chartOptions = computed(() => ({
   }
 }))
 
-console.log(workingSetWeights.value)
 const chartConfig = computed(() => ({
   type: 'line',
   data: {
@@ -90,6 +90,7 @@ const chartConfig = computed(() => ({
   options: chartOptions.value
 }))
 
+console.log(labels.value)
 const exerciseChart = ref(null)
 let chartInstance = null
 

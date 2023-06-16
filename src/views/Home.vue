@@ -85,7 +85,6 @@ import { useWeightInputStore } from '@/stores/storeInput'
 import { ExerciseChart } from '@/components/Index.js'
 import useExerciseChartStore from '@/stores/storeDashboardChart';
 
-
 const exercises = useWeightInputStore();
 const chartStore  = useExerciseChartStore();
 
@@ -109,13 +108,9 @@ const dateToWorkingSetsReps = ref([])
 
 function getExercises(date) {
   resetMuscleGroups()
-
   if (!exercises.exercises[date]) return
   const muscle = exercises.exercises[date]
   goThoughMuscle(date, muscle)
-  console.log(chartStore.getExerciseDates(dateFrom, dateTo, 'Legs'))
-  console.log(chartStore.chartData.value)
-
 }
 
 function goThoughMuscle(date, muscle) {
@@ -138,6 +133,8 @@ function resetMuscleGroups() {
 
 function getExercisesByMuscle(date, muscle) {
   if (exercises.exercises[date] && exercises.exercises[date][muscle]) {
+    console.log(chartStore.getLastSetBetweenDates(Object.keys(exercises.exercises[date][muscle], dateFrom.value, dateTo.value )))
+
     return Object.keys(exercises.exercises[date][muscle])
   }
   return []
