@@ -86,7 +86,6 @@ const exerciseClick = (exercise) => {
 }
 
 const initSetInput = () => {
-  console.log(exerciseDate.value)
   weightInput.initSetsInputs(exerciseDate.value, props.muscle, selectedExercise.value)
 }
 </script>

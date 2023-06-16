@@ -8,7 +8,7 @@
         class="text-black font-semibold py-2 px-2 rounded mt-5 mb-1"
       />
     </div>
-    <div class="">
+    <div>
       <input
         @input="getExercises(dateTo)"
         v-model="dateTo"
@@ -17,12 +17,16 @@
       />
     </div>
   </div>
+  <div class="flex-grow">
   <div class="" v-for="muscleGroup in muscleGroups" :key="muscleGroup.name">
-    <div class="font-bold mt-2 text-lg text-black bg-primary-button-500" style="max-width: 35%">
+    <div class="font-bold mt-2 text-lg text-black bg-primary-button-500 flex-wrap" style="max-width: 35%">
       {{ muscleGroup.name }}
     </div>
     <div class="ml-5" v-for="exercise in muscleGroup.exercises" :key="exercise">
       <h2 class="font-bold mt-4">{{ exercise }}</h2>
+      <div>
+        <button class="bg-primary-button-500 text-black" @click="exerciseClick(exercise, muscleGroup.name)">View history</button>
+      </div>
       <div class="w-1/3 flex">
         <div
           class="mr-7 flex justify-start"
@@ -66,16 +70,15 @@
           :key="set"
         >
         </div>
-        <div class="w-1/3 ml-7">
-          <ExerciseChart
-            :muscle="muscleGroup.name"
-            :exercise="exercise"
-            :fromDate="dateFrom"
-            :toDate="dateTo"
-          ></ExerciseChart>
-        </div>
       </div>
     </div>
+  </div>
+  <ExerciseChart class="" v-if="selectedExercise"
+      :muscle="selectedMuscle"
+      :exercise="selectedExercise"
+      :fromDate="dateFrom"
+      :toDate="dateTo"
+    ></ExerciseChart>
   </div>
 </template>
 
@@ -89,7 +92,8 @@ const exercises = useWeightInputStore();
 const chartStore  = useExerciseChartStore();
 
 let muscles = []
-
+const selectedExercise = ref(null)
+const selectedMuscle = ref(null)
 const lastWorkingSet = ref([])
 const muscleGroups = [
   { name: 'Legs', exercises: [] },
@@ -111,6 +115,12 @@ function getExercises(date) {
   if (!exercises.exercises[date]) return
   const muscle = exercises.exercises[date]
   goThoughMuscle(date, muscle)
+}
+
+const exerciseClick = (exercise, muscleGroupName) => {
+  selectedExercise.value = exercise
+  selectedMuscle.value = muscleGroupName
+  console.log(selectedMuscle.value)
 }
 
 function goThoughMuscle(date, muscle) {

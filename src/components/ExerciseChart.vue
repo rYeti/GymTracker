@@ -50,17 +50,19 @@ const chartData = computed(() =>
     const date = new Date(Object.keys(exerciseData)[index])
     const formattedDate = `${date.getMonth() + 1}/${date.getDate()}`
     const maxWorkingSetWeight = Math.max(...exercise.workingSet.map((set) => set.workingSetWeight))
+    const maxWorkingSetReps = Math.max(...exercise.workingSet.map((set) => set.workingSetReps))
 
     return {
       date: formattedDate,
-      workingSet: Number.isNaN(maxWorkingSetWeight) ? 0 : maxWorkingSetWeight
+      workingSetWeights: Number.isNaN(maxWorkingSetWeight) ? 0 : maxWorkingSetWeight,
+      workingSetReps: Number.isNaN(maxWorkingSetReps) ? 0 : maxWorkingSetReps
     }
   })
 )
 
 const labels = computed(() => chartData.value.map((data) => data.date))
-const workingSetWeights = computed(() => chartData.value.map((data) => data.workingSet))
-
+const workingSetWeights = computed(() => chartData.value.map((data) => data.workingSetWeights))
+const workingSetReps = computed(() => chartData.value.map((data) => data.workingSetReps))
 
 const chartOptions = computed(() => ({
   responsive: true,
@@ -68,7 +70,9 @@ const chartOptions = computed(() => ({
   scales: {
     y: {
       beginAtZero: true,
-      suggestedMax: Math.max(...workingSetWeights.value)
+      suggestedMax: Math.max(
+        Math.max(...workingSetWeights.value),
+        Math.max(...workingSetReps.value),)
     }
   }
 }))
@@ -80,11 +84,17 @@ const chartConfig = computed(() => ({
     datasets: [
       {
         yAxisID: 'y',
-        label: 'Working Sets',
+        label: 'Weight',
         data: workingSetWeights.value,
         fill: false,
         borderColor: 'rgba(192, 75, 192, 1)'
-      }
+      },
+      {
+        label: 'Reps',
+        data: workingSetReps.value,
+        fill: false,
+        borderColor: 'rgba(192, 75, 192, 1)',
+      },
     ]
   },
   options: chartOptions.value
@@ -103,7 +113,11 @@ watch([filteredData, chartOptions], () => {
   if (chartInstance) {
     chartInstance.data.labels = labels.value
     chartInstance.data.datasets[0].data = workingSetWeights.value
-    chartInstance.options.scales.y.suggestedMax = Math.max(...workingSetWeights.value)
+    chartInstance.data.datasets[1].data = workingSetReps.value
+    chartInstance.options.scales.y.suggestedMax = Math.max(
+      Math.max(...workingSetWeights.value),
+      Math.max(...workingSetReps.value),
+    )
 
     chartInstance.update()
   }
