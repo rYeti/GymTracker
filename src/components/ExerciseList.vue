@@ -6,6 +6,7 @@
         type="date"
         v-model="exerciseDate"
         style="width: 100%"
+        @input="initSetInput()"
       />
       <input
         style="width: 100%"

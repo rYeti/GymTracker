@@ -34,13 +34,12 @@ const dateTo = computed(() => new Date(props.toDate))
 const dateFrom = computed(() => new Date(props.fromDate))
 
 //https://stackoverflow.com/questions/5467129/sort-javascript-object-by-key
-const orderdExerciseDate = Object.keys(exercises.exercises).sort().reduce(
-  (obj, key) => { 
-    obj[key] = exercises.exercises[key]; 
-    return obj;
-  }, 
-  {}
-)
+const orderdExerciseDate = Object.keys(exercises.exercises)
+  .sort()
+  .reduce((obj, key) => {
+    obj[key] = exercises.exercises[key]
+    return obj
+  }, {})
 
 const filteredData = computed(() =>
   Object.entries(orderdExerciseDate)
@@ -79,7 +78,8 @@ const chartOptions = computed(() => ({
       beginAtZero: true,
       suggestedMax: Math.max(
         Math.max(...workingSetWeights.value),
-        Math.max(...workingSetReps.value),)
+        Math.max(...workingSetReps.value)
+      )
     }
   }
 }))
@@ -100,8 +100,8 @@ const chartConfig = computed(() => ({
         label: 'Reps',
         data: workingSetReps.value,
         fill: false,
-        borderColor: 'green',
-      },
+        borderColor: 'green'
+      }
     ]
   },
   options: chartOptions.value
@@ -123,7 +123,7 @@ watch([filteredData, chartOptions], () => {
     chartInstance.data.datasets[1].data = workingSetReps.value
     chartInstance.options.scales.y.suggestedMax = Math.max(
       Math.max(...workingSetWeights.value),
-      Math.max(...workingSetReps.value),
+      Math.max(...workingSetReps.value)
     )
 
     chartInstance.update()

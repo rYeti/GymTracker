@@ -18,59 +18,81 @@
     </div>
   </div>
   <div class="flex-grow">
-  <div class="" v-for="muscleGroup in muscleGroups" :key="muscleGroup.name">
-    <div class="font-bold mt-2 text-lg text-black bg-primary-button-500 flex-wrap" style="max-width: 35%">
-      {{ muscleGroup.name }}
-    </div>
-    <div class="ml-5" v-for="exercise in muscleGroup.exercises" :key="exercise">
-      <h2 class="font-bold mt-4">{{ exercise }}</h2>
-      <div>
-        <button class="primary-button primary-button-medium disabled:opacity-25" 
-        @click="exerciseClick(exercise, muscleGroup.name)"             
-        :disabled="dateFrom === null || dateTo === null"
-        >View history</button>
+    <div class="" v-for="muscleGroup in muscleGroups" :key="muscleGroup.name">
+      <div
+        class="font-bold mt-2 text-lg text-black bg-primary-button-500 flex-wrap"
+        style="max-width: 35%"
+      >
+        {{ muscleGroup.name }}
       </div>
-      <div class="w-1/3 flex">
-        <div
-          class="mr-7 flex justify-start" v-if="dateFrom"
-        >
-          <div>
-            <div>
-              <label> {{ chartStore.getLastWorkingSet(dateFrom, muscleGroup.name, exercise).workingSetWeight }} KG </label>
-            </div>
-            <div>
-                <label>
-                  {{ chartStore.getLastWorkingSet(dateFrom, muscleGroup.name, exercise).workingSetReps }} Reps
-                </label>
-            </div>
-          </div>
+      <div class="ml-5" v-for="exercise in muscleGroup.exercises" :key="exercise">
+        <h2 class="font-bold mt-4">{{ exercise }}</h2>
+        <div>
+          <button
+            class="primary-button primary-button-medium"
+            @click="exerciseClick(exercise, muscleGroup.name)"
+          >
+            View history
+          </button>
         </div>
-        <div
-          class="w-1/3 flex justify-center" v-if="dateTo"
-        >
-          <div>
-            <div>
-              <label> {{ chartStore.getLastWorkingSet(dateTo, muscleGroup.name, exercise).workingSetWeight }} KG </label>
-            </div>
+        <div class="w-1/3 flex">
+          <div class="mr-7 flex justify-start" v-if="dateFrom">
             <div>
               <div>
                 <label>
-                  {{ chartStore.getLastWorkingSet(dateTo, muscleGroup.name, exercise).workingSetReps }} Reps
+                  {{
+                    chartStore.getLastWorkingSet(dateFrom, muscleGroup.name, exercise)
+                      .workingSetWeight
+                  }}
+                  KG
                 </label>
+              </div>
+              <div>
+                <label>
+                  {{
+                    chartStore.getLastWorkingSet(dateFrom, muscleGroup.name, exercise)
+                      .workingSetReps
+                  }}
+                  Reps
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="w-1/3 flex justify-center" v-if="dateTo">
+            <div>
+              <div>
+                <label>
+                  {{
+                    chartStore.getLastWorkingSet(dateTo, muscleGroup.name, exercise)
+                      .workingSetWeight
+                  }}
+                  KG
+                </label>
+              </div>
+              <div>
+                <div>
+                  <label>
+                    {{
+                      chartStore.getLastWorkingSet(dateTo, muscleGroup.name, exercise)
+                        .workingSetReps
+                    }}
+                    Reps
+                  </label>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <ExerciseChart class=""
+    <ExerciseChart
+      class=""
       :muscle="selectedMuscle"
       :exercise="selectedExercise"
       :fromDate="dateFrom"
       :toDate="dateTo"
     >
-  </ExerciseChart>
+    </ExerciseChart>
   </div>
 </template>
 
@@ -78,10 +100,10 @@
 import { ref } from 'vue'
 import { useWeightInputStore } from '@/stores/storeInput'
 import { ExerciseChart } from '@/components/Index.js'
-import useExerciseChartStore from '@/stores/storeDashboardChart';
+import useExerciseChartStore from '@/stores/storeDashboardChart'
 
-const exercises = useWeightInputStore();
-const chartStore  = useExerciseChartStore();
+const exercises = useWeightInputStore()
+const chartStore = useExerciseChartStore()
 
 let muscles = []
 const selectedExercise = ref(null)

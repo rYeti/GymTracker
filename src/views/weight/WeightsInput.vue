@@ -1,8 +1,6 @@
 <template>
   <div class="w-full m-16">
-    <button @click="save()"             
-    class="primary-button primary-button-small"
-    >Save</button>
+    <button @click="save()" class="primary-button primary-button-small">Save</button>
     <div class="mt-2">
       <div class="flex justify-end items-center w-[78%]">
         <div class="w-1/3 mb-2">
@@ -94,7 +92,7 @@
                 required
                 numeric
                 onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-                />
+              />
             </div>
             <div class="ml-3">
               <!-- https://stackoverflow.com/questions/66172698/textbox-which-accepts-only-numbers-in-vue-js -->
@@ -126,7 +124,7 @@ const props = defineProps({
 const weightInput = useWeightInputStore()
 
 function save() {
-  if(weightInput.workingSetReps === undefined && weightInput.workingSetWeight === undefined) {
+  if (weightInput.workingSetReps === undefined && weightInput.workingSetWeight === undefined) {
     alert('Please fill in all the fields')
     return
   }
