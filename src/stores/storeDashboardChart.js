@@ -5,30 +5,22 @@ import { useWeightInputStore } from '@/stores/storeInput'
 const useExerciseChartStore  = defineStore('chart', () => {
   const useExerciseChart = ref([])
   const exercises = useWeightInputStore();
-  const localStorageExercise = ref(JSON.parse(localStorage.getItem('exercises')))
   
   function getAvailableExercises (date, muscle){
-    console.log(Object.keys(exercises.exercises[date][muscle]))
     return Object.keys(exercises.exercises[date][muscle])
   }
-  function getLastWorkingSetWeight(exercise){
-    return exercise.sets[exercise.sets.length - 1].weight
-  }
 
-  function getLastWorkingSetReps(exercise){
-    return exercise.sets[exercise.sets.length - 1].reps
-  }
-
-  function getLastSetBetweenDates(exercise, fromDate, toDate) {  
+  function getLastSetBetweenDates(muscle, exercise, fromDate, toDate) {  
+    if(!fromDate && !toDate) return
     const filteredData = Object.entries(exercises.exercises)
-      .filter(([date]) => {
-        const currentDate = new Date(date);
-        return currentDate >= fromDate && currentDate <= toDate.value
-      })
-      .flatMap(([, muscleData]) => Object.values(muscleData))
-      .filter((muscle) => muscle[exercise])
-      .map((muscle) => muscle[exercise]);
-  
+       .filter(([date]) => {
+      const currentDate = new Date(date)
+      return currentDate >= fromDate.value && currentDate <= toDate.value
+    })
+    .map(([, muscleData]) => muscleData[muscle]?.[exercise])
+    .filter(Boolean)
+
+      console.log(filteredData)
     const lastSet = filteredData.reduce((lastSet, muscle) => {
       const sets = muscle[exercise].sets;
       if (sets.length > 0) {
@@ -43,13 +35,30 @@ const useExerciseChartStore  = defineStore('chart', () => {
     return lastSet;
   }
 
+  function getLastWorkingSet(date, muscle, exercise) {
+    if (
+      exercises.exercises[date] &&
+      exercises.exercises[date][muscle] &&
+      exercises.exercises[date][muscle][exercise]
+    ) {
+      const muscleExercise = Object.keys(exercises.exercises[date][muscle][exercise])
+      muscleExercise.pop()
+      const workingSet = exercises.exercises[date][muscle][exercise][muscleExercise]
+      if(workingSet.length === 1) {
+        return workingSet[0]
+      }  
+      return workingSet[workingSet.length - 1]
+      const lastWorkingSet = workingSet[workingSet.length - 1]
+      return lastWorkingSet
+    }
+    return
+  }
+
   return {
     useExerciseChart, 
     getAvailableExercises,
-    getLastWorkingSetWeight,
-    getLastWorkingSetReps,
     getLastSetBetweenDates,
-
+    getLastWorkingSet,
   }
 })
 

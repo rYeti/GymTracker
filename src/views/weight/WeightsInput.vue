@@ -1,5 +1,8 @@
 <template>
   <div class="w-full m-16">
+    <button @click="save()"             
+    class="primary-button primary-button-small"
+    >Save</button>
     <div class="mt-2">
       <div class="flex justify-end items-center w-[78%]">
         <div class="w-1/3 mb-2">
@@ -88,18 +91,21 @@
                 type="number"
                 class="mt-1 px-3 py-2 bg-black border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none block rounded-md sm:text-sm"
                 placeholder="Weight (Kg)"
+                required
+                numeric
                 onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-              />
+                />
             </div>
             <div class="ml-3">
+              <!-- https://stackoverflow.com/questions/66172698/textbox-which-accepts-only-numbers-in-vue-js -->
               <input
                 v-model="workingset.workingSetReps"
                 type="number"
                 class="mt-1 px-3 py-2 bg-black border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none block rounded-md sm:text-sm"
                 placeholder="Reps"
+                required
                 onkeypress="return event.charCode >= 48 && event.charCode <= 57"
               />
-              <!-- https://stackoverflow.com/questions/66172698/textbox-which-accepts-only-numbers-in-vue-js -->
             </div>
           </div>
         </div>
@@ -118,4 +124,12 @@ const props = defineProps({
 })
 
 const weightInput = useWeightInputStore()
+
+function save() {
+  if(weightInput.workingSetReps === undefined && weightInput.workingSetWeight === undefined) {
+    alert('Please fill in all the fields')
+    return
+  }
+  weightInput.saveTolocalStorage()
+}
 </script>

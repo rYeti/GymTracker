@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ExerciseList muscle="Shoulder" />
+    <ExerciseList muscle="Shoulders" />
   </div>
 </template>
 

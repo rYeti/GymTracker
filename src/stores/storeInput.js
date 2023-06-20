@@ -5,6 +5,12 @@ export const useWeightInputStore = defineStore('weightInput', () => {
   // localStorage https://vueuse.org/core/useLocalStorage/
   const exercises = useLocalStorage('exercises', {})
 
+  function saveTolocalStorage() {
+    // exercises.value = useLocalStorage('exercises', {})
+    localStorage.setItem(exercises, JSON.stringify(exercises.value))
+    console.log(exercises.value + "               h")
+  }
+
   function addWorkingSet(date, muscle, selectedExercise) {
     if (!exercises.value[date][muscle][selectedExercise]) {
       return
@@ -54,13 +60,13 @@ export const useWeightInputStore = defineStore('weightInput', () => {
 
   function getWarmUpSetCount(date, muscle, selectedExercise) {
     if (exercises.value[date][muscle][selectedExercise]) {
+            console.log(exercises.value[date])
       return exercises.value[date][muscle][selectedExercise].warmUpSet.length
     }
     return 1
   }
 
   function initSetsInputs(date, muscle, selectedExercise) {
-    console.log(date, muscle, selectedExercise)
     if (!exercises.value[date]) {
       exercises.value[date] = {}
     }
@@ -95,6 +101,7 @@ export const useWeightInputStore = defineStore('weightInput', () => {
     removeWarmUpSet,
     getWorkingSetCount,
     getWarmUpSetCount,
-    initSetsInputs
+    initSetsInputs,
+    saveTolocalStorage,
   }
 })

@@ -25,60 +25,52 @@
     <div class="ml-5" v-for="exercise in muscleGroup.exercises" :key="exercise">
       <h2 class="font-bold mt-4">{{ exercise }}</h2>
       <div>
-        <button class="bg-primary-button-500 text-black" @click="exerciseClick(exercise, muscleGroup.name)">View history</button>
+        <button class="primary-button primary-button-medium disabled:opacity-25" 
+        @click="exerciseClick(exercise, muscleGroup.name)"             
+        :disabled="dateFrom === null || dateTo === null"
+        >View history</button>
       </div>
       <div class="w-1/3 flex">
         <div
-          class="mr-7 flex justify-start"
-          v-for="set in getSetsByMuscleExercise(dateFrom, muscleGroup.name, exercise)"
-          :key="set"
+          class="mr-7 flex justify-start" v-if="dateFrom"
         >
           <div>
             <div>
-              <label> {{ getLastWorkingSet(dateFrom, muscleGroup.name, exercise, set) }} KG </label>
+              <label> {{ chartStore.getLastWorkingSet(dateFrom, muscleGroup.name, exercise).workingSetWeight }} KG </label>
             </div>
             <div>
-              <div>
                 <label>
-                  {{ getLastWorkingSetReps(dateFrom, muscleGroup.name, exercise, set) }} Reps
+                  {{ chartStore.getLastWorkingSet(dateFrom, muscleGroup.name, exercise).workingSetReps }} Reps
                 </label>
-              </div>
             </div>
           </div>
         </div>
         <div
-          class="w-1/3 flex justify-center"
-          v-for="set in getSetsByMuscleExercise(dateTo, muscleGroup.name, exercise)"
-          :key="set"
+          class="w-1/3 flex justify-center" v-if="dateTo"
         >
           <div>
             <div>
-              <label> {{ getLastWorkingSet(dateTo, muscleGroup.name, exercise, set) }} KG </label>
+              <label> {{ chartStore.getLastWorkingSet(dateTo, muscleGroup.name, exercise).workingSetWeight }} KG </label>
             </div>
             <div>
               <div>
                 <label>
-                  {{ getLastWorkingSetReps(dateTo, muscleGroup.name, exercise, set) }} Reps
+                  {{ chartStore.getLastWorkingSet(dateTo, muscleGroup.name, exercise).workingSetReps }} Reps
                 </label>
               </div>
             </div>
           </div>
-        </div>
-        <div
-          class="ml-6"
-          v-for="set in getSetsByMuscleExercise(dateFrom, muscleGroup.name, exercise)"
-          :key="set"
-        >
         </div>
       </div>
     </div>
   </div>
-  <ExerciseChart class="" v-if="selectedExercise"
+  <ExerciseChart class=""
       :muscle="selectedMuscle"
       :exercise="selectedExercise"
       :fromDate="dateFrom"
       :toDate="dateTo"
-    ></ExerciseChart>
+    >
+  </ExerciseChart>
   </div>
 </template>
 
@@ -94,7 +86,6 @@ const chartStore  = useExerciseChartStore();
 let muscles = []
 const selectedExercise = ref(null)
 const selectedMuscle = ref(null)
-const lastWorkingSet = ref([])
 const muscleGroups = [
   { name: 'Legs', exercises: [] },
   { name: 'Back', exercises: [] },
@@ -105,10 +96,6 @@ const muscleGroups = [
 ]
 const dateFrom = ref('')
 const dateTo = ref('')
-const dateFromWorkingSetsWeight = ref([])
-const dateToWorkingSetsWeight = ref([])
-const dateFromWorkingSetsReps = ref([])
-const dateToWorkingSetsReps = ref([])
 
 function getExercises(date) {
   resetMuscleGroups()
@@ -120,7 +107,7 @@ function getExercises(date) {
 const exerciseClick = (exercise, muscleGroupName) => {
   selectedExercise.value = exercise
   selectedMuscle.value = muscleGroupName
-  console.log(selectedMuscle.value)
+  chartStore.getLastSetBetweenDates(exercise, dateFrom, dateTo)
 }
 
 function goThoughMuscle(date, muscle) {
@@ -143,61 +130,8 @@ function resetMuscleGroups() {
 
 function getExercisesByMuscle(date, muscle) {
   if (exercises.exercises[date] && exercises.exercises[date][muscle]) {
-    console.log(chartStore.getLastSetBetweenDates(Object.keys(exercises.exercises[date][muscle], dateFrom.value, dateTo.value )))
-
     return Object.keys(exercises.exercises[date][muscle])
   }
   return []
-}
-
-function getSetsByMuscleExercise(date, muscle, exercise) {
-  if (
-    exercises.exercises[date] &&
-    exercises.exercises[date][muscle] &&
-    exercises.exercises[date][muscle][exercise]
-  ) {
-    const muscleExercise = Object.keys(exercises.exercises[date][muscle][exercise])
-    muscleExercise.pop()
-    return muscleExercise
-  }
-  return []
-}
-//TODO refactor duplicate code
-function getLastWorkingSet(date, muscle, exercise, set) {
-  if (
-    exercises.exercises[date] &&
-    exercises.exercises[date][muscle] &&
-    exercises.exercises[date][muscle][exercise] &&
-    exercises.exercises[date][muscle][exercise][set]
-  ) {
-    const workingSet = exercises.exercises[date][muscle][exercise][set]
-    lastWorkingSet.value = workingSet[workingSet.length - 1]
-    if (date === dateFrom.value) {
-      dateFromWorkingSetsWeight.value = lastWorkingSet.value.workingSetWeight
-    } else {
-      dateToWorkingSetsWeight.value = lastWorkingSet.value.workingSetWeight
-    }
-    return lastWorkingSet.value.workingSetWeight
-  }
-  return
-}
-
-function getLastWorkingSetReps(date, muscle, exercise, set) {
-  if (
-    exercises.exercises[date] &&
-    exercises.exercises[date][muscle] &&
-    exercises.exercises[date][muscle][exercise] &&
-    exercises.exercises[date][muscle][exercise][set]
-  ) {
-    const workingSet = exercises.exercises[date][muscle][exercise][set]
-    lastWorkingSet.value = workingSet[workingSet.length - 1]
-    if (date === dateFrom.value) {
-      dateFromWorkingSetsReps.value = lastWorkingSet.value.workingSetReps
-    } else {
-      dateToWorkingSetsReps.value = lastWorkingSet.value.workingSetReps
-    }
-    return lastWorkingSet.value.workingSetReps
-  }
-  return
 }
 </script>

@@ -26,28 +26,35 @@ const props = defineProps({
   },
   toDate: {
     type: String,
-    required: true
+    required: false
   }
 })
 
 const dateTo = computed(() => new Date(props.toDate))
 const dateFrom = computed(() => new Date(props.fromDate))
 
-const exerciseData = exercises.exercises
+//https://stackoverflow.com/questions/5467129/sort-javascript-object-by-key
+const orderdExerciseDate = Object.keys(exercises.exercises).sort().reduce(
+  (obj, key) => { 
+    obj[key] = exercises.exercises[key]; 
+    return obj;
+  }, 
+  {}
+)
 
 const filteredData = computed(() =>
-  Object.entries(exerciseData)
+  Object.entries(orderdExerciseDate)
     .filter(([date]) => {
       const currentDate = new Date(date)
-      return currentDate >= dateFrom.value && currentDate <= dateTo.value
+      const today = new Date()
+      return currentDate >= dateFrom.value && currentDate <= today
     })
     .map(([, muscleData]) => muscleData[props.muscle]?.[props.exercise])
     .filter(Boolean)
 )
-
 const chartData = computed(() =>
   filteredData.value.map((exercise, index) => {
-    const date = new Date(Object.keys(exerciseData)[index])
+    const date = new Date(Object.keys(orderdExerciseDate)[index])
     const formattedDate = `${date.getMonth() + 1}/${date.getDate()}`
     const maxWorkingSetWeight = Math.max(...exercise.workingSet.map((set) => set.workingSetWeight))
     const maxWorkingSetReps = Math.max(...exercise.workingSet.map((set) => set.workingSetReps))
@@ -93,7 +100,7 @@ const chartConfig = computed(() => ({
         label: 'Reps',
         data: workingSetReps.value,
         fill: false,
-        borderColor: 'rgba(192, 75, 192, 1)',
+        borderColor: 'green',
       },
     ]
   },
