@@ -1,6 +1,11 @@
 <template>
-  <div>
-    <canvas ref="exerciseChart" :style="{ height: '400px', width: '600px' }" />
+  <div class="flex w-1/2">
+    <div>
+      <canvas v-once ref="exerciseChart" :style="{ height: '400px', width: '300px' }" />
+    </div>
+    <div>
+      <canvas ref="exerciseRepsChart" :style="{height: '400px', width: '300px' }"/>
+    </div>
   </div>
 </template>
 
@@ -84,6 +89,19 @@ const chartOptions = computed(() => ({
   }
 }))
 
+const chartRepsOptions = computed(() => ({
+  responsive: true,
+  maintainAspectRatio: false,
+  scales: {
+    y: {
+      beginAtZero: true,
+      suggestedMax: Math.max(
+        Math.max(...workingSetReps.value)
+      )
+    }
+  }
+}))
+
 const chartConfig = computed(() => ({
   type: 'line',
   data: {
@@ -96,37 +114,56 @@ const chartConfig = computed(() => ({
         fill: false,
         borderColor: 'rgba(192, 75, 192, 1)'
       },
-      {
-        label: 'Reps',
-        data: workingSetReps.value,
-        fill: false,
-        borderColor: 'green'
-      }
     ]
   },
   options: chartOptions.value
 }))
 
-console.log(labels.value)
+const chartConfigReps = computed(() => ({
+  type: 'line',
+  data: {
+    labels: labels.value,
+    datasets: [
+    {
+        label: 'Reps',
+        data: workingSetReps.value,
+        fill: false,
+        borderColor: 'green'
+      },
+    ]
+  },
+  options: chartRepsOptions.value
+}))
+
 const exerciseChart = ref(null)
+const exerciseRepsChart = ref(null)
 let chartInstance = null
+let chartRepsInstance = null
 
 onMounted(() => {
   const ctx = exerciseChart.value.getContext('2d')
+  const ctxReps = exerciseRepsChart.value.getContext('')
   chartInstance = new ChartJS(ctx, chartConfig.value)
+  chartRepsInstance = new ChartJS(ctxReps, chartConfigReps.value)
 })
 
 watch([filteredData, chartOptions], () => {
-  if (chartInstance) {
+  if (chartInstance || chartRepsInstance) {
     chartInstance.data.labels = labels.value
     chartInstance.data.datasets[0].data = workingSetWeights.value
-    chartInstance.data.datasets[1].data = workingSetReps.value
+    //chartInstance.data.datasets[1].data = workingSetReps.value
     chartInstance.options.scales.y.suggestedMax = Math.max(
       Math.max(...workingSetWeights.value),
+      
+    )
+    chartRepsInstance.data.label = labels.value
+    chartRepsInstance.data.datasets[0].data = workingSetReps.value
+    chartRepsInstance.options.scales.y.suggestedMax = Math.max(
       Math.max(...workingSetReps.value)
     )
 
     chartInstance.update()
+    chartRepsInstance.update()
   }
 })
 </script>
