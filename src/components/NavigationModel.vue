@@ -11,11 +11,50 @@
       <router-link to="/Muscles/Shoulder" class="nav-item nav-link">Shoulder</router-link>
       <router-link to="/Muscles/Triceps" class="nav-item nav-link">Triceps</router-link>
       <router-link to="/Muscles/Biceps" class="nav-item nav-link">Biceps</router-link>
+      <button class="nav-item nav-link" @click="importData()">Import</button>
+      <button class="nav-item nav-link" @click="exportData()">Export</button>
     </div>
   </nav>
 </template>
 
-<script setup></script>
+<script setup>
+import { useWeightInputStore } from '@/stores/storeInput'
+
+const exercises = useWeightInputStore()
+
+//https://stackoverflow.com/questions/48611671/vue-js-write-json-object-to-local-file
+function exportData() {
+  const data = JSON.stringify(exercises.exercises)
+  const blob = new Blob([data], { type: 'text/plain' })
+  const e = document.createEvent('MouseEvents'),
+    a = document.createElement('a')
+  a.download = 'exercieses.json'
+  a.href = window.URL.createObjectURL(blob)
+  a.dataset.downloadurl = ['text/json', a.download, a.href].join(':')
+  e.initEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null)
+  a.dispatchEvent(e)
+}
+
+//https://forsmile.jp/en/vue-en/1032/
+//https://developer.mozilla.org/en-US/docs/Web/API/Document/createElement
+//https://developer.mozilla.org/en-US/docs/Web/API/Event/target
+//https://developer.mozilla.org/en-US/docs/Web/API/FileReader/readAsText
+//https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/click
+function importData() {
+  const input = document.createElement('input')
+  input.type = 'file'
+  input.onchange = (e) => {
+    const file = e.target.files[0]
+    const reader = new FileReader()
+    reader.readAsText(file, 'UTF-8')
+    reader.onload = (readerEvent) => {
+      const content = readerEvent.target.result
+      exercises.exercises = JSON.parse(content)
+    }
+  }
+  input.click()
+}
+</script>
 
 <style lang="scss" scoped>
 // styling for the navbar (with reference to https://css-tricks.com/snippets/css/a-guide-to-flexbox/#aa-flexbox-properties last accessed 05.05.2023)
@@ -42,6 +81,11 @@
 
 .nav-item:hover {
   color: #699f65;
+  transition: color .25s;
+  transition-property: color;
+  transition-duration: 0.25s;
+  transition-timing-function: ease;
+  transition-delay: 0s;
 }
 
 .active-link {

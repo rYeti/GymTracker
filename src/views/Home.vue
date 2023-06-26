@@ -129,7 +129,7 @@ function getExercises(date) {
 const exerciseClick = (exercise, muscleGroupName) => {
   selectedExercise.value = exercise
   selectedMuscle.value = muscleGroupName
-  chartStore.getLastSetBetweenDates(exercise, dateFrom, dateTo)
+  // chartStore.getLastSetBetweenDates(exercise, dateFrom, dateTo)
 }
 
 function goThoughMuscle(date, muscle) {

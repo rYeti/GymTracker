@@ -1,10 +1,10 @@
 <template>
   <div class="flex w-1/2">
     <div>
-      <canvas v-once ref="exerciseChart" :style="{ height: '400px', width: '300px' }" />
+      <canvas v-once ref="exerciseChart" :style="{ height: '400px', width: '400px' }" />
     </div>
     <div>
-      <canvas ref="exerciseRepsChart" :style="{height: '400px', width: '300px' }"/>
+      <canvas ref="exerciseRepsChart" :style="{ height: '400px', width: '400px' }" />
     </div>
   </div>
 </template>
@@ -81,10 +81,7 @@ const chartOptions = computed(() => ({
   scales: {
     y: {
       beginAtZero: true,
-      suggestedMax: Math.max(
-        Math.max(...workingSetWeights.value),
-        Math.max(...workingSetReps.value)
-      )
+      suggestedMax: Math.max(Math.max(...workingSetWeights.value))
     }
   }
 }))
@@ -95,9 +92,7 @@ const chartRepsOptions = computed(() => ({
   scales: {
     y: {
       beginAtZero: true,
-      suggestedMax: Math.max(
-        Math.max(...workingSetReps.value)
-      )
+      suggestedMax: Math.max(Math.max(...workingSetReps.value))
     }
   }
 }))
@@ -113,7 +108,7 @@ const chartConfig = computed(() => ({
         data: workingSetWeights.value,
         fill: false,
         borderColor: 'rgba(192, 75, 192, 1)'
-      },
+      }
     ]
   },
   options: chartOptions.value
@@ -124,12 +119,13 @@ const chartConfigReps = computed(() => ({
   data: {
     labels: labels.value,
     datasets: [
-    {
+      {
+        yAxisID: 'y',
         label: 'Reps',
         data: workingSetReps.value,
         fill: false,
-        borderColor: 'green'
-      },
+        borderColor: 'rgba(14, 171, 82, 1)'
+      }
     ]
   },
   options: chartRepsOptions.value
@@ -142,7 +138,7 @@ let chartRepsInstance = null
 
 onMounted(() => {
   const ctx = exerciseChart.value.getContext('2d')
-  const ctxReps = exerciseRepsChart.value.getContext('')
+  const ctxReps = exerciseRepsChart.value.getContext('2d')
   chartInstance = new ChartJS(ctx, chartConfig.value)
   chartRepsInstance = new ChartJS(ctxReps, chartConfigReps.value)
 })
@@ -151,16 +147,10 @@ watch([filteredData, chartOptions], () => {
   if (chartInstance || chartRepsInstance) {
     chartInstance.data.labels = labels.value
     chartInstance.data.datasets[0].data = workingSetWeights.value
-    //chartInstance.data.datasets[1].data = workingSetReps.value
-    chartInstance.options.scales.y.suggestedMax = Math.max(
-      Math.max(...workingSetWeights.value),
-      
-    )
-    chartRepsInstance.data.label = labels.value
+    chartInstance.options.scales.y.suggestedMax = Math.max(Math.max(...workingSetWeights.value))
+    chartRepsInstance.data.labels = labels.value
     chartRepsInstance.data.datasets[0].data = workingSetReps.value
-    chartRepsInstance.options.scales.y.suggestedMax = Math.max(
-      Math.max(...workingSetReps.value)
-    )
+    chartRepsInstance.options.scales.y.suggestedMax = Math.max(Math.max(...workingSetReps.value))
 
     chartInstance.update()
     chartRepsInstance.update()

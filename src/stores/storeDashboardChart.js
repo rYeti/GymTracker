@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { useWeightInputStore } from '@/stores/storeInput'
 
 const useExerciseChartStore  = defineStore('chart', () => {
@@ -48,8 +48,6 @@ const useExerciseChartStore  = defineStore('chart', () => {
         return workingSet[0]
       }  
       return workingSet[workingSet.length - 1]
-      const lastWorkingSet = workingSet[workingSet.length - 1]
-      return lastWorkingSet
     }
     return
   }
