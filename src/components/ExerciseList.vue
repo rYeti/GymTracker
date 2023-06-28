@@ -66,15 +66,22 @@ onMounted(async () => {
   exercises.value = exerciseList.value.find((m) => m.name === props.muscle)?.exercises ?? []
 })
 
+// Filtered exercises based on search input
 const filterExericse = computed(() => {
   return exercises.value.filter((e) => e.name.toLowerCase().includes(search.value.toLowerCase()))
 })
 
+// Virtual list configuration
 // https://vueuse.org/core/useVirtualList/#usage
 const { list, containerProps, wrapperProps } = useVirtualList(filterExericse, {
   itemHeight: 38
 })
 
+/**
+ * Determines the CSS class for the exercise button based on whether it is active or not.
+ * @param {string} exercise - The exercise name.
+ * @returns {Object} - Object containing CSS classes.
+ */
 function isActiveExericse(exercise) {
   return {
     'primary-button w-full primary-button-medium': selectedExercise.value != exercise,
@@ -82,48 +89,21 @@ function isActiveExericse(exercise) {
   }
 }
 
+/**
+ * Handles the click event of an exercise button.
+ * @param {Object} exercise - The selected exercise object.
+ */
 const exerciseClick = (exercise) => {
   selectedExercise.value = exercise.name
 }
 
+/**
+ * Initializes the weight input.
+ */
 const initSetInput = () => {
   weightInput.initSetsInputs(exerciseDate.value, props.muscle, selectedExercise.value)
 }
 </script>
 
 <style>
-.exerciseList {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.25rem;
-  margin-top: 0.5rem;
-}
-
-.search {
-  width: auto;
-  height: 2rem;
-  border-radius: 1rem;
-  border: 1px solid #ccc;
-  padding: 1rem;
-  font-size: 1rem;
-}
-
-.weights {
-  display: flex;
-  flex-direction: row;
-  gap: 0.25rem;
-  margin-top: 0.5rem;
-  margin-left: 5rem;
-  color: white;
-}
-
-.set {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  gap: 0.25rem;
-  margin-top: 0.5rem;
-  color: white;
-}
 </style>

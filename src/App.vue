@@ -13,7 +13,6 @@ import { NavigationModel } from './components/Index.js'
 
 <style scoped lang="scss">
 @import '/css/head.scss';
-.app-container {
-  width: 100%;
-}
+@import '/css/main.scss';
+
 </style>

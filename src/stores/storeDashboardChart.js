@@ -2,39 +2,63 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { useWeightInputStore } from '@/stores/storeInput'
 
-const useExerciseChartStore  = defineStore('chart', () => {
+/**
+ * Store for exercise chart data.
+ */
+const useExerciseChartStore = defineStore('chart', () => {
   const useExerciseChart = ref([])
-  const exercises = useWeightInputStore();
-  
-  function getAvailableExercises (date, muscle){
+  const exercises = useWeightInputStore()
+
+  /**
+   * Get the available exercises for a specific date and muscle.
+   * @param {string} date - The date to retrieve available exercises for.
+   * @param {string} muscle - The muscle to retrieve available exercises for.
+   * @returns {string[]} - The list of available exercises.
+   */
+  function getAvailableExercises(date, muscle) {
     return Object.keys(exercises.exercises[date][muscle])
   }
 
-  function getLastSetBetweenDates(muscle, exercise, fromDate, toDate) {  
-    if(!fromDate && !toDate) return
+  /**
+   * Get the last set between two dates for a specific muscle and exercise.
+   * @param {string} muscle - The muscle to retrieve the last set for.
+   * @param {string} exercise - The exercise to retrieve the last set for.
+   * @param {Date} fromDate - The start date for the range.
+   * @param {Date} toDate - The end date for the range.
+   * @returns {object} - The last set object.
+   */
+  function getLastSetBetweenDates(muscle, exercise, fromDate, toDate) {
+    if (!fromDate && !toDate) return
     const filteredData = Object.entries(exercises.exercises)
-       .filter(([date]) => {
-      const currentDate = new Date(date)
-      return currentDate >= fromDate.value && currentDate <= toDate.value
-    })
-    .map(([, muscleData]) => muscleData[muscle]?.[exercise])
-    .filter(Boolean)
+      .filter(([date]) => {
+        const currentDate = new Date(date)
+        return currentDate >= fromDate.value && currentDate <= toDate.value
+      })
+      .map(([, muscleData]) => muscleData[muscle]?.[exercise])
+      .filter(Boolean)
 
-      console.log(filteredData)
+    console.log(filteredData)
     const lastSet = filteredData.reduce((lastSet, muscle) => {
-      const sets = muscle[exercise].sets;
+      const sets = muscle[exercise].sets
       if (sets.length > 0) {
-        const lastExerciseSet = sets[sets.length - 1];
+        const lastExerciseSet = sets[sets.length - 1]
         if (!lastSet || new Date(lastSet.date) < new Date(lastExerciseSet.date)) {
-          return lastExerciseSet;
+          return lastExerciseSet
         }
       }
-      return lastSet;
-    }, null);
-  
-    return lastSet;
+      return lastSet
+    }, null)
+
+    return lastSet
   }
 
+  /**
+   * Get the last working set for a specific date, muscle, and exercise.
+   * @param {string} date - The date to retrieve the last working set for.
+   * @param {string} muscle - The muscle to retrieve the last working set for.
+   * @param {string} exercise - The exercise to retrieve the last working set for.
+   * @returns {object} - The last working set object.
+   */
   function getLastWorkingSet(date, muscle, exercise) {
     if (
       exercises.exercises[date] &&
@@ -44,20 +68,20 @@ const useExerciseChartStore  = defineStore('chart', () => {
       const muscleExercise = Object.keys(exercises.exercises[date][muscle][exercise])
       muscleExercise.pop()
       const workingSet = exercises.exercises[date][muscle][exercise][muscleExercise]
-      if(workingSet.length === 1) {
+      if (workingSet.length === 1) {
         return workingSet[0]
-      }  
+      }
       return workingSet[workingSet.length - 1]
     }
     return
   }
 
   return {
-    useExerciseChart, 
+    useExerciseChart,
     getAvailableExercises,
     getLastSetBetweenDates,
-    getLastWorkingSet,
+    getLastWorkingSet
   }
 })
 
-export default useExerciseChartStore;
+export default useExerciseChartStore

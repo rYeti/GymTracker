@@ -4,7 +4,7 @@
       <canvas v-once ref="exerciseChart" :style="{ height: '400px', width: '400px' }" />
     </div>
     <div>
-      <canvas ref="exerciseRepsChart" :style="{ height: '400px', width: '400px' }" />
+      <canvas class="ml-5" ref="exerciseRepsChart" :style="{ height: '400px', width: '400px' }" />
     </div>
   </div>
 </template>
@@ -35,10 +35,11 @@ const props = defineProps({
   }
 })
 
-const dateTo = computed(() => new Date(props.toDate))
 const dateFrom = computed(() => new Date(props.fromDate))
 
-//https://stackoverflow.com/questions/5467129/sort-javascript-object-by-key
+// https://stackoverflow.com/questions/5467129/sort-javascript-object-by-key
+// https://michaeluloth.com/javascript-filter-boolean/
+// Sorting the exercises by date
 const orderdExerciseDate = Object.keys(exercises.exercises)
   .sort()
   .reduce((obj, key) => {
@@ -46,6 +47,7 @@ const orderdExerciseDate = Object.keys(exercises.exercises)
     return obj
   }, {})
 
+// Filtering the data based on the date range and extracting the relevant exercise information
 const filteredData = computed(() =>
   Object.entries(orderdExerciseDate)
     .filter(([date]) => {
@@ -53,9 +55,15 @@ const filteredData = computed(() =>
       const today = new Date()
       return currentDate >= dateFrom.value && currentDate <= today
     })
+    // define exercies.workingSet
     .map(([, muscleData]) => muscleData[props.muscle]?.[props.exercise])
     .filter(Boolean)
 )
+
+/**
+ * chartjs https://www.chartjs.org/
+ */
+// Transforming the filtered data into chart-ready format
 const chartData = computed(() =>
   filteredData.value.map((exercise, index) => {
     const date = new Date(Object.keys(orderdExerciseDate)[index])
@@ -71,10 +79,12 @@ const chartData = computed(() =>
   })
 )
 
+// Extracting the chart labels, working set weights, and working set reps
 const labels = computed(() => chartData.value.map((data) => data.date))
 const workingSetWeights = computed(() => chartData.value.map((data) => data.workingSetWeights))
 const workingSetReps = computed(() => chartData.value.map((data) => data.workingSetReps))
 
+// Chart options for weight chart
 const chartOptions = computed(() => ({
   responsive: true,
   maintainAspectRatio: false,
@@ -86,6 +96,7 @@ const chartOptions = computed(() => ({
   }
 }))
 
+// Chart options for reps chart
 const chartRepsOptions = computed(() => ({
   responsive: true,
   maintainAspectRatio: false,
@@ -97,6 +108,7 @@ const chartRepsOptions = computed(() => ({
   }
 }))
 
+// Chart configuration for weight chart
 const chartConfig = computed(() => ({
   type: 'line',
   data: {
@@ -114,6 +126,7 @@ const chartConfig = computed(() => ({
   options: chartOptions.value
 }))
 
+// Chart configuration for reps chart
 const chartConfigReps = computed(() => ({
   type: 'line',
   data: {
@@ -131,11 +144,15 @@ const chartConfigReps = computed(() => ({
   options: chartRepsOptions.value
 }))
 
+// References to chart canvases
 const exerciseChart = ref(null)
 const exerciseRepsChart = ref(null)
+
+// Chart instances
 let chartInstance = null
 let chartRepsInstance = null
 
+// Chart initialization
 onMounted(() => {
   const ctx = exerciseChart.value.getContext('2d')
   const ctxReps = exerciseRepsChart.value.getContext('2d')
@@ -143,6 +160,7 @@ onMounted(() => {
   chartRepsInstance = new ChartJS(ctxReps, chartConfigReps.value)
 })
 
+// Watch for changes in filteredData and chartOptions to update the charts
 watch([filteredData, chartOptions], () => {
   if (chartInstance || chartRepsInstance) {
     chartInstance.data.labels = labels.value

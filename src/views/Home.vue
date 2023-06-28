@@ -86,7 +86,6 @@
       </div>
     </div>
     <ExerciseChart
-      class=""
       :muscle="selectedMuscle"
       :exercise="selectedExercise"
       :fromDate="dateFrom"
@@ -119,6 +118,10 @@ const muscleGroups = [
 const dateFrom = ref('')
 const dateTo = ref('')
 
+/**
+ * Retrieves exercises for the given date and updates muscleGroups.
+ * @param {string} date - The selected date.
+ */
 function getExercises(date) {
   resetMuscleGroups()
   if (!exercises.exercises[date]) return
@@ -126,12 +129,21 @@ function getExercises(date) {
   goThoughMuscle(date, muscle)
 }
 
+/**
+ * Handles the click event for an exercise, updates selectedExercise and selectedMuscle.
+ * @param {string} exercise - The selected exercise.
+ * @param {string} muscleGroupName - The name of the muscle group.
+ */
 const exerciseClick = (exercise, muscleGroupName) => {
   selectedExercise.value = exercise
   selectedMuscle.value = muscleGroupName
-  // chartStore.getLastSetBetweenDates(exercise, dateFrom, dateTo)
 }
 
+/**
+ * Iterates through the muscle object to populate muscleGroups.
+ * @param {string} date - The selected date.
+ * @param {Object} muscle - The muscle object containing exercises.
+ */
 function goThoughMuscle(date, muscle) {
   muscles = Object.keys(muscle)
 
@@ -144,12 +156,21 @@ function goThoughMuscle(date, muscle) {
   }
 }
 
+/**
+ * Resets the exercises in each muscle group befor populating.
+ */
 function resetMuscleGroups() {
   for (const group of muscleGroups) {
     group.exercises = []
   }
 }
 
+/**
+ * Retrieves exercises for a specific muscle on a given date.
+ * @param {string} date - The selected date.
+ * @param {string} muscle - The name of the muscle group.
+ * @returns {string[]} An array of exercises for the muscle on the given date.
+ */
 function getExercisesByMuscle(date, muscle) {
   if (exercises.exercises[date] && exercises.exercises[date][muscle]) {
     return Object.keys(exercises.exercises[date][muscle])
