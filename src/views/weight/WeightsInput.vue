@@ -124,6 +124,6 @@ const props = defineProps({
 const weightInput = useWeightInputStore()
 
 function save() {
-  alert('Feature not implemented yet. Steys for future development.')
+  alert('Feature not yet implemented. Stays for future development.')
 }
 </script>

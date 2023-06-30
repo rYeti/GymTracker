@@ -35,6 +35,7 @@ const props = defineProps({
   }
 })
 
+const dateTo = computed(() => new Date(props.toDate || Date.now()))
 const dateFrom = computed(() => new Date(props.fromDate))
 
 // https://stackoverflow.com/questions/5467129/sort-javascript-object-by-key
@@ -52,8 +53,9 @@ const filteredData = computed(() =>
   Object.entries(orderdExerciseDate)
     .filter(([date]) => {
       const currentDate = new Date(date)
-      const today = new Date()
-      return currentDate >= dateFrom.value && currentDate <= today
+      const fromDate = dateFrom.value
+      const toDate = dateTo.value
+      return currentDate >= fromDate && currentDate <= toDate
     })
     // define exercies.workingSet
     .map(([, muscleData]) => muscleData[props.muscle]?.[props.exercise])

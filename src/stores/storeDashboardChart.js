@@ -54,6 +54,7 @@ const useExerciseChartStore = defineStore('chart', () => {
 
   /**
    * Get the last working set for a specific date, muscle, and exercise.
+   * if the last working set is empty, return the previous working set, and if there is only one working set that is empty, return.
    * @param {string} date - The date to retrieve the last working set for.
    * @param {string} muscle - The muscle to retrieve the last working set for.
    * @param {string} exercise - The exercise to retrieve the last working set for.
@@ -69,7 +70,11 @@ const useExerciseChartStore = defineStore('chart', () => {
       muscleExercise.pop()
       const workingSet = exercises.exercises[date][muscle][exercise][muscleExercise]
       if (workingSet.length === 1) {
+        if (workingSet[0].workingSetReps.length === 0) return
         return workingSet[0]
+      }
+      if (workingSet[workingSet.length - 1].workingSetReps.length === 0) {
+        return workingSet[workingSet.length - 2]
       }
       return workingSet[workingSet.length - 1]
     }

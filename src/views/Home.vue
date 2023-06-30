@@ -2,7 +2,7 @@
   <div class="flex">
     <div class="mr-4">
       <input
-        @input="getExercises(dateFrom)"
+        @change="getExercises(dateFrom)"
         v-model="dateFrom"
         type="date"
         class="text-black font-semibold py-2 px-2 rounded mt-5 mb-1"
@@ -10,7 +10,7 @@
     </div>
     <div>
       <input
-        @input="getExercises(dateTo)"
+        @change="getExercises(dateTo)"
         v-model="dateTo"
         type="date"
         class="text-black font-semibold py-2 px-2 rounded mt-5 mb-1"
@@ -41,8 +41,7 @@
               <div>
                 <label>
                   {{
-                    chartStore.getLastWorkingSet(dateFrom, muscleGroup.name, exercise)
-                      .workingSetWeight
+                    chartStore.getLastWorkingSet(dateFrom, muscleGroup.name, exercise).workingSetWeight
                   }}
                   KG
                 </label>
@@ -50,8 +49,7 @@
               <div>
                 <label>
                   {{
-                    chartStore.getLastWorkingSet(dateFrom, muscleGroup.name, exercise)
-                      .workingSetReps
+                    chartStore.getLastWorkingSet(dateFrom, muscleGroup.name, exercise).workingSetReps
                   }}
                   Reps
                 </label>
@@ -63,8 +61,7 @@
               <div>
                 <label>
                   {{
-                    chartStore.getLastWorkingSet(dateTo, muscleGroup.name, exercise)
-                      .workingSetWeight
+                    chartStore.getLastWorkingSet(dateTo, muscleGroup.name, exercise).workingSetWeight
                   }}
                   KG
                 </label>
@@ -73,8 +70,7 @@
                 <div>
                   <label>
                     {{
-                      chartStore.getLastWorkingSet(dateTo, muscleGroup.name, exercise)
-                        .workingSetReps
+                      chartStore.getLastWorkingSet(dateTo, muscleGroup.name, exercise).workingSetReps
                     }}
                     Reps
                   </label>

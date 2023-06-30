@@ -4,7 +4,7 @@
       <img src="../assets/logo.png" alt="logo" />
     </div>
     <div class="navbar-nav">
-      <router-link to="/" class="nav-item nav-link">Home</router-link>
+      <router-link to="/" class="nav-item nav-link">Dashboard</router-link>
       <router-link to="/Muscles/Legs" class="nav-item nav-link">Legs</router-link>
       <router-link to="/Muscles/Back" class="nav-item nav-link">Back</router-link>
       <router-link to="/Muscles/Chest" class="nav-item nav-link">Chest</router-link>
