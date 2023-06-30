@@ -13,6 +13,18 @@ Der Gym Tracker bietet ein Dashboard, das Benutzern eine detaillierte Analyse ih
 
 Eine weitere Funktion ist der Historie-Graph, der die Entwicklung einer bestimmten Übung im Laufe der Zeit darstellt. Benutzer können visuell verfolgen, wie sich ihre Leistung in einer spezifischen Übung verbessert oder verändert hat.
 
+## Used Tech-Stack
+
+Vue (Composition API (Setup)
+
+    Router
+    Pinia
+    SCSS, Tailwind
+    Chart.js
+    Vueuse
+    dayjs
+
+
 ## Recommended IDE Setup
 
 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
