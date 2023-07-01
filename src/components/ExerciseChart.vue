@@ -29,10 +29,6 @@ const props = defineProps({
     type: String,
     required: true
   },
-  toDate: {
-    type: String,
-    required: false
-  }
 })
 
 const dateFrom = computed(() => new Date(props.fromDate))
@@ -53,7 +49,6 @@ const filteredData = computed(() =>
     .filter(([date]) => {
       const currentDate = new Date(date)
       const today = new Date()
-      console.log(currentDate, dateFrom.value, today)
       return currentDate >= dateFrom.value && currentDate <= today
     })
     // define exercies.workingSet

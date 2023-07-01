@@ -2,18 +2,18 @@
   <div class="flex">
     <div class="mr-4">
       <input
-        @change="getExercises(dateFrom)"
         v-model="dateFrom"
         type="date"
         class="text-black font-semibold py-2 px-2 rounded mt-5 mb-1"
+        @change="getExercises(dateFrom)"
       />
     </div>
     <div>
       <input
-        @change="getExercises(dateTo)"
         v-model="dateTo"
         type="date"
         class="text-black font-semibold py-2 px-2 rounded mt-5 mb-1"
+        @change="getExercises(dateTo)"
       />
     </div>
   </div>
@@ -81,11 +81,11 @@
         </div>
       </div>
     </div>
+    <div>{{ selectedExercise }}</div>
     <ExerciseChart
       :muscle="selectedMuscle"
       :exercise="selectedExercise"
       :fromDate="dateFrom"
-      :toDate="dateTo"
     >
     </ExerciseChart>
   </div>
