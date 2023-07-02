@@ -37,7 +37,6 @@ const useExerciseChartStore = defineStore('chart', () => {
       .map(([, muscleData]) => muscleData[muscle]?.[exercise])
       .filter(Boolean)
 
-    console.log(filteredData)
     const lastSet = filteredData.reduce((lastSet, muscle) => {
       const sets = muscle[exercise].sets
       if (sets.length > 0) {
@@ -68,6 +67,7 @@ const useExerciseChartStore = defineStore('chart', () => {
     ) {
       const muscleExercise = Object.keys(exercises.exercises[date][muscle][exercise])
       muscleExercise.pop()
+      console.log(muscleExercise, date, muscle, exercise)
       const workingSet = exercises.exercises[date][muscle][exercise][muscleExercise]
       if (workingSet.length === 1) {
         if (workingSet[0].workingSetReps.length === 0) return

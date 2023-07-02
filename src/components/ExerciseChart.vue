@@ -64,13 +64,14 @@ const chartData = computed(() =>
   filteredData.value.map((exercise, index) => {
     const date = new Date(Object.keys(orderdExerciseDate)[index])
     const formattedDate = `${date.getMonth() + 1}/${date.getDate()}`
-    const maxWorkingSetWeight = Math.max(...exercise.workingSet.map((set) => set.workingSetWeight))
-    const maxWorkingSetReps = Math.max(...exercise.workingSet.map((set) => set.workingSetReps))
+    console.log(date)
+    const lastWorkingSetWeight = exercise.workingSet[exercise.workingSet.length - 1]?.workingSetWeight
+    const lastWorkingSetReps = exercise.workingSet[exercise.workingSet.length - 1]?.workingSetReps
 
     return {
       date: formattedDate,
-      workingSetWeights: Number.isNaN(maxWorkingSetWeight) ? 0 : maxWorkingSetWeight,
-      workingSetReps: Number.isNaN(maxWorkingSetReps) ? 0 : maxWorkingSetReps
+      workingSetWeights: Number.isNaN(lastWorkingSetWeight) ? 0 : lastWorkingSetWeight,
+      workingSetReps: Number.isNaN(lastWorkingSetReps) ? 0 : lastWorkingSetReps
     }
   })
 )
@@ -87,7 +88,7 @@ const chartOptions = computed(() => ({
   scales: {
     y: {
       beginAtZero: true,
-      suggestedMax: Math.max(Math.max(...workingSetWeights.value))
+      suggestedMax: Math.max(...workingSetWeights.value)
     }
   }
 }))
@@ -99,7 +100,7 @@ const chartRepsOptions = computed(() => ({
   scales: {
     y: {
       beginAtZero: true,
-      suggestedMax: Math.max(Math.max(...workingSetReps.value))
+      suggestedMax: Math.max(...workingSetReps.value)
     }
   }
 }))
@@ -168,6 +169,7 @@ watch([filteredData, chartOptions], () => {
 
     chartInstance.update()
     chartRepsInstance.update()
+    console.log(filteredData.value)
   }
 })
 </script>
