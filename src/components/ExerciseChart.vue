@@ -53,8 +53,8 @@ const filteredData = computed(() =>
     .filter(([date]) => {
       const currentDate = new Date(date)
       const today = new Date()
-      console.log(currentDate, dateFrom.value, today)
-      return currentDate >= dateFrom.value && currentDate <= today
+      // return the earliest date of the exercise and between today's date
+      return date && currentDate <= today
     })
     // define exercies.workingSet
     .map(([, muscleData]) => muscleData[props.muscle]?.[props.exercise])
@@ -63,15 +63,15 @@ const filteredData = computed(() =>
 
 /**
  * chartjs https://www.chartjs.org/
+ * Transforming the filtered data into chart-ready format
  */
-// Transforming the filtered data into chart-ready format
 const chartData = computed(() =>
+
   filteredData.value.map((exercise, index) => {
     const date = new Date(Object.keys(orderdExerciseDate)[index])
     const formattedDate = `${date.getMonth() + 1}/${date.getDate()}`
-    const maxWorkingSetWeight = Math.max(...exercise.workingSet.map((set) => set.workingSetWeight))
-    const maxWorkingSetReps = Math.max(...exercise.workingSet.map((set) => set.workingSetReps))
-
+    const maxWorkingSetWeight = exercise.workingSet[exercise.workingSet.length - 1]?.workingSetWeight
+    const maxWorkingSetReps = exercise.workingSet[exercise.workingSet.length - 1]?.workingSetReps
     return {
       date: formattedDate,
       workingSetWeights: Number.isNaN(maxWorkingSetWeight) ? 0 : maxWorkingSetWeight,

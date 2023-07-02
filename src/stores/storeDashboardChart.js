@@ -37,7 +37,6 @@ const useExerciseChartStore = defineStore('chart', () => {
       .map(([, muscleData]) => muscleData[muscle]?.[exercise])
       .filter(Boolean)
 
-    console.log(filteredData)
     const lastSet = filteredData.reduce((lastSet, muscle) => {
       const sets = muscle[exercise].sets
       if (sets.length > 0) {
