@@ -6,8 +6,7 @@
         type="date"
         v-model="exerciseDate"
         style="width: 100%"
-        @input="initSetInput()"
-      />
+        />
       <input
         style="width: 100%"
         class="search text-black font-semibold py-2 px-2 rounded mt-5 mb-1"
@@ -102,6 +101,14 @@ const exerciseClick = (exercise) => {
  */
 const initSetInput = () => {
   weightInput.initSetsInputs(exerciseDate.value, props.muscle, selectedExercise.value)
+}
+
+/**
+ * Initializes the weight input based on the date change.
+ * @param {string} selectedExercise - The selected exercise name.
+ */
+function initDateChangeweightInput(selectedExercise) {
+  weightInput.initSetsInputs(exerciseDate.value, props.muscle, selectedExercise)
 }
 </script>
 

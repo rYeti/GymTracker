@@ -81,7 +81,7 @@
         </div>
       </div>
     </div>
-    <div>{{ selectedExercise }}</div>
+    <div class="mt-5 font-bold">{{ selectedExercise }}</div>
     <ExerciseChart
       :muscle="selectedMuscle"
       :exercise="selectedExercise"
